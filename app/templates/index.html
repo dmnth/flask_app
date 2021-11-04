@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}<title>TODO's</title>{% endblock %}
+    <link rel="stylesheet" href="{{ url_for('static',
+                                   filename='bootstrap/css/bootstrap.css') }}"> 
+    <link rel="stylesheet"
+                                  href="{{url_for('static',
+                                  filename='style.css') }}">
+    <nav class='navbar navbar-light bg-light'>
+        <a class='navbar-brand' href='#'>nav</a>
+    </nav>
+</head>
+<body>
+    {% block body %}
+    <div class="container-fluid">
+    <div class='row'>
+        <div class='col-md-3'>
+            content
+        </div>
+        <div class='col-md-6'>
+            <div class='container-fluid'>
+                <div class='row'>
+
+                    <!--Delimeter-->
+                    <div class='delimeter-text'>
+                        <h2> Observe own misery: </h2>
+                    </div>
+                    <div class='delimeter-line'>
+                    </div>
+                    <!--Delimeter end-->
+
+                    <div class='table container-fluid'>
+                        <table style='width: 100%'>
+                            <tr>
+                                <td> date </td>
+                                <td> Activity </td>
+                                <td> Status </td>
+                                <td> btn </td>
+                            </tr>
+                            {% for act in activities %}
+                            <tr>
+                                <td> yesterday </td>
+                                <td><a href='#'> {{ act['description'] }}</a></td>
+                                <td> {{ act['status'] }}</td>
+                                <td><input type='checkbox'></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <!---Delimeter-->
+                    <div class='delimeter-text'>
+                        <h2> Add more procrastination: </h2>
+                    </div>
+                    <div class='delimeter-line'>
+                    </div>
+                    <!---Delimeter end-->
+
+                    <div class='table container-fluid'>
+                        <form>
+                            {{ form.hidden_tag() }}
+                            <div class='row'>
+                                <div class='col-md-6'>
+                                    <div class='row'>
+                                        {{form.status.label()}}
+                                        <br>
+                                        {{form.status()}}
+                                    </div>
+                                    <br>
+                                    <div class='row'>
+                                        {{ form.date.label()}}
+                                        <br>
+                                        {{ form.date()}}
+                                    </div>
+                                </div>
+                                <div class='col-md-6'>
+                                    <div class='row'>
+                                        <div class='description col-md-12'>
+                                        {{form.description.label()}}
+                                        <br>
+                                        {{form.description(rows='1',
+                                        cols='30')}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='col-md-3'>
+            content
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

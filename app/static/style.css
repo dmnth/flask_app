@@ -1,0 +1,47 @@
+.navbar {
+    padding: 10px 10px;
+    width: 100%;
+}
+
+.table.container-fluid {
+    padding: 2em 2em;
+    border: 1px solid black;
+    box-shadow: 5px 10px;
+    margin-top: 3em;
+    overflow: scroll;
+    max-height: 500px;
+    overflow-X: hidden;
+}
+
+.static-row {
+    margin-bottom: 3px;
+}
+
+.table.container-fluid td {
+    font-size: 1.2em;
+}
+
+a:hover {
+    background-color: palegreen;
+}
+
+.form {
+    padding: 2em 2em;
+    border: 1px solid black;
+    box-shadow: 5px 10px;
+    margin-top: 1em;
+    height: 100%;
+}
+
+.delimeter-line {
+    border: 1px solid black;
+}
+.delimeter-text {
+    margin-top: 3em;
+}
+
+.description.col-md-12 {
+    padding-left: 3em;
+}
+
+
