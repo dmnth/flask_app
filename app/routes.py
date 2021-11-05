@@ -32,14 +32,21 @@ def index():
         form.description.data = ''
     
     act_list = Activitie.query.all()
-    if delete_form.validate():
-        for key in request.form.keys():
-            if key.isdigit():
-                Activitie.query.filter(Activitie.id==int(key)).delete()
-                db.session.commit()
-            else:
-                print(key)
-        return redirect(url_for('index'))
+
+    if request.method == 'POST': 
+
+        if request.form.get('delete_button'):
+            for key in request.form.keys():
+                if key.isdigit():
+                    Activitie.query.filter(Activitie.id==int(key)).delete()
+                    db.session.commit()
+                else:
+                    print(key)
+            return redirect(url_for('index'))
+        
+        if request.form.get('uncheck_button'):
+            print('redirected')
+            return redirect(url_for('index'))
 
     return render_template('index.html', form=form, activities=activities,
             delete_form=delete_form)

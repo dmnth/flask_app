@@ -1,3 +1,19 @@
+/* Media queries */
+
+@media only screen and (max-width: 1200px) {
+    body {
+          background-color: lightblue;
+            }
+        }
+
+/* Tags */
+
+a:hover {
+    background-color: palegreen;
+}
+
+/* Classes */
+
 .navbar {
     padding: 10px 10px;
     width: 100%;
@@ -21,9 +37,6 @@
     font-size: 1.2em;
 }
 
-a:hover {
-    background-color: palegreen;
-}
 
 .form {
     padding: 2em 2em;
@@ -44,4 +57,46 @@ a:hover {
     padding-left: 3em;
 }
 
+.submit.col-md-12 {
+    padding-left: 3em;
+    
+}
+
+.date.row {
+    margin-top: 2em;
+}
+
+.footer.container-fluid {
+    height: 5em;
+    border: 1px solid black;
+    width: 100%;
+    margin-top: 10em;
+}
+
+.options {
+    display:flex;
+    justify-content: end;
+    padding-right: 3em;
+}
+
+input[type=submit] {
+    margin-left: 0.3em;
+    box-shadow: 2.5px 5px;
+
+}
+    
+/* Id's */
+
+#submit-btn {
+    width: 5em;
+    margin-top: 1.1em;
+    margin-left: 0.3em;
+}
+
+#status-field, #date-field, #description {
+    margin-bottom: 1.1em;
+}
+
+#deadline-field {
+}
 

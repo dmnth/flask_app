@@ -9,92 +9,127 @@
                                   href="{{url_for('static',
                                   filename='style.css') }}">
     <nav class='navbar navbar-light bg-light'>
-        <a class='navbar-brand' href='#'>nav</a>
+        <a class='navbar-brand' href='#'>ND</a>
     </nav>
 </head>
 <body>
     {% block body %}
     <div class="container-fluid">
-    <div class='row'>
-        <div class='col-md-3'>
-            content
-        </div>
-        <div class='col-md-6'>
-            <div class='container-fluid'>
-                <div class='row'>
+        <div class='row'>
+            <div class='col-md-3'>
+            </div>
+            <div class='col-md-6'>
+                <div class='container-fluid'>
+                    <div class='row'>
 
-                    <!--Delimeter-->
-                    <div class='delimeter-text'>
-                        <h2> Observe own misery: </h2>
-                    </div>
-                    <div class='delimeter-line'>
-                    </div>
-                    <!--Delimeter end-->
+                        <!--Delimeter-->
+                        <div class='delimeter-text'>
+                            {% if activities %}
+                            <h2> Observe own misery: </h2>
+                            {% else %}
+                            <h2> Nothing to worry about? </h2>
+                            {% endif %}
+                        </div>
+                        <div class='delimeter-line'>
+                        </div>
+                        <!--Delimeter end-->
+                        {% if activities %}
+                        <form action method="POST">
+                            <div class='table container-fluid'>
+                                <table style='width: 100%'>
+                                    {% for act in activities %}
+                                    <tr>
+                                        <td>{{ act['description'] }}</td>
+                                        <td>{{ act['status'] }}</td>
+                                        <td>{{ act['deadline'] }} </td>
+                                        <td><input type="checkbox"
+                                                   name={{act['id']}}></td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <div class='options'>
+                                    <input type="submit" name="uncheck_button"
+                                                         value="Uncheck">
+                                    <input type="submit" name="delete_button"
+                                    value='Delete'>
+                            </div>
+                        </form>
+                        {% endif %}
 
-                    <div class='table container-fluid'>
-                        <table style='width: 100%'>
-                            <tr>
-                                <td> date </td>
-                                <td> Activity </td>
-                                <td> Status </td>
-                                <td> btn </td>
-                            </tr>
-                            {% for act in activities %}
-                            <tr>
-                                <td> yesterday </td>
-                                <td><a href='#'> {{ act['description'] }}</a></td>
-                                <td> {{ act['status'] }}</td>
-                                <td><input type='checkbox'></td>
-                            </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
+                        <!---Delimeter-->
+                        <div class='delimeter-text'>
+                            <h2> Add more procrastination: </h2>
+                        </div>
+                        <div class='delimeter-line'>
+                        </div>
+                        <!---Delimeter end-->
 
-                    <!---Delimeter-->
-                    <div class='delimeter-text'>
-                        <h2> Add more procrastination: </h2>
-                    </div>
-                    <div class='delimeter-line'>
-                    </div>
-                    <!---Delimeter end-->
-
-                    <div class='table container-fluid'>
-                        <form>
-                            {{ form.hidden_tag() }}
+                        <div class='table container-fluid'>
                             <div class='row'>
-                                <div class='col-md-6'>
-                                    <div class='row'>
-                                        {{form.status.label()}}
-                                        <br>
-                                        {{form.status()}}
+                            <form action method='POST'>
+                                {{ form.hidden_tag() }}
+                                <div class='row'>
+
+                                    <!-- Message represntation -->
+                                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                    <ul class='flashes'>
+                                        {% for message in messages %}
+                                        <li> {{ message }} </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                    {% endwith %}
+                                    <!-- Message representation end -->
+
+                                    <div class='col-md-6'>
+                                        <div class='row'>
+                                            {{form.status.label()}}
+                                            <br>
+                                            {{form.status()}}
+                                        </div>
+                                        <div class='row'>
+                                            {{ form.date_added.label()}}
+                                            <br>
+                                            {{ form.date_added()}}
+                                        </div>
+                                        <div class='row'>
+                                            {{ form.deadline.label()}}
+                                            <br>
+                                            {{ form.deadline()}}
+                                        </div>
                                     </div>
-                                    <br>
-                                    <div class='row'>
-                                        {{ form.date.label()}}
-                                        <br>
-                                        {{ form.date()}}
-                                    </div>
-                                </div>
-                                <div class='col-md-6'>
-                                    <div class='row'>
-                                        <div class='description col-md-12'>
-                                        {{form.description.label()}}
-                                        <br>
-                                        {{form.description(rows='1',
-                                        cols='30')}}
+                                    <div class='col-md-6'>
+                                        <div class='row'>
+                                            <div class='description col-md-12'>
+                                            {{form.description.label()}}
+                                            <br>
+                                            {{form.description(rows='4',
+                                            cols='30')}}
+                                            </div>
+                                        <div class='row'>
+                                            <div class='submit col-md-12'>
+                                            {{ form.submit(size=5, maxlength=5)
+                                            }}
+                                            </div>
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class='col-md-3'>
-            content
         </div>
     </div>
+    </div>
     {% endblock %}
+    <footer class='footer container-fluid'>
+            content
+    </footer>
 </body>
 </html>
