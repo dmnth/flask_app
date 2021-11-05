@@ -10,7 +10,8 @@ class Activitie(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text(255), index=True, nullable=False)
     status = db.Column(db.String(24), index=True, nullable=False)
-    date = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+    date_added = db.Column(db.DateTime, index=True, default=datetime.utcnow())
+    deadline = db.Column(db.DateTime, index=True)
     
     def __repr__(self):
         return f"Activitie: {self.description}"
