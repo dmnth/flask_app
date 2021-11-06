@@ -31,7 +31,7 @@ input[type=submit] {
 }
 
 td {
-    font-size: 1.2em;
+    font-size: 3.2em;
     font-family: 'Indie Flower', cursive;
 }
 
@@ -48,17 +48,19 @@ td {
     border: 1px solid black;
     box-shadow: 5px 10px;
     margin-top: 3em;
-    overflow: scroll;
+    overflow-Y: scroll;
     max-height: 500px;
-    overflow-X: hidden;
 }
 
+.input {
+    max-height: 100px;
+}
 .static-row {
     margin-bottom: 3px;
 }
 
 .table.container-fluid td {
-    font-size: 1.2em;
+    font-size: 1.3em;
 }
 
 
