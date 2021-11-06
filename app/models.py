@@ -15,3 +15,4 @@ class Activitie(db.Model):
     
     def __repr__(self):
         return f"Activitie: {self.description}"
+

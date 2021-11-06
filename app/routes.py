@@ -4,6 +4,7 @@ from app import app, db
 from flask import render_template, url_for, redirect, session, flash, request
 from app.forms import ActivitieForm, DeleteForm
 from app.models import Activitie
+from datetime import datetime
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -19,14 +20,18 @@ def index():
     # Do stuff here
     if description is None:
         if form.validate_on_submit():
-            activitie.date_added = form.date_added.data
-            activitie.description = form.description.data
-            activitie.status = form.status.data
-            activitie.deadline = form.deadline.data
-            db.session.add(activitie)
-            db.session.commit()
-            form.description.data = ''
-            return redirect(url_for('index'))
+            if form.dateNotInPast() is True:
+                activitie.date_added = form.date_added.data
+                activitie.deadline = form.deadline.data
+                activitie.description = form.description.data
+                activitie.status = form.status.data
+                db.session.add(activitie)
+                db.session.commit()
+                form.description.data = ''
+                return redirect(url_for('index'))
+            if form.dateNotInPast() is False:
+                form.deadline.errors.append('Time travel not allowed')
+
     else:
         flash('Is already in progress')
         form.description.data = ''
