@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!---Google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=MedievalSharp&family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <!---endfonts-->
     <meta charset="UTF-8">
-    {% block title %}<title>Not Done's</title>{% endblock %}
+    <!-- Stylesheets-->
     <link rel="stylesheet" href="{{ url_for('static',
                                    filename='bootstrap/css/bootstrap.css') }}"> 
     <link rel="stylesheet"
                                   href="{{url_for('static',
                                   filename='style.css') }}">
+    <!-- endstylesheeets -->
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/053a636f0f.js" crossorigin="anonymous"></script>
+    <!-- awesomeend -->
+    {% block title %}<title>Not Done's</title>{% endblock %}
     <nav class='navbar navbar-light bg-light'>
-        <a class='navbar-brand' href='#'>ND</a>
+        <a class='navbar-brand' href='#'><i class="fas fa-hamsa">&nbsp</i></a>
     </nav>
 </head>
 <body>
@@ -28,9 +35,9 @@
                         <!--Delimeter-->
                         <div class='delimeter-text'>
                             {% if activities %}
-                            <h2> Observe own misery: </h2>
+                            <h2 style='text-align: center'>Observe own misery: </h2>
                             {% else %}
-                            <h2> Nothing to worry about? </h2>
+                            <h2 style='text-align: center'> Are you lost? Or maybe in doubt? </h2>
                             {% endif %}
                         </div>
                         <div class='delimeter-line'>
@@ -44,7 +51,7 @@
                                     <tr>
                                         <td>{{ act['description'] }}</td>
                                         <td>{{ act['status'] }}</td>
-                                        <td>{{ act['deadline'] }} </td>
+                                        <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
                                         <td><input type="checkbox"
                                                    name={{act['id']}}></td>
                                     </tr>
@@ -62,30 +69,34 @@
 
                         <!---Delimeter-->
                         <div class='delimeter-text'>
-                            <h2> Add more procrastination: </h2>
+                            {% if not activities %}
+                            <h2> <i class="fas fa-pray">&nbsp</i>Get in touch with the One Above All: </h2>
+                            {% else %}
+                            <h2> <i class="fas fa-pray">&nbsp</i>Add more? </h2>
                         </div>
+                            {% endif %}
                         <div class='delimeter-line'>
                         </div>
                         <!---Delimeter end-->
 
                         <div class='table input container-fluid'>
+
+                            <!-- Message represntation -->
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+                            <ul class='flashes'>
+                                {% for message in messages %}
+                                <li> {{ message }} </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% endwith %}
+                            <!-- Message representation end -->
+
                             <div class='row'>
-                            <form action method='POST'>
+                            <form action method='POST' novalidate>
                                 {{ form.hidden_tag() }}
                                 <div class='row'>
-
-                                    <!-- Message represntation -->
-                                    {% with messages = get_flashed_messages() %}
-                                    {% if messages %}
-                                    <ul class='flashes'>
-                                        {% for message in messages %}
-                                        <li> {{ message }} </li>
-                                        {% endfor %}
-                                    </ul>
-                                    {% endif %}
-                                    {% endwith %}
-                                    <!-- Message representation end -->
-
                                     <div class='col-md-6'>
                                         <div class='row'>
                                             {{form.status.label()}}
@@ -100,7 +111,10 @@
                                         <div class='row'>
                                             {{ form.deadline.label()}}
                                             <br>
-                                            {{ form.deadline()}}
+                                            {{ form.deadline(value='yy/mm/dd')}}
+                                            {% for error in form.deadline.errors %}
+                                            <span style='color: red;'>[{{error}}]</span>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                     <div class='col-md-6'>
@@ -110,6 +124,9 @@
                                             <br>
                                             {{form.description(rows='4',
                                             cols='30')}}
+                                            {% for error in form.description.errors %}
+                                            <span style='color: red;'>[{{error}}]</span>
+                                            {% endfor %}
                                             </div>
                                         <div class='row'>
                                             <div class='submit col-md-12'>

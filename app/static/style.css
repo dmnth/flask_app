@@ -35,12 +35,20 @@ td {
     font-family: 'Indie Flower', cursive;
 }
 
+h2 {
+    font-family: 'MedievalSharp', cursive;
+}
+
 /* Classes */
 
 .navbar {
     padding: 10px 10px;
     width: 100%;
-    margin-bottom: 10em;
+    margin-bottom: 3em;
+}
+
+.navbar-brand {
+    padding-left: 1em
 }
 
 .table.container-fluid {
