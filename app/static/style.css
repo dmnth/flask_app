@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
 /* Media queries */
 
 @media only screen and (max-width: 1200px) {
@@ -12,11 +14,33 @@ a:hover {
     background-color: palegreen;
 }
 
+footer {
+   position:relative;
+   margin-top: 10em;
+   bottom:0;
+   width:100%;
+   height:60px;   /* Height of the footer */
+   padding-left: 2em;
+   padding-right: 2em;
+   }
+
+input[type=submit] {
+    margin-left: 0.3em;
+    box-shadow: 2.5px 5px;
+
+}
+
+td {
+    font-size: 1.2em;
+    font-family: 'Indie Flower', cursive;
+}
+
 /* Classes */
 
 .navbar {
     padding: 10px 10px;
     width: 100%;
+    margin-bottom: 10em;
 }
 
 .table.container-fluid {
@@ -54,7 +78,8 @@ a:hover {
 }
 
 .description.col-md-12 {
-    padding-left: 3em;
+   padding-left: 3em;
+   padding-right: 0em;
 }
 
 .submit.col-md-12 {
@@ -79,24 +104,21 @@ a:hover {
     padding-right: 3em;
 }
 
-input[type=submit] {
-    margin-left: 0.3em;
-    box-shadow: 2.5px 5px;
-
-}
     
 /* Id's */
+
 
 #submit-btn {
     width: 5em;
     margin-top: 1.1em;
     margin-left: 0.3em;
+    padding: 0px;
 }
 
 #status-field, #date-field, #description {
     margin-bottom: 1.1em;
 }
 
-#deadline-field {
+#description {
+    width: 100%;
 }
-

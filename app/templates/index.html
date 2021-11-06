@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=Montserrat:wght@100&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
-    {% block title %}<title>TODO's</title>{% endblock %}
+    {% block title %}<title>Not Done's</title>{% endblock %}
     <link rel="stylesheet" href="{{ url_for('static',
                                    filename='bootstrap/css/bootstrap.css') }}"> 
     <link rel="stylesheet"
@@ -128,8 +131,10 @@
     </div>
     </div>
     {% endblock %}
-    <footer class='footer container-fluid'>
+    <footer>
+        <div class='footer-info'>
             content
+        </div>
     </footer>
 </body>
 </html>
