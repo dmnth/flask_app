@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %} Main page {% endblock %}
+{% block body %}
+<div class='container-fluid'>
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8 stuff">
+            <div class="container-fluid">
+            <div>
+                <h2 style='text-align: center'> Observe the Possibilities: </h2>
+                <br>
+            </div>
+                <div class="row">
+                    {% for person in persons %}
+                    <div class="col-md-4 stuff">
+                        <img src="" alt="insert image">
+                        <div class='image-text'>
+                            <p>{{person['name'] }}</p>
+                            <p>{{person['bio'] }}</p>
+                            <a href='#'>Details</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+{% endblock %}

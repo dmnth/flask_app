@@ -41,6 +41,7 @@ h2 {
 
 /* Classes */
 
+
 .navbar {
     padding: 10px 10px;
     width: 100%;
@@ -114,6 +115,7 @@ h2 {
     padding-right: 3em;
 }
 
+
     
 /* Id's */
 
@@ -132,3 +134,51 @@ h2 {
 #description {
     width: 100%;
 }
+
+
+/* Landing page */
+
+.stuff {
+    display: flex;
+    justify-content: start;
+}
+
+.col-md-4.stuff {
+    height: 10em;
+    margin-bottom: 2em;
+
+}
+
+.col-md-4.stuff img {
+    width: 50%;
+    height: auto;
+    border: 1px solid black;
+}
+
+.image-text {
+    padding-top: 0.52em;
+    padding-left: 0.5em;
+    width: 50%;
+    height: auto;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

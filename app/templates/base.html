@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!---Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=MedievalSharp&family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <!---endfonts-->
+    <meta charset="UTF-8">
+    <!-- Stylesheets-->
+    <link rel="stylesheet" href="{{ url_for('static',
+                                   filename='bootstrap/css/bootstrap.css') }}"> 
+    <link rel="stylesheet"
+                                  href="{{url_for('static',
+                                  filename='style.css') }}">
+    <!-- endstylesheeets -->
+    <!-- Fontawesome -->
+    <script src="https://kit.fontawesome.com/053a636f0f.js" crossorigin="anonymous"></script>
+    <!-- awesomeend -->
+    <!-- jQuery -->
+    <script src='../static/jquery/jquery-3.6.0.min.js'></script>
+    <script>
+        $(document).ready(function() {
+                    return 0
+                }); // end ready
+    </script>
+    <!-- endjQuery -->
+    <title>{% block title %}Not Done's{% endblock %}</title>
+    <nav class='navbar navbar-light bg-light'>
+        <a class='navbar-brand' href='#'><i class="fas fa-hamsa">&nbsp</i></a>
+    </nav>
+</head>
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
+<footer>
+    {% block footer %}
+    {% endblock %}
+</footer>
+</html>

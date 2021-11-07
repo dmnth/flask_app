@@ -1,29 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <!---Google fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=MedievalSharp&family=Montserrat:wght@100&display=swap" rel="stylesheet">
-    <!---endfonts-->
-    <meta charset="UTF-8">
-    <!-- Stylesheets-->
-    <link rel="stylesheet" href="{{ url_for('static',
-                                   filename='bootstrap/css/bootstrap.css') }}"> 
-    <link rel="stylesheet"
-                                  href="{{url_for('static',
-                                  filename='style.css') }}">
-    <!-- endstylesheeets -->
-    <!-- Fontawesome -->
-    <script src="https://kit.fontawesome.com/053a636f0f.js" crossorigin="anonymous"></script>
-    <!-- awesomeend -->
-    {% block title %}<title>Not Done's</title>{% endblock %}
-    <nav class='navbar navbar-light bg-light'>
-        <a class='navbar-brand' href='#'><i class="fas fa-hamsa">&nbsp</i></a>
-    </nav>
-</head>
-<body>
-    {% block body %}
+{% extends 'base.html' %}
+{% block body %}
     <div class="container-fluid">
         <div class='row'>
             <div class='col-md-3'>
@@ -147,11 +123,9 @@
         </div>
     </div>
     </div>
-    {% endblock %}
-    <footer>
-        <div class='footer-info'>
-            content
-        </div>
-    </footer>
-</body>
-</html>
+{% endblock %}
+{% block footer %}
+<div class='footer-info'>
+    content
+</div>
+{% endblock %}
