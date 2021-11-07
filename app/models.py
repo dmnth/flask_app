@@ -23,20 +23,11 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), index=True, nullable=False)
     info = db.Column(db.String(255), index=True, nullable=False)
-    relation = db.relationship('followedrelations', backref='followed',
-    lazy='dynamic')
+    follower = db.relationship('Follower', backref='following', lazy='dynamic') 
+
 
     def __repr__(self):
         return f"<Person {self.name}>"
-
-class FollowedRelation(db.Model):
-
-    __tablename__ = 'followedrelations'
-
-    id = db.Column(db.Integer, primary_key=True)
-    person_id = db.Column(db.Integer, db.ForeignKey('persons.id'))
-    follower_id = db.Column(db.Integer, db.ForeignKey('followers.id'))
-
 
 class Follower(db.Model):
 
@@ -44,7 +35,5 @@ class Follower(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     person_id = db.Column(db.Integer, db.ForeignKey('persons.id'))
-    relation = db.relationship('followedrelations', backref='stalker',
-    lazy='dynamic')
 
 
