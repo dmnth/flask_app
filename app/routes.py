@@ -4,15 +4,12 @@ from app import app, db
 from flask import render_template, url_for, redirect, session, flash, request
 from app.forms import ActivitieForm, DeleteForm
 from app.models import Activitie
-from app.persons import Persons
 from datetime import datetime
 import random
 
 @app.route('/main', methods=['GET', 'POST'])
 def main():
-    persons = Persons
-    random.shuffle(persons) 
-    return render_template('main.html', persons=persons)
+    return render_template('main.html')
 
 
 @app.route('/', methods=['GET', 'POST'])
