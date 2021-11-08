@@ -16,15 +16,16 @@ class Activitie(db.Model):
     def __repr__(self):
         return f"Activitie: {self.description}"
 
-class Person(db.Model):
+class User(db.Model):
 
-    __tablename__ = 'persons'
+    __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), index=True, nullable=False)
     info = db.Column(db.String(255), index=True, nullable=False)
-    follower = db.relationship('Follower', backref='following', lazy='dynamic') 
-
+    users = db.relationship('Follower', backref='user', lazy='dynamic', \
+            foreign_keys='Follower.user_id')
+    followers = db.relationship('Follower', backref='follower', lazy='dynamic', foreign_keys='Follower.follower_id')
 
     def __repr__(self):
         return f"<Person {self.name}>"
@@ -34,6 +35,5 @@ class Follower(db.Model):
     __tablename__ = 'followers'
 
     id = db.Column(db.Integer, primary_key=True)
-    person_id = db.Column(db.Integer, db.ForeignKey('persons.id'))
-
-
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'))
