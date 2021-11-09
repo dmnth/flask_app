@@ -15,14 +15,17 @@ def main():
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+
     # Forms
     form = ActivitieForm()
     delete_form = DeleteForm()
+
     # Db entities
     activities = Activitie.query.all()
     activitie = Activitie()
     description = \
             Activitie.query.filter_by(description=form.description.data).first()
+
     # Do stuff here
     if description is None:
         if form.validate_on_submit():
@@ -35,14 +38,12 @@ def index():
                 db.session.commit()
                 form.description.data = ''
                 return redirect(url_for('index'))
-            if form.dateNotInPast() is False:
+            else:
                 form.deadline.errors.append('Time travel not allowed')
 
     else:
-        flash('Is already in progress')
+        flash('Is already not being done. ')
         form.description.data = ''
-    
-    act_list = Activitie.query.all()
 
     if request.method == 'POST': 
 
@@ -51,12 +52,9 @@ def index():
                 if key.isdigit():
                     Activitie.query.filter(Activitie.id==int(key)).delete()
                     db.session.commit()
-                else:
-                    print(key)
             return redirect(url_for('index'))
         
         if request.form.get('uncheck_button'):
-            print('redirected')
             return redirect(url_for('index'))
 
     return render_template('index.html', form=form, activities=activities,
