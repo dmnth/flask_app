@@ -10,6 +10,8 @@ class ActivitieForm(FlaskForm):
     description = TextAreaField('description', validators=[DataRequired()])
     status = StringField('status', default='not done', \
             validators=[DataRequired()], id='status-field')
+    header = StringField('header', default='Your header', \
+            validators=[DataRequired()], id='header-field')
     date_added = DateTimeField('date', format='%y/%m/%d', default=datetime.utcnow(), id='date-field')
     deadline = DateTimeField('deadline', format='%y/%m/%d',id='deadline-field')
     submit = SubmitField(id='submit-btn')

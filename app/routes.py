@@ -29,8 +29,9 @@ def index():
     # Do stuff here
     if description is None:
         if form.validate_on_submit():
-            if form.dateNotInPast() is True:
+            if form.dateNotInPast():
                 activitie.date_added = form.date_added.data
+                activitie.header = form.header.data
                 activitie.deadline = form.deadline.data
                 activitie.description = form.description.data
                 activitie.status = form.status.data
