@@ -25,9 +25,13 @@
                                 <table style='width: 100%'>
                                     {% for act in activities %}
                                     <tr>
-                                        <td>{{ act['description'] }}</td>
-                                        <td>{{ act['status'] }}</td>
+                                        <td> header </td>
+                                        <td> added </td>
+                                        <td> deadline </td>
+                                    <tr>
+                                        <td>{{ act['header'] }}</td>
                                         <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
+                                        <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
                                         <td><input type="checkbox"
                                                    name={{act['id']}}></td>
                                     </tr>
@@ -75,9 +79,9 @@
                                 <div class='row'>
                                     <div class='col-md-6'>
                                         <div class='row'>
-                                            {{form.status.label()}}
+                                            {{form.header.label()}}
                                             <br>
-                                            {{form.status()}}
+                                            {{form.header()}}
                                         </div>
                                         <div class='row'>
                                             {{ form.date_added.label()}}
