@@ -23,17 +23,17 @@
                         <form action method="POST">
                             <div class='table container-fluid'>
                                 <table style='width: 100%'>
-                                    {% for act in activities %}
                                     <tr>
                                         <td> header </td>
                                         <td> added </td>
                                         <td> deadline </td>
+                                    </tr>
+                                    {% for act in activities %}
                                     <tr>
-                                        <td>{{ act['header'] }}</td>
+                                        <td><a href={{url_for('activitie',id=act['id']) }}>{{act['header'] }}</a></td>
                                         <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
                                         <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
-                                        <td><input type="checkbox"
-                                                   name={{act['id']}}></td>
+                                        <td><input type="checkbox" name={{act['id']}}></td>
                                     </tr>
                                     {% endfor %}
                                 </table>

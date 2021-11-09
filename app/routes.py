@@ -11,6 +11,9 @@ import random
 def main():
     return render_template('main.html')
 
+@app.route('/activitie/<int:id>/')
+def activitie(id):
+    return render_template('activitie.html', id=id)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -23,13 +26,15 @@ def index():
     # Db entities
     activities = Activitie.query.all()
     activitie = Activitie()
-    description = \
-            Activitie.query.filter_by(description=form.description.data).first()
+    header = \
+            Activitie.query.filter_by(header=form.header.data).first()
 
     # Do stuff here
-    if description is None:
+    if header is None:
         if form.validate_on_submit():
-            if form.dateNotInPast():
+            if not form.dateNotInPast():
+                form.deadline.errors.append('Time travel not allowed')
+            else:
                 activitie.date_added = form.date_added.data
                 activitie.header = form.header.data
                 activitie.deadline = form.deadline.data
@@ -39,12 +44,10 @@ def index():
                 db.session.commit()
                 form.description.data = ''
                 return redirect(url_for('index'))
-            else:
-                form.deadline.errors.append('Time travel not allowed')
 
     else:
-        flash('Is already not being done. ')
-        form.description.data = ''
+        flash(f'<\"{form.header.data}\" is already on list somewhere> ')
+        form.header.data = ''
 
     if request.method == 'POST': 
 
