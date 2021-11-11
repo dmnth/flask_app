@@ -12,8 +12,9 @@ def main():
     return render_template('main.html')
 
 @app.route('/activitie/<int:id>/')
-def activitie(id):
-    return render_template('activitie.html', id=id)
+def details(id):
+    activitie = Activitie.query.get(id)
+    return render_template('activitie.html', id=id, activitie=activitie)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])

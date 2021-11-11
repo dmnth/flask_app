@@ -30,7 +30,7 @@
                                     </tr>
                                     {% for act in activities %}
                                     <tr>
-                                        <td><a href={{url_for('activitie',id=act['id']) }}>{{act['header'] }}</a></td>
+                                        <td><a href={{url_for('details',id=act['id']) }}>{{act['header'] }}</a></td>
                                         <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
                                         <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
                                         <td><input type="checkbox" name={{act['id']}}></td>

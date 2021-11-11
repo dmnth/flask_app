@@ -22,9 +22,8 @@
             <div class='row'>
                 <div class='left col-md-6'>
                     <div class='content-container'>
-                        <p> Description </p> 
-                        <p> Here i will place desctiption about stuff that will be done in one way or another, how i shall be done and using what instruments, maybe add a bit of instructions
-                        </p>
+                        <p> {{ activitie.header }} </p> 
+                        <p> {{ activitie.description }} <p>
                     </div>
                 </div>
             </div>
@@ -46,11 +45,10 @@
             </div>
             <div class='row'>
                 <div class='col-md-6 btn-prev'>
-                    <div class='button prev'> 
-                    </div>
+                    <input type='submit' name='prev' value='previous'>
                 </div>
                 <div class='col-md-6 btn-next'>
-                    <div class='button next'>
+                    <input type='submit' name='next' value='next'>
                     </div>
                 </div>
             </div>
