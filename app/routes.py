@@ -68,3 +68,6 @@ def index():
 def jq():
     return render_template('jq.html')
 
+@app.route('/button_test', methods=['GET', 'POST'])
+def buttons():
+    return render_template('button.html')

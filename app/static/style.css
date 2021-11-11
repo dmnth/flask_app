@@ -1,17 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 /* Media queries */
 
 @media only screen and (max-width: 1200px) {
-    body {
-          background-color: lightblue;
-            }
         }
 
 /* Tags */
 
-a:hover {
-    background-color: palegreen;
+
+body {
 }
 
 footer {
@@ -43,22 +41,32 @@ h2 {
 
 
 .navbar {
-    padding: 10px 10px;
+    padding-top: 0.3rem; 
+    padding-bottom: 0.3rem;
     width: 100%;
     margin-bottom: 3em;
+    font-family: "Lato" sans-serif;
+    opacity: 0.8;
+    background: black;
+
 }
+
 
 .navbar-brand {
     padding-left: 1em
 }
 
+#navbarNav.collapse.navbar-collapse {
+}
+
 .table.container-fluid {
     padding: 2em 2em;
-    border: 1px solid black;
     box-shadow: 5px 10px;
     margin-top: 3em;
     overflow-Y: scroll;
     max-height: 500px;
+    border: 1px solid black;
+    color: grey;
 }
 
 .input {
@@ -75,7 +83,6 @@ h2 {
 
 .form {
     padding: 2em 2em;
-    border: 1px solid black;
     box-shadow: 5px 10px;
     margin-top: 1em;
     height: 100%;
@@ -104,7 +111,6 @@ h2 {
 
 .footer.container-fluid {
     height: 5em;
-    border: 1px solid black;
     width: 100%;
     margin-top: 10em;
 }
@@ -152,7 +158,6 @@ h2 {
 .col-md-4.stuff img {
     width: 50%;
     height: auto;
-    border: 1px solid black;
 }
 
 .image-text {
@@ -162,23 +167,178 @@ h2 {
     height: auto;
 }
 
+/* activitie page */
+
+@media only screen and (max-width: 769px) {
+    .list-of-notdones{
+        display: none;
+    }
+}
+
+.col-md-6.left, .col-md-6.right {
+    display: flex;
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+}
+
+.col-md-6.right {
+    justify-content: end;
+}
+
+.col-md-6.left {
+    justify-content: start;
+}
+
+.btn-menu {
+    font-family: 'Lato', sans-serif;
+}
+  .btn-menu::after {
+    content: "MAIN";
+    position: absolute;
+    /*
+    top: 41%;
+    */
+    left: 50%;
+    transform: translate(-50%);
+    color: red;
+    transition: all 0.1s linear; }
+  .btn-menu::before {
+    content: "";
+    position: relative;
+    display: block;
+    height: 15px;
+    width: 15px;
+    background: #d2bdff;
+    box-shadow: 0px 0px 10px 3px #0ff;
+    margin-left: -8px;
+    margin-top: -8px;
+    opacity: 0;
+    transition: all 0.1s linear;
+    border-radius: 100%
+    } 
 
 
 
 
+.button {
+  border: 2px solid #d2bdff;
+  height: 40px;
+  width: 80px;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  font-family: "Roboto", sans-serif;
+  margin: 25px; }
+  .button::after {
+    content: "MAIN";
+    position: absolute;
+    /*
+    top: 41%;
+    */
+    left: 50%;
+    transform: translate(-50%);
+    color: #d2bdff;
+    transition: all 0.1s linear; }
+  .button::before {
+    content: "";
+    position: relative;
+    display: block;
+    height: 15px;
+    width: 15px;
+    background: #d2bdff;
+    box-shadow: 0px 0px 10px 3px #0ff;
+    margin-left: -8px;
+    margin-top: -8px;
+    opacity: 0;
+    transition: all 0.1s linear;
+    border-radius: 100%;
+} 
+@keyframes star {
+  0% {
+    margin-left: -8px;
+    margin-top: -8px; }
+  25% {
+    margin-left: 194px;
+    margin-top: -8px; }
+  50% {
+    margin-left: 194px;
+    margin-top: 75px; }
+  75% {
+    margin-left: -8px;
+    margin-top: 75px; }
+  100% {
+    margin-left: -8px;
+    margin-top: -8px; } }
+  .button:hover::after {
+    text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 20px #82bedc, 0 0 30px #82bedc, 0 0 40px #82bedc, 0 0 50px #82bedc, 0 0 60px #82bedc; }
+  .btn-menu:hover::after {
+    text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 20px #82bedc, 0 0 30px #82bedc, 0 0 40px #82bedc, 0 0 50px #82bedc, 0 0 60px #82bedc; }
+
+.button.next::after {
+    content: "NEXT";
+}
+
+.button.prev::after {
+    content: "PREV";
+}
+
+.col-md-4.btn-prev {
+    display: flex;
+    justify-content: start;
+    border: 1px solid black;
+}
+
+/* Neon text */
+
+.neonText {
+  color: palegreen; 
+  text-shadow:
+      0 0 7px #fff,
+      0 0 10px #fff,
+      0 0 21px #fff,
+      0 0 42px #0fa,
+      0 0 82px #0fa,
+      0 0 92px #0fa,
+      0 0 102px #0fa,
+      0 0 151px #0fa;
+}
+
+h1 {
+  font-size: 3rem;
+  animation: flicker  infinite alternate;     
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+  padding-bottom: 0rem;
+}
 
 
+h3 {
+  animation: flicker 1s infinite alternate;     
+  font-family: 'Lato', sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: red;
+  }
 
+/* Flickering animation */
+@keyframes flicker {
+    
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
 
-
-
-
-
-
-
-
-
-
-
-
-
+      text-shadow:
+      0 0 4px #fff,
+      0 0 11px #fff,
+      0 0 19px #fff,
+      0 0 40px #0fa,
+      0 0 80px #0fa,
+      0 0 90px #0fa,
+      0 0 100px #0fa,
+      0 0 150px #0fa;
+  
+  }
+  
+  20%, 24%, 55% {        
+      text-shadow: none;
+  }    
+}

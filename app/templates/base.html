@@ -5,13 +5,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&family=MedievalSharp&family=Montserrat:wght@100&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;1,300;1,400&family=Montserrat:wght@200&family=Ubuntu:wght@300&family=Yellowtail&display=swap" rel="stylesheet">
     <!---endfonts-->
     <meta charset="UTF-8">
     <!-- Stylesheets-->
     <link rel="stylesheet" href="{{ url_for('static',
                                    filename='bootstrap/css/bootstrap.css') }}"> 
     <link rel="stylesheet"
-                                  href="{{url_for('static',
+                                   href="{{url_for('static',
                                   filename='style.css') }}">
     <!-- endstylesheeets -->
     <!-- Fontawesome -->
@@ -22,12 +23,34 @@
     <script>
         $(document).ready(function() {
                     return 0
-                }); // end ready
+                }); // end ready 
     </script>
     <!-- endjQuery -->
     <title>{% block title %}Not Done's{% endblock %}</title>
-    <nav class='navbar navbar-light bg-light'>
-        <a class='navbar-brand' href='#'><i class="fas fa-hamsa">&nbsp</i></a>
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand" hr ef="#">
+              <span style='color: black; position: relative;'>
+              <i class="far fa-eye fa-3x"></i>
+              </span>
+        </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+              <h1 class='neonText'> Not done </h1>
+          </li>
+          <li class="nav-item active">
+          </li>
+          <li class="nav-item">
+          </li>
+          <li class="nav-item">
+          </li>
+          <li class="nav-item">
+          </li>
+        </ul>
+      </div>
     </nav>
 </head>
 <body>
