@@ -12,6 +12,10 @@
 body {
 }
 
+a {
+    text-decoration: none;
+}
+
 footer {
    position:relative;
    margin-top: 10em;
@@ -78,6 +82,12 @@ h2 {
 
 .table.container-fluid td {
     font-size: 1.3em;
+}
+
+.content-container.nav-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -175,15 +185,32 @@ h2 {
     }
 }
 
+#btns.col-md-4 {
+    display: flex;
+    justify-content: center;
+
+}
+
+input[type=submit] {
+    width: 10rem;
+}
+
+.button-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .col-md-6.left, .col-md-6.right {
     display: flex;
+    padding: 1.5rem 1.5rem;
     border: 1px solid black;
     width: 100%;
     height: auto;
 }
 
 .col-md-6.right {
-    justify-content: end;
+    justify-content: center;
 }
 
 .col-md-6.left {
