@@ -15,7 +15,10 @@ def main():
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):
-#    activitie = Activitie.query.get(id)
+    activitie = Activitie.query.get(id)
+    if not activitie:
+        return render_template('404.html')
+
     activities = Activitie.query.all()
     ll = circularList()
     ll.populate(Activitie)
@@ -41,6 +44,8 @@ def details(id):
            act = Activitie.query.get(activitie.data.id)
            act.status = 'delete'
            db.session.commit()
+           activitie = activitie.get_next()
+           return redirect(url_for('details', id=activitie.data.id, activitie=activitie))
     
     return render_template('activitie.html', id=activitie.data.id, activitie=activitie, activities=activities)
 

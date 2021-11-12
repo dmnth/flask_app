@@ -29,10 +29,14 @@
                         <p style='text-decoration: line-through;'> {{ activitie.data.header }} </p> 
                         <p style='text-decoration: line-through;'> {{ activitie.data.description }} <p>
                     </div>
-                    {% else %}
+                    {% elif activitie.data.status == "not done" %}
                     <div class='content-container'>
                         <p> {{ activitie.data.header }} </p> 
                         <p> {{ activitie.data.description }} <p>
+                    </div>
+                    {% else %}
+                    <div class='content-container'>
+                        <p> Nothing left </p> 
                     </div>
                     {% endif %}
                     </div>
