@@ -5,13 +5,14 @@
     <div class='row'>
         <div class='col-md-2'>
             <div class='list-of-notdones'>
+                <h4> NotDone's: </h4>
                 {% if activitie %}
                     <ul>
                         {% for act in activities %}
-                        {% if act.id == activitie.id %}
+                        {% if act.status == "not done" %}
                         <li><a style="text-decoration: undeline; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% else %}
-                        <li><a href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                        {% elif act.status == "done"%}
+                        <li><a style="text-decoration: line-through; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
                         {% endif %}
                         {% endfor %}
                     </ul>
@@ -21,22 +22,32 @@
         <div class='second col-md-6'>
             <div class='row'>
                 <div class='left col-md-6'>
+                    <form action method="POST">
+                    {% if activitie.data.status == "done" %}
                     <div class='content-container'>
-                        <p> {{ activitie.header }} </p> 
-                        <p> {{ activitie.description }} <p>
+                            <input style="margin-left: 33rem" type='submit' name='delete' value='delete'>
+                        <p style='text-decoration: line-through;'> {{ activitie.data.header }} </p> 
+                        <p style='text-decoration: line-through;'> {{ activitie.data.description }} <p>
                     </div>
-                </div>
-                <div class='button-container'>
-                    <div class='col-md-4' id='btns'>
-                        <input type='submit' name='prev' value='previous'>
+                    {% else %}
+                    <div class='content-container'>
+                        <p> {{ activitie.data.header }} </p> 
+                        <p> {{ activitie.data.description }} <p>
                     </div>
-                    <div class='col-md-4' id='btns'>
-                        <input type='submit' name='prev' value='mark as done'>
+                    {% endif %}
                     </div>
-                    <div class='col-md-4' id='btns'>
-                        <input type='submit' name='next' value='next'>
+                    <div class='button-container'>
+                        <div class='col-md-4' id='btns'>
+                            <input type='submit' name='prev-page' value='previous'>
+                        </div>
+                        <div class='col-md-4' id='btns'>
+                            <input type='submit' name='done' value='mark as done'>
+                        </div>
+                        <div class='col-md-4' id='btns'>
+                            <input type='submit' name='next-page' value='next'>
+                        </div>
+                    </form>
                     </div>
-                </div>
             </div>
             <div class='row'>
                 <div class='center col-md-6'>
