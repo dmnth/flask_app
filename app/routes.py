@@ -14,7 +14,8 @@ def main():
 @app.route('/activitie/<int:id>/')
 def details(id):
     activitie = Activitie.query.get(id)
-    return render_template('activitie.html', id=id, activitie=activitie)
+    activities = Activitie.query.all()
+    return render_template('activitie.html', id=id, activitie=activitie, activities=activities)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])

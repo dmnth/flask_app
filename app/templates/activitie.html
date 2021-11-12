@@ -3,19 +3,19 @@
 {% block body %}
 <div class="container-fluid">
     <div class='row'>
-        <div class='col-md-3'>
+        <div class='col-md-2'>
             <div class='list-of-notdones'>
-                <p> highlights current </p>
-                <p><a href='#'> all links</a></p>
-                <p> not done </p>
-                <p> not done </p>
-                <p> not done </p>
-                <p> not done </p>
-                <p> not done </p>
-                <p> not done </p>
-                <p> not done </p>
-                <p> not done </p>
-                <p> not done </p>
+                {% if activitie %}
+                    <ul>
+                        {% for act in activities %}
+                        {% if act.id == activitie.id %}
+                        <li><a style="text-decoration: undeline; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                        {% else %}
+                        <li><a href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
             </div>
         </div>
         <div class='second col-md-6'>
@@ -26,46 +26,36 @@
                         <p> {{ activitie.description }} <p>
                     </div>
                 </div>
+                <div class='button-container'>
+                    <div class='col-md-4' id='btns'>
+                        <input type='submit' name='prev' value='previous'>
+                    </div>
+                    <div class='col-md-4' id='btns'>
+                        <input type='submit' name='prev' value='mark as done'>
+                    </div>
+                    <div class='col-md-4' id='btns'>
+                        <input type='submit' name='next' value='next'>
+                    </div>
+                </div>
             </div>
             <div class='row'>
                 <div class='center col-md-6'>
+                    <br>
                     <div class='content-container'>
                     </div>
                 </div>
             </div>
             <div class='row'>
                 <div class='right col-md-6'>
-                    <div class='content-container'>
-                        <p> Contacts </p>
-                        <p> tel: +372 5533511 </p>
-                        <p> email: boris@blade.org</p>
-                        <p> address: Moskovskaja square 12b</p>
+                    <div class='content-container nav-btns'>
                     </div>
                 </div>
             </div>
+            <br>
             <div class='row'>
-                <div class='col-md-6 btn-prev'>
-                    <input type='submit' name='prev' value='previous'>
-                </div>
-                <div class='col-md-6 btn-next'>
-                    <input type='submit' name='next' value='next'>
-                    </div>
-                </div>
             </div>
         </div>
-        <div class='col-md-3'>
-            <div class='list-of-notdones'>
-                <p> highlights current </p>
-                <p><a href='#'> all links</a></p>
-                <p>  done </p>
-                <p>  done </p>
-                <p>  done </p>
-                <p>  done </p>
-                <p>  done </p>
-                <p>  done </p>
-                <p>  done </p>
-                <p>  done </p>
-                <p>  done </p>
+        <div class='col-md-4'>
             </div>
         </div>
     </div>
