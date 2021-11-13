@@ -30,6 +30,7 @@ footer {
 input[type=submit] {
     margin-left: 0.3em;
     box-shadow: 2.5px 5px;
+    width: 10rem;
 
 }
 
@@ -192,9 +193,6 @@ h2 {
 
 }
 
-input[type=submit] {
-    width: 10rem;
-}
 
 .button-container {
     width: 100%;
@@ -342,12 +340,17 @@ h1 {
 
 
 h3 {
-  animation: flicker 1s infinite alternate;     
+  animation: flicker 10s infinite alternate;     
   font-family: 'Lato', sans-serif;
   font-size: 1.5rem;
   font-weight: bold;
   color: red;
   }
+
+h3.crud {
+    animation: flicker 8.3s infinite alternate;
+    color: purple;
+}
 
 /* Flickering animation */
 @keyframes flicker {
@@ -370,3 +373,36 @@ h3 {
       text-shadow: none;
   }    
 }
+
+
+/* Main page */
+
+.menu {
+    display: flex;
+    justify-content: center;
+    font-size: 1.3rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

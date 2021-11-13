@@ -12,16 +12,16 @@
                 <br>
             </div>
                 <div class="row">
-                    {% for person in persons %}
-                    <div class="col-md-4 stuff">
-                        <img src="" alt="insert image">
-                        <div class='image-text'>
-                            <p>{{person['name'] }}</p>
-                            <p>{{person['bio'] }}</p>
-                            <a href='#'>Details</a>
+                    <div class='col-md-12 main'>
+                        <div class='menu'>
+                            <ul>
+                                <li><a href='{{ url_for('index') }}'> Add and delete suff </a></li>
+                                <li><a href='#'> Service </a></li>
+                                <li><a href='#'> Service </a></li>
+                                <li><a href='#'> Service </a></li>
+                                <li><a href='#'> Service </a></li>
                         </div>
                     </div>
-                    {% endfor %}
                 </div>
             </div>
         </div>
