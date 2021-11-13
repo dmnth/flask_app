@@ -39,8 +39,14 @@ td {
     font-family: 'Indie Flower', cursive;
 }
 
-h2 {
+h2.main-header {
+    text-align: center;
     font-family: 'MedievalSharp', cursive;
+}
+
+h2.crud-header {
+    text-align: center;
+    font-family: 'Bangers', cursive;
 }
 
 /* Classes */
@@ -58,8 +64,8 @@ h2 {
 }
 
 
-.navbar-brand {
-    padding-left: 1em
+li.nav-item.active {
+    margin-left: 3rem;
 }
 
 #navbarNav.collapse.navbar-collapse {
@@ -206,6 +212,8 @@ h2 {
     border: 1px solid black;
     width: 100%;
     height: auto;
+    font-family: 'Special Elite', cursive;
+    font-size: 1.2rem;
 }
 
 .col-md-6.right {
@@ -348,8 +356,12 @@ h3 {
   }
 
 h3.crud {
-    animation: flicker 8.3s infinite alternate;
+    animation: flicker 18.3s infinite alternate;
     color: purple;
+}
+
+.header_text {
+    animation: flicker 15s infinite alternate;
 }
 
 /* Flickering animation */
@@ -377,10 +389,26 @@ h3.crud {
 
 /* Main page */
 
+h3.header {
+    animation: none;
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+h3.crud {
+    animation: none;
+    font-family: 'Press Start 2P', cursive;
+}
+
 .menu {
     display: flex;
     justify-content: center;
+    text-align: center;
     font-size: 1.3rem;
+}
+
+.menu li {
+    list-style-type: none;
+    font-family: 'MedievalSharp', cursive;
 }
 
 

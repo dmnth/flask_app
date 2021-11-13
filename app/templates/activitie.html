@@ -29,13 +29,13 @@
                     {% if activitie.status == "done" %}
                     <div class='content-container'>
                             <input style="margin-left: 33rem" type='submit' name='delete' value='delete'>
-                        <p style='text-decoration: line-through;'> {{ activitie.header }} </p> 
-                        <p style='text-decoration: line-through;'> {{ activitie.description }} <p>
+                        <p style='text-decoration: line-through;'> {{ activitie.header | upper }} </p> 
+                        <p style='text-decoration: line-through; margin-left: 5rem; margin-right: 7rem;'> {{ activitie.description[0].title() + activitie.description[1:] }} <p>
                     </div>
                     {% elif activitie.status == "not done" %}
                     <div class='content-container'>
-                        <p> {{ activitie.header }} </p> 
-                        <p> {{ activitie.description }} <p>
+                        <p> {{ activitie.header | upper }} </p> 
+                        <p> {{ activitie.description[0].title() + activitie.description[1:] }} <p>
                     </div>
                     {% else %}
                     <div class='content-container'>
