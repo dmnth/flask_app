@@ -15,8 +15,6 @@ class Activitie(db.Model):
     deadline = db.Column(db.DateTime, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
-    def __repr__(self):
-        return f"Activitie: {self.description}"
 
 class User(db.Model):
 

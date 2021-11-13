@@ -34,6 +34,9 @@ class circularList():
 
     def get_by_id(self, id):
 
+        if self.head == None:
+            return
+
         current_node = self.head
         while current_node.data.id != id:
             current_node = current_node.get_next()
@@ -75,22 +78,19 @@ class circularList():
 
     def populate(self, db_model):
 
-        item = db_model.query.get(1)
+        check = db_model.query.first()
+        if not check:
+            return
+
         id = 1
+        item = db_model.query.get(id)
 
-        if item is None:
-            raise ValueError('No such id')
-
+        # Dont stuff list with unneeded elements
         while item is not None:
-            self.insert_at_end(Node(item))
+            if item.status != "deleted":
+                self.insert_at_end(Node(item))
             id += 1
             item = db_model.query.get(id)
 
 
-if __name__ == "__main__":
-
-    links = circularList()
-    links.populate(Activitie)
-
-    links.print_list()
 

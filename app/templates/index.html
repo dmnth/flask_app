@@ -29,18 +29,21 @@
                                         <td> deadline </td>
                                     </tr>
                                     {% for act in activities %}
+                                    {% if act.status != "deleted" %}
                                     <tr>
                                         <td><a href={{url_for('details',id=act['id']) }}>{{act['header'] }}</a></td>
                                         <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
                                         <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
                                         <td><input type="checkbox" name={{act['id']}}></td>
                                     </tr>
+                                    {% endif %}
                                     {% endfor %}
                                 </table>
                             </div>
                             <div class='options'>
                                     <input type="submit" name="uncheck_button"
                                                          value="Uncheck">
+                                    <input type="submit" name="select_all" value="Select all">
                                     <input type="submit" name="delete_button"
                                     value='Delete'>
                             </div>
@@ -76,6 +79,10 @@
                             <div class='row'>
                             <form action method='POST' novalidate>
                                 {{ form.hidden_tag() }}
+                                {{ form.csrf_token }}
+                                {% if form.csrf_token.errors %}
+                                    <div class="warning">You have submitted an invalid CSRF token</div>
+                                {% endif %}
                                 <div class='row'>
                                     <div class='col-md-6'>
                                         <div class='row'>
