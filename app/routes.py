@@ -59,8 +59,7 @@ def details(id):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
 
-    selection = False
-
+    all_selected = False
     # Forms
     form = ActivitieForm()
     delete_form = DeleteForm()
@@ -104,10 +103,10 @@ def index():
             return redirect(url_for('index'))
 
         if request.form.get('select_all'):
-            return redirect(url_for('index', all_selected=True))
+            all_selected=True
 
     return render_template('index.html', form=form, activities=activities,
-            delete_form=delete_form, all_selected=selection)
+            delete_form=delete_form, all_selected=all_selected)
 
 @app.route('/jq', methods=['GET', 'POST'])
 def jq():

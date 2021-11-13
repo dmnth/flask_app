@@ -34,7 +34,11 @@
                                         <td><a href={{url_for('details',id=act['id']) }}>{{act['header'] }}</a></td>
                                         <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
                                         <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
-                                        <td><input type="checkbox" name={{act['id']}}></td>
+                                        {% if all_selected == True %}
+                                        <td><input type="checkbox" name={{act['id']}} checked></td>
+                                        {% else %}
+                                        <td><input type="checkbox" name={{act['id']}} ></td>
+                                        {% endif %}
                                     </tr>
                                     {% endif %}
                                     {% endfor %}
