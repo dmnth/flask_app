@@ -49,8 +49,23 @@ h2.crud-header {
     font-family: 'Bangers', cursive;
 }
 
+img.activitie {
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+    min-height: 200px;
+    width: 100%;
+    margin-bottom: 1em;
+
+}
+
 /* Classes */
 
+.row {
+    padding: 0px 0px 0px 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+}
 
 .navbar {
     padding-top: 0.3rem; 
@@ -88,14 +103,30 @@ li.nav-item.active {
     margin-bottom: 3px;
 }
 
+
 .table.container-fluid td {
     font-size: 1.3em;
+}
+
+.message-container {
+    border: 1px solid black;
+    width: 100%;
+    height: auto;
+    position: relative;
 }
 
 .content-container.nav-btns {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.content-text {
+    height: 9em;
+}
+
+.content-header-done {
+    text-decoration: line-through;
 }
 
 
@@ -139,6 +170,12 @@ li.nav-item.active {
     padding-right: 3em;
 }
 
+.text-stuff {
+    border: 1px solid black;
+    width: 100%;
+}
+
+
 
     
 /* Id's */
@@ -159,6 +196,23 @@ li.nav-item.active {
     width: 100%;
 }
 
+#btns.col-md-6 {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-left: 0px;
+    padding-right: 0px;
+    border: 1px solid black;
+}
+
+
+#btns.col-md-12 {
+    border: 0; 
+}
+
+input#delete {
+    margin-left: 0;
+}
 
 /* Landing page */
 
@@ -178,13 +232,22 @@ li.nav-item.active {
     height: auto;
 }
 
-.image-text {
-    padding-top: 0.52em;
-    padding-left: 0.5em;
-    width: 50%;
-    height: auto;
+
+.col-md-12.btns {
+    display: flex;
+    justify-content: center;
 }
 
+.main.col-md-6 {
+    display: flex;
+    justify-content: end;
+    margin-right: 2.5em;
+}
+.crud.col-md-6 {
+    display: flex;
+    justify-content: start;
+    margin-left: 2.5em;
+}
 /* activitie page */
 
 @media only screen and (max-width: 769px) {
@@ -208,12 +271,13 @@ li.nav-item.active {
 
 .col-md-6.left, .col-md-6.right {
     display: flex;
-    padding: 1.5rem 1.5rem;
     border: 1px solid black;
     width: 100%;
-    height: auto;
+    height: 17rem;
     font-family: 'Special Elite', cursive;
     font-size: 1.2rem;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .col-md-6.right {
@@ -221,7 +285,8 @@ li.nav-item.active {
 }
 
 .col-md-6.left {
-    justify-content: start;
+    justify-content: center;
+    margin-bottom: 1em;
 }
 
 .btn-menu {

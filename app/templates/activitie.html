@@ -24,73 +24,104 @@
         </div>
         <div class='second col-md-6'>
             <div class='row'>
+            {% for activitie in activities %}
                 <div class='left col-md-6'>
-                    <form action method="POST">
-                    {% if activitie.status == "done" %}
-                    <div class='content-container'>
-                            <input style="margin-left: 33rem" type='submit' name='delete' value='delete'>
-                        <p style='text-decoration: line-through;'> {{ activitie.header | upper }} </p> 
-                        <p style='text-decoration: line-through; margin-left: 5rem; margin-right: 7rem;'> {{ activitie.description[0].title() + activitie.description[1:] }} <p>
+                    <div class='image-frame' style='border: 1px solid black'>
+                        <img class='activitie' src="" alt="inser image here">
+                        <div>
+                            <form action method="POST">
+                                <input type="submit" name='picture_upload'
+                                       value="add picture">
+                            </form>
+                        </div>
                     </div>
-                    {% elif activitie.status == "not done" %}
-                    <div class='content-container'>
-                        <p> {{ activitie.header | upper }} </p> 
-                        <p> {{ activitie.description[0].title() + activitie.description[1:] }} <p>
+                        <div class='text-stuff'>
+                            <div>
+                            {% if activitie.status == "done" %}
+                            <div class='content-header-done'>
+                                <p> {{ activitie.header | upper }} </p>
+                            </div>
+                            <div class='content-text'>
+                                <p class='content-text'>
+                                {{ activitie.description[0].title() +
+                                activitie.description[1:] }}
+                                </p>
+                            </div>
+                            {% elif activitie.status == "not done" %}
+                            <div class='content-header'>
+                                <p class='conten-header-nd'> {{ activitie.header | upper }} </p>
+                            </div>
+                            <div class='content-text'>
+                                <p class='content-text'>
+                                {{ activitie.description[0].title() +
+                                activitie.description[1:] }}
+                                </p>
+                            </div>
+                            {% else %}
+                            <div class='content-container-buttons'>
+                                <p> Nothing left </p> 
+                            </div>
+                            {% endif %}
+                            <form action method="POST">
+                            <div class='row'>
+                                <div class='col-md-12 btns'>
+                                <input id='delete' type='submit' name='delete' value='delete'>
+                                <input type='submit' name='edit' value='edit'>
+                                {% if activitie.status == "not done" %}
+                                <input type='submit' name='done' value='mark as done'>
+                                {% endif %}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+                <form action method="POST">
+                <div class='button-container'>
+                    {% if activitie.status != "deleted" %}
+                    <div class='col-md-4' id='btns'>
+                        <input type='submit' name='prev-page' value='previous'>
+                    </div>
+                    <div class='col-md-4' id='btns'>
+                        <input type='submit' name='next-page' value='next'>
                     </div>
                     {% else %}
-                    <div class='content-container'>
-                        <p> Nothing left </p> 
+                    <div class='col-md-4' id='btns'>
+                        <a href='{{ url_for("index")}}'> Add more stuff </a>
                     </div>
                     {% endif %}
-                    </div>
-                    <div class='button-container'>
-                        {% if activitie.status != "deleted" %}
-                        <div class='col-md-4' id='btns'>
-                            <input type='submit' name='prev-page' value='previous'>
-                        </div>
-                        {% if activitie.status != "done" %}
-                        <div class='col-md-4' id='btns'>
-                            <input type='submit' name='done' value='mark as done'>
-                        </div>
-                        {% endif %}
-                        <div class='col-md-4' id='btns'>
-                            <input type='submit' name='next-page' value='next'>
-                        </div>
-                        {% else %}
-                        <div class='col-md-4' id='btns'>
-                            <a href='{{ url_for("index")}}'> Add more stuff </a>
-                        </div>
-                        {% endif %}
-                    </form>
-                    </div>
+                </form>
+                </div>
             </div>
             {% endif %}
             <div class='row'>
-                <div class='center col-md-6'>
-                    <br>
-                    <div class='content-container'>
-                    </div>
-                </div>
-            </div>
-            <div class='row'>
                 <div class='right col-md-6'>
-                    <div class='row'>
-                        <div class="row">
-                        <div class='col-md-6' style='text-align: left'  >
+                        <div class='main col-md-6' style='text-align: left'  >
                             <a href='{{ url_for("main")}}'> Back to MAIN </a>
                         </div>
-                        <div class='col-md-6' style='text-align: right'>
+                        <div class='crud col-md-6' style='text-align: right'>
                             <a href='{{ url_for("index")}}'> Back to CRUD </a>
-                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <br>
-            <div class='row'>
-            </div>
-        </div>
-        <div class='col-md-4'>
+            <div class='col-md-3'>
+                <h3> Display as: </h3>
+                <form action method="POST">
+                <ul>
+                    <li><input type='submit' name='list'
+                               value='Long list'></li>
+                    <li><input type='submit' name='single'
+                               value='One at a time'></li>
+                </ul>
+                <h3> Sort: </h3>
+                <ul>
+                    <li><input type='submit' name='single'
+                               value='Show not done only'></li>
+                    <li><input type='submit' name='single'
+                               value='Show done only'></li>
+                </ul>
             </div>
         </div>
     </div>

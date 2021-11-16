@@ -49,8 +49,21 @@ def details(id):
                activitie = activitie.get_next()
                return redirect(url_for('details', id=activitie.data.id, activitie=activitie.data))
 
+            if request.form.get('edit'):
+               return redirect(url_for('details', edit=True,
+                   id=activitie.data.id)) 
+
+            if request.form.get('list'):
+               return redirect(url_for('details', llist=True,
+                   id=activitie.data.id))
+
+            if request.form.get('single'):
+               return redirect(url_for('details', node=True,
+                   id=activitie.data.id))
+
     
-        return render_template('activitie.html', id=activitie.data.id, activitie=activitie.data, activities=activities)
+        return render_template('activitie.html', id=int(activitie.data.id), activitie=activitie.data, 
+            activities=activities)
 
     else:
         return render_template('activitie.html')
