@@ -61,7 +61,6 @@ def details(id):
                return redirect(url_for('details', node=True,
                    id=activitie.data.id))
 
-    
         return render_template('activitie.html', id=int(activitie.data.id), activitie=activitie.data, 
             activities=activities)
 

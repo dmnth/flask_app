@@ -1,130 +1,114 @@
 {% extends 'base.html' %}
 {% block title %} Title {% endblock %}
-{% block body %}
-<div class="container-fluid">
+    {% block cl1 %}
+        <div class='list-of-notdones'>
+            <h4> NotDone's: </h4>
+                <ul>
+                    {% for act in activities %}
+                    {% if act.id == activitie.id and act.status == "not done"%}
+                    <li><a style="text-decoration: none; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% elif act.status == "done" and act.id != activitie.id %}
+                    <li><a style="text-decoration: line-through; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% elif act.status == "done" and act.id == activitie.id %}
+                    <li><a style="text-decoration: line-through; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% elif act.status == "not done" and act.id != activitie.id %}
+                    <li><a style="text-decoration: none; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+        </div>
+    {% endblock %}
+    {% block cl2 %}
     {% if activitie %}
     <div class='row'>
-        <div class='col-md-2'>
-            <div class='list-of-notdones'>
-                <h4> NotDone's: </h4>
-                    <ul>
-                        {% for act in activities %}
-                        {% if act.id == activitie.id and act.status == "not done"%}
-                        <li><a style="text-decoration: none; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% elif act.status == "done" and act.id != activitie.id %}
-                        <li><a style="text-decoration: line-through; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% elif act.status == "done" and act.id == activitie.id %}
-                        <li><a style="text-decoration: line-through; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% elif act.status == "not done" and act.id != activitie.id %}
-                        <li><a style="text-decoration: none; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
+        <div class='left col-md-6'>
+            <div class='image-frame' style='border: 1px solid black'>
+                <img class='activitie' src="" alt="inser image here">
+                <div>
+                    <form action method="POST">
+                        <input type="submit" name='picture_upload'
+                               value="add picture">
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class='second col-md-6'>
-            <div class='row'>
-            {% for activitie in activities %}
-                <div class='left col-md-6'>
-                    <div class='image-frame' style='border: 1px solid black'>
-                        <img class='activitie' src="" alt="inser image here">
-                        <div>
-                            <form action method="POST">
-                                <input type="submit" name='picture_upload'
-                                       value="add picture">
-                            </form>
-                        </div>
+                <div class='text-stuff'>
+                    <div>
+                    {% if activitie.status == "done" %}
+                    <div class='content-header-done'>
+                        <p> {{ activitie.header | upper }} </p>
                     </div>
-                        <div class='text-stuff'>
-                            <div>
-                            {% if activitie.status == "done" %}
-                            <div class='content-header-done'>
-                                <p> {{ activitie.header | upper }} </p>
-                            </div>
-                            <div class='content-text'>
-                                <p class='content-text'>
-                                {{ activitie.description[0].title() +
-                                activitie.description[1:] }}
-                                </p>
-                            </div>
-                            {% elif activitie.status == "not done" %}
-                            <div class='content-header'>
-                                <p class='conten-header-nd'> {{ activitie.header | upper }} </p>
-                            </div>
-                            <div class='content-text'>
-                                <p class='content-text'>
-                                {{ activitie.description[0].title() +
-                                activitie.description[1:] }}
-                                </p>
-                            </div>
-                            {% else %}
-                            <div class='content-container-buttons'>
-                                <p> Nothing left </p> 
-                            </div>
-                            {% endif %}
-                            <form action method="POST">
-                            <div class='row'>
-                                <div class='col-md-12 btns'>
-                                <input id='delete' type='submit' name='delete' value='delete'>
-                                <input type='submit' name='edit' value='edit'>
-                                {% if activitie.status == "not done" %}
-                                <input type='submit' name='done' value='mark as done'>
-                                {% endif %}
-                                </div>
-                            </div>
-                        </form>
+                    <div class='content-text'>
+                        <p class='content-text'>
+                        {{ activitie.description[0].title() +
+                        activitie.description[1:] }}
+                        </p>
                     </div>
-                </div>
-                </div>
-                {% endfor %}
-                <form action method="POST">
-                <div class='button-container'>
-                    {% if activitie.status != "deleted" %}
-                    <div class='col-md-4' id='btns'>
-                        <input type='submit' name='prev-page' value='previous'>
+                    {% elif activitie.status == "not done" %}
+                    <div class='content-header'>
+                        <p class='conten-header-nd'> {{ activitie.header | upper }} </p>
                     </div>
-                    <div class='col-md-4' id='btns'>
-                        <input type='submit' name='next-page' value='next'>
+                    <div class='content-text'>
+                        <p class='content-text'>
+                        {{ activitie.description[0].title() +
+                        activitie.description[1:] }}
+                        </p>
                     </div>
                     {% else %}
-                    <div class='col-md-4' id='btns'>
-                        <a href='{{ url_for("index")}}'> Add more stuff </a>
+                    <div class='content-container-buttons'>
+                        <p> Nothing left </p> 
                     </div>
                     {% endif %}
-                </form>
-                </div>
-            </div>
-            {% endif %}
-            <div class='row'>
-                <div class='right col-md-6'>
-                        <div class='main col-md-6' style='text-align: left'  >
-                            <a href='{{ url_for("main")}}'> Back to MAIN </a>
-                        </div>
-                        <div class='crud col-md-6' style='text-align: right'>
-                            <a href='{{ url_for("index")}}'> Back to CRUD </a>
+                    <form action method="POST">
+                    <div class='row'>
+                        <div class='col-md-12 btns'>
+                        <input id='delete' type='submit' name='delete' value='delete'>
+                        <input type='submit' name='edit' value='edit'>
+                        {% if activitie.status == "not done" %}
+                        <input type='submit' name='done' value='mark as done'>
+                        {% endif %}
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class='col-md-3'>
-                <h3> Display as: </h3>
-                <form action method="POST">
-                <ul>
-                    <li><input type='submit' name='list'
-                               value='Long list'></li>
-                    <li><input type='submit' name='single'
-                               value='One at a time'></li>
-                </ul>
-                <h3> Sort: </h3>
-                <ul>
-                    <li><input type='submit' name='single'
-                               value='Show not done only'></li>
-                    <li><input type='submit' name='single'
-                               value='Show done only'></li>
-                </ul>
+                </form>
             </div>
         </div>
+        </div>
+        <form action method="POST">
+        <div class='button-container'>
+            {% if activitie.status != "deleted" %}
+            <div class='col-md-4' id='btns'>
+                <input type='submit' name='prev-page' value='previous'>
+            </div>
+            <div class='col-md-4' id='btns'>
+                <input type='submit' name='next-page' value='next'>
+            </div>
+            {% else %}
+            <div class='col-md-4' id='btns'>
+                <a href='{{ url_for("index")}}'> Add more stuff </a>
+            </div>
+            {% endif %}
+        </form>
+        </div>
     </div>
-</div>
-{% endblock %}
+    {% else %}
+    <h1> ... All out of activities </h1>
+    {% endif %}
+    {% endblock %}
+    {% block cl3 %}
+    <h3> Display as: </h3>
+    <form action method="POST">
+        <ul>
+            <li><input type='submit' name='list'
+                       value='Long list'></li>
+            <li><input type='submit' name='single'
+                       value='One at a time'></li>
+        </ul>
+        <h3> Sort: </h3>
+        <ul>
+            <li><input type='submit' name='single'
+                       value='Show not done only'></li>
+            <li><input type='submit' name='single'
+                       value='Show done only'></li>
+        </ul>
+    </form>
+    {% endblock %}
 {% block footer %} {% endblock %}

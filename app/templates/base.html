@@ -48,11 +48,51 @@
     </nav>
 </head>
 <body>
-    {% block body %}
-    {% endblock %}
+    <div class='container-fluid'>
+        <div class='row'>
+            <div class='col-md-2'>
+                {% block cl1 %}
+                {% endblock %}
+            </div>
+            <div class='second col-md-6'>
+                {% block cl2 %}
+                {% endblock %}
+            </div>
+            <div class='col-md-4'>
+                {% block cl3 %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
 </body>
 <footer>
     {% block footer %}
     {% endblock %}
 </footer>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
