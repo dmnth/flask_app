@@ -9,7 +9,6 @@ from app.queries import Node, circularList
 from datetime import datetime
 import random
 
-
 @app.route('/main', methods=['GET', 'POST'])
 def main():
     return render_template('main.html')
@@ -22,6 +21,7 @@ def details(id):
     ll.populate(Activitie)
 
     activities = Activitie.query.filter(Activitie.status!="deleted")
+    print(activities)
     activitie = ll.get_by_id(id)
 
     if activitie:
@@ -61,9 +61,9 @@ def details(id):
             if request.form.get('single'):
                return redirect(url_for('details', node=True,
                    id=activitie.data.id))
-
-        return render_template('activitie.html', id=int(activitie.data.id), activitie=activitie.data, 
-            activities=activities, llist=False)
+        else:
+            return render_template('activitie.html', id=int(activitie.data.id), activitie=activitie.data, 
+                activities=activities, llist=False)
 
     else:
         return render_template('activitie.html')

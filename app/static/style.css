@@ -67,6 +67,10 @@ img.activitie {
     margin-left: 0px;
 }
 
+.huge {
+    font-size: 20rem;
+}
+
 .navbar {
     padding-top: 0.3rem; 
     padding-bottom: 0.3rem;
