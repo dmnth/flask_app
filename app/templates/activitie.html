@@ -3,33 +3,19 @@
     {% block cl1 %}
         <div class='list-of-notdones'>
             <h4> NotDone's: </h4>
-            <ul>
-                {% if not llist %}
+                <ul>
                     {% for act in activities %}
-                        {% if act.id == activitie.id and act.status == "not done"%}
-                        <li><a style="text-decoration: none; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% elif act.status == "done" and act.id != activitie.id %}
-                        <li><a style="text-decoration: line-through; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% elif act.status == "done" and act.id == activitie.id %}
-                        <li><a style="text-decoration: line-through; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% elif act.status == "not done" and act.id != activitie.id %}
-                        <li><a style="text-decoration: none; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
-                        {% endif %}
+                    {% if act.id == activitie.id and act.status == "not done"%}
+                    <li><a style="text-decoration: none; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% elif act.status == "done" and act.id != activitie.id %}
+                    <li><a style="text-decoration: line-through; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% elif act.status == "done" and act.id == activitie.id %}
+                    <li><a style="text-decoration: line-through; color: red;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% elif act.status == "not done" and act.id != activitie.id %}
+                    <li><a style="text-decoration: none; color: blue;" href={{ url_for('details', id=act.id)}}> {{ act.header }} </a></li>
+                    {% endif %}
                     {% endfor %}
-                {% else %}
-                    {% for act in activities %}
-                        {% if act.id == activitie.id and act.status == "not done"%}
-                        <li><a style="text-decoration: none; color: red;" href='#{{act.id}}'> {{ act.header }} </a></li>
-                        {% elif act.status == "done" and act.id != activitie.id %}
-                        <li><a style="text-decoration: line-through; color: blue;" href='#{{act.id}}'> {{ act.header }} </a></li>
-                        {% elif act.status == "done" and act.id == activitie.id %}
-                        <li><a style="text-decoration: line-through; color: red;" href='#{{ act.id}}'> {{ act.header }} </a></li>
-                        {% elif act.status == "not done" and act.id != activitie.id %}
-                        <li><a style="text-decoration: none; color: blue;" href='#{{ act.id}}'> {{ act.header }} </a></li>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </ul>
+                </ul>
         </div>
     {% endblock %}
     {% block cl2 %}
@@ -38,57 +24,6 @@
             <div class='filler'>
                 <p>&nbsp</p>
             </div>
-    {% if llist %}
-    {% for act in activities %}
-        <div class='left col-md-6'>
-            <div class='image-frame' style='border: 1px solid black'>
-                <img class='activitie' src="" alt="inser image here">
-                <div>
-                    <form action method="POST">
-                        <input type="submit" name='picture_upload'
-                               value="add picture">
-                    </form>
-                </div>
-            </div>
-                <div class='text-stuff'>
-                    <div>
-                    {% if activitie.status == "done" %}
-                    <div class='content-header-done' id={{ act.id }}> 
-                        <p> {{ act.header | upper }} </p>
-                    </div>
-                    <div class='content-text'>
-                        <p class='content-text'>
-                        {{ act.description[0].title() +
-                        act.description[1:] }}
-                        </p>
-                    </div>
-                    {% elif act.status == "not done" %}
-                    <div class='content-header' id={{ act.id }}>
-                        <p class='conten-header-nd'> {{ act.header | upper }} </p>
-                    </div>
-                    <div class='content-text'>
-                        <p class='content-text'>
-                        {{ act.description[0].title() +
-                        act.description[1:] }}
-                        </p>
-                    </div>
-                    {% endif %}
-                    <form action method="POST">
-                    <div class='row'>
-                        <div class='col-md-12 btns'>
-                        <input id='delete' type='submit' name='delete' value='delete'>
-                        <input type='submit' name='edit' value='edit'>
-                        {% if activitie.status == "not done" %}
-                        <input type='submit' name='done' value='mark as done'>
-                        {% endif %}
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div>
-    {% endfor %}
-    {% else %}
         <div class='left col-md-6'>
             <div class='image-frame' style='border: 1px solid black'>
                 <img class='activitie' src="" alt="inser image here">
@@ -140,7 +75,6 @@
             </div>
         </div>
         </div>
-        {% endif %}
         <form action method="POST">
             <div class='button-container'>
                 {% if activitie.status != "deleted" %}

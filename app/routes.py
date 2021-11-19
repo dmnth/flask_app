@@ -9,6 +9,7 @@ from app.queries import Node, circularList
 from datetime import datetime
 import random
 
+
 @app.route('/main', methods=['GET', 'POST'])
 def main():
     return render_template('main.html')
@@ -21,7 +22,6 @@ def details(id):
     ll.populate(Activitie)
 
     activities = Activitie.query.filter(Activitie.status!="deleted")
-    print(activities)
     activitie = ll.get_by_id(id)
 
     if activitie:
@@ -54,19 +54,66 @@ def details(id):
                    id=activitie.data.id)) 
 
             if request.form.get('list'):
-                return render_template('activitie.html',
-                        id=int(activitie.data.id), activitie=activitie.data,
-                        activities=activities, llist=True)
+                return redirect(url_for('activities'))
 
-            if request.form.get('single'):
-               return redirect(url_for('details', node=True,
-                   id=activitie.data.id))
-        else:
-            return render_template('activitie.html', id=int(activitie.data.id), activitie=activitie.data, 
-                activities=activities, llist=False)
+
+        return render_template('activitie.html', id=int(activitie.data.id), activitie=activitie.data, 
+            activities=activities, llist=False)
 
     else:
         return render_template('activitie.html')
+
+@app.route('/activities', methods=['GET', 'POST'])
+def activities():
+    form = ActivitieForm()
+    activities = Activitie.query.filter(Activitie.status!="deleted")
+    activitie = Activitie()
+
+    header = \
+            Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
+
+    # Do stuff here
+    if header is None:
+        if form.validate_on_submit():
+            if not form.dateNotInPast():
+                form.deadline.errors.append('Time travel not allowed')
+            else:
+                activitie.date_added = form.date_added.data
+                activitie.header = form.header.data
+                activitie.deadline = form.deadline.data
+                activitie.description = form.description.data
+                activitie.status = form.status.data
+                db.session.add(activitie)
+                db.session.commit()
+                form.description.data = ''
+                return redirect(url_for('activities'))
+
+    else:
+        flash(f'<\"{form.header.data}\" is already on list somewhere> ')
+        form.header.data = ''
+
+
+    if request.method == "POST":
+
+        if request.form.get('single'):
+            activitie = Activitie.query.filter_by(status="not done").first()
+            return redirect(url_for('details', id=activitie.id, activitie=activitie)) 
+
+        if request.form.get('delete'):
+            id = request.form.get('id')
+            act = Activitie.query.get(id)
+            if act:
+                act.status = 'deleted'
+                db.session.commit()
+
+        if request.form.get('done'):
+            id = request.form.get('id')
+            act = Activitie.query.get(id)
+            if act:
+                act.status = 'done'
+                db.session.commit()
+
+    return render_template('activities_long.html', activities=activities, form=form)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])

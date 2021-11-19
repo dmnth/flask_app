@@ -1,0 +1,177 @@
+{% extends 'base.html' %}
+{% block cl1 %}
+<!-- left menu -->
+        <div class='list-of-notdones'>
+            <h4> NotDone's: </h4>
+                <ul>
+                    {% for act in activities %}
+                        {% if act.status == "not done" %}
+                        <li><a style="text-decoration: none; color: red;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% elif act.status == "done"  %}
+                        <li><a style="text-decoration: line-through; color: blue;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% elif act.status == "done" %}
+                        <li><a style="text-decoration: line-through; color: red;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% elif act.status == "not done" %}
+                        <li><a style="text-decoration: none; color: blue;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+        </div>
+{% endblock %}
+<!-- Item representation -->
+{% block cl2 %}
+{% if activities %}
+    <div class='delimeter'>
+        <p>&nbsp</p>
+    </div>
+    {% for act in activities %}
+        <div class='left col-md-6'>
+            <div class='image-frame' style='border: 1px solid black'>
+                <img class='activitie' src="" alt="inser image here">
+                <div>
+                    <form action method="POST">
+                        <input type="submit" name='picture_upload'
+                               value="add picture">
+                    </form>
+                </div>
+            </div>
+                <div class='text-stuff'>
+                    <div>
+                    {% if act.status == "done" %}
+                    <div class='content-header-done' id={{act.id}} >
+                        <p> {{ act.header | upper }} [ {{act.status}} ]</p>
+                    </div>
+                    <div class='content-text'>
+                        <p class='content-text'>
+                        {{ act.description[0].title() +
+                        act.description[1:] }}
+                        </p>
+                    </div>
+                    {% elif act.status == "not done" %}
+                    <div class='content-header' id={{act.id}} >
+                        <div class='row'>
+                            <div class='col-md-10'>
+                                <p class='conten-header-nd'> {{ act.header | upper }} <span style='margin-left: 0.5rem;'>[ {{act.status}} ]</span></p>
+                            </div>
+                            <div class='col-md-2' style='display: flex; justify-content: end; padding-top: 0.5rem;'>
+                                <i class="far fa-trash-alt" ><input type='checkbox' name={{act.id}} style="margin-left: 0.5rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='content-text'>
+                        <p class='content-text'>
+                        {{ act.description[0].title() +
+                        act.description[1:] }}
+                        </p>
+                    </div>
+                    {% else %}
+                    <div class='content-container-buttons'>
+                        <p> Nothing left </p> 
+                    </div>
+                    {% endif %}
+                    <form action method="POST">
+                    <div class='row'>
+                        <div class='col-md-12 btns'>
+                            <input type='submit' name='delete' value='delete'>
+                            <input type='submit' name='edit' value='edit'>
+                            {% if act.status == "not done" %}
+                            <input type='submit' name='done' value='mark as done'>
+                            {% endif %}
+                            <input type='hidden' name='id' value='{{act.id}}'>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+        <div class='table input container-fluid'>
+
+            <!-- Message represntation -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class='flashes'>
+                {% for message in messages %}
+                <li> {{ message }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            <!-- Message representation end -->
+
+            <div class='row'>
+            <form action method='POST' novalidate>
+                {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
+                {% if form.csrf_token.errors %}
+                    <div class="warning">You have submitted an invalid CSRF token</div>
+                {% endif %}
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <div class='row'>
+                            {{form.header.label()}}
+                            <br>
+                            {{form.header()}}
+                        </div>
+                        <div class='row'>
+                            {{ form.date_added.label()}}
+                            <br>
+                            {{ form.date_added()}}
+                        </div>
+                        <div class='row'>
+                            {{ form.deadline.label()}}
+                            <br>
+                            {{ form.deadline(value='yy/mm/dd')}}
+                            {% for error in form.deadline.errors %}
+                            <span style='color: red;'>[{{error}}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class='col-md-6'>
+                        <div class='row'>
+                            <div class='description col-md-12'>
+                            {{form.description.label()}}
+                            <br>
+                            {{form.description(rows='4',
+                            cols='30')}}
+                            {% for error in form.description.errors %}
+                            <span style='color: red;'>[{{error}}]</span>
+                            {% endfor %}
+                            </div>
+                        <div class='row'>
+                            <div class='submit col-md-12'>
+                            {{ form.submit(size=5, maxlength=5)
+                            }}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <h1> All out of stuff </h1>
+    {% endif %}
+{% endblock %}
+<!-- right menu -->
+{% block cl3 %}
+    <div class='right-menu'>
+        <form action method="POST">
+            <h3> Display as: </h3>
+            <ul>
+                <li><input type='submit' name='list'
+                           value='Long list'></li>
+                <li><input type='submit' name='single'
+                           value='One at a time'></li>
+            </ul>
+            <h3> Sort: </h3>
+            <ul>
+                <li><input type='submit' name='notDone'
+                           value='Show not done only'></li>
+                <li><input type='submit' name='done'
+                           value='Show done only'></li>
+            </ul>
+        </form>
+    </div>
+{% endblock %}
