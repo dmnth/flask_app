@@ -108,12 +108,13 @@
             </ul>
             <h3> Sort: </h3>
             <ul>
-                <li><input type='submit' name='single'
+                <li><input class='sort' type='submit' name='sort'
                            value='Show not done only'></li>
-                <li><input type='submit' name='single'
+                <li><input class='sort' type='submit' name='sort'
                            value='Show done only'></li>
             </ul>
         </form>
+    <script src="{{ url_for('static', filename='../static/js/index.js') }}" defer charset='utf-8'></script> 
     </div>
     {% endblock %}
 {% block footer %} {% endblock %}

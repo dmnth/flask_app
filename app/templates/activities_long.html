@@ -22,7 +22,71 @@
 {% block cl2 %}
 {% if activities %}
     <div class='delimeter'>
-        <p>&nbsp</p>
+        <button type="button" class="btn btn-dark">Add more</button>
+        <div class='table input container-fluid' id='add-stuff-top' hidden>
+
+            <!-- Message represntation -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class='flashes'>
+                {% for message in messages %}
+                <li> {{ message }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+            <!-- Message representation end -->
+
+            <div class='row'>
+            <form action method='POST' novalidate>
+                {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
+                {% if form.csrf_token.errors %}
+                    <div class="warning">You have submitted an invalid CSRF token</div>
+                {% endif %}
+                <div class='row'>
+                    <div class='col-md-6'>
+                        <div class='row'>
+                            {{form.header.label()}}
+                            <br>
+                            {{form.header()}}
+                        </div>
+                        <div class='row'>
+                            {{ form.date_added.label()}}
+                            <br>
+                            {{ form.date_added()}}
+                        </div>
+                        <div class='row'>
+                            {{ form.deadline.label()}}
+                            <br>
+                            {{ form.deadline(value='yy/mm/dd')}}
+                            {% for error in form.deadline.errors %}
+                            <span style='color: red;'>[{{error}}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class='col-md-6'>
+                        <div class='row'>
+                            <div class='description col-md-12'>
+                            {{form.description.label()}}
+                            <br>
+                            {{form.description(rows='4',
+                            cols='30')}}
+                            {% for error in form.description.errors %}
+                            <span style='color: red;'>[{{error}}]</span>
+                            {% endfor %}
+                            </div>
+                        <div class='row'>
+                            <div class='submit col-md-12'>
+                            {{ form.submit(size=5, maxlength=5)
+                            }}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
     {% for act in activities %}
         <div class='left col-md-6'>
@@ -85,7 +149,7 @@
         </div>
         </div>
     {% endfor %}
-        <div class='table input container-fluid'>
+        <div class='table input container-fluid' id='add-stuff'>
 
             <!-- Message represntation -->
             {% with messages = get_flashed_messages() %}
@@ -167,11 +231,12 @@
             </ul>
             <h3> Sort: </h3>
             <ul>
-                <li><input type='submit' name='notDone'
+                <li><input type='submit' name='sort'
                            value='Show not done only'></li>
-                <li><input type='submit' name='done'
+                <li><input type='submit' name='sort'
                            value='Show done only'></li>
             </ul>
         </form>
+        <script src="{{url_for('static', filename='../static/js/activities_long.js')}}"></script>
     </div>
 {% endblock %}
