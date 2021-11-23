@@ -22,7 +22,6 @@
 {% block cl2 %}
 {% if activities %}
     <div class='delimeter'>
-        <button type="button" class="btn btn-dark">Add more</button>
         <div class='table input container-fluid' id='add-stuff-top' hidden>
 
             <!-- Message represntation -->
@@ -88,8 +87,12 @@
             </form>
         </div>
     </div>
+        <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" id='somebutton'>Unfold all</button>
     {% for act in activities %}
-        <div class='left col-md-6'>
+    <div>
+        <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" id='{{act.id}}' name='button'>{{act.header[0].title() + act.header[1:].lower() }}</button>
+    </div>
+    <div class='element left col-md-6' id={{act.id}} hidden>
             <div class='image-frame' style='border: 1px solid black'>
                 <img class='activitie' src="" alt="inser image here">
                 <div>

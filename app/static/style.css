@@ -71,7 +71,7 @@ img.activitie {
     padding-top: 0.3rem; 
     padding-bottom: 0.3rem;
     width: 100%;
-    margin-bottom: 0em;
+    margin-bottom: 1.5em;
     font-family: "Lato" sans-serif;
     opacity: 0.8;
     background: black;
@@ -179,6 +179,12 @@ li.nav-item.active {
 
     
 /* Id's */
+
+#act-button{
+    width: 10rem;
+    height: auto;
+    text-align: left;
+}
 
 
 #submit-btn {
