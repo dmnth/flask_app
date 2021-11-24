@@ -34,7 +34,7 @@ class circularList():
 
     def get_by_id(self, id):
 
-        if self.head == None:
+        if self.head == None and self.tail==None:
             return
 
         current_node = self.head
@@ -56,7 +56,6 @@ class circularList():
 
     def print(self):
         current_node = self.head
-        circular_counter = 0
         while current_node:
             print(current_node.data.header)
             current_node = current_node.get_next()
@@ -68,6 +67,12 @@ class circularList():
 
 
     def delete(self, node):
+
+        if node == self.head:
+            self.head.get_next().set_prev(self.tail)
+            self.tail.set_next(self.head.get_next())
+
+
         previous = node.get_prev()
         next = node.get_next()
         next_next = node.get_next().get_next()
@@ -78,19 +83,8 @@ class circularList():
 
     def populate(self, db_model):
 
-        check = db_model.query.first()
-        if not check:
-            return
-
-        id = 1
-        item = db_model.query.get(id)
-
-        # Dont stuff list with unneeded elements
-        while item is not None:
-            if item.status != "deleted":
-                self.insert_at_end(Node(item))
-            id += 1
-            item = db_model.query.get(id)
-
+        items = db_model.query.filter(db_model.status!='deleted')
+        for item in items:
+            self.insert_at_end(Node(item))
 
 

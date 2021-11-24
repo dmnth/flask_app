@@ -18,6 +18,7 @@ def main():
 def details(id):
     
     # ll filters deleted items so you wont have to
+    # is used for left menu, because of reasons...
     ll = circularList()
     ll.populate(Activitie)
 
@@ -58,7 +59,7 @@ def details(id):
 
 
         return render_template('activitie.html', id=int(activitie.data.id), activitie=activitie.data, 
-            activities=activities, llist=False)
+            activities=activities)
 
     else:
         return render_template('activitie.html')
@@ -130,6 +131,9 @@ def index():
     header = \
             Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
 
+    # Priorities:
+    choices = ['can wait', 'not important', 'maybe tommorow']
+
     # Do stuff here
     if header is None:
         if form.validate_on_submit():
@@ -159,14 +163,18 @@ def index():
                     db.session.commit()
             return redirect(url_for('index'))
         
-        if request.form.get('uncheck_button'):
-            return redirect(url_for('index'))
-
-        if request.form.get('select_all'):
+        if request.form.get('Select'):
             all_selected=True
 
+        if request.form.get('deSelect'):
+            all_selected=False
+
+        if request.form.get('prior'):
+            print(request.form.keys())
+            print(request.form.values())
+
     return render_template('index.html', form=form, activities=activities,
-            delete_form=delete_form, all_selected=all_selected)
+            delete_form=delete_form, all_selected=all_selected, choices=choices)
 
 @app.route('/jq', methods=['GET', 'POST'])
 def jq():

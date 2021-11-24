@@ -26,6 +26,7 @@
                                         <td> header </td>
                                         <td> added </td>
                                         <td> deadline </td>
+                                        <td> priroritie </td>
                                     </tr>
                                     {% for act in activities %}
                                     {% if act.status != "deleted" %}
@@ -33,6 +34,17 @@
                                         <td><a href={{url_for('details',id=act['id']) }}>{{act['header'] }}</a></td>
                                         <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
                                         <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
+                                        <td>
+                                            <form method='POST' action>
+                                                <select name='prior' method='POST' action>
+                                                    <option value="{{choices[0]}}" selected>{{choices[0]}}</option>
+                                                    {% for choice in choices[1:] %}
+                                                        <option value="{{choice}}">{{choice}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                                <button type='submit' name='{{act.id}}'>Set</button>
+                                            </form>
+                                        </td>
                                         {% if all_selected == True %}
                                         <td><input type="checkbox" name={{act['id']}} checked></td>
                                         {% else %}
@@ -44,9 +56,11 @@
                                 </table>
                             </div>
                             <div class='options'>
-                                    <input type="submit" name="uncheck_button"
-                                                         value="Uncheck">
-                                    <input type="submit" name="select_all" value="Select all">
+                                    {% if all_selected %}
+                                    <input type="submit" name="deSelect" value="deSelect all">
+                                    {% else %}
+                                    <input type="submit" name="Select" value="Select all">
+                                    {% endif %}
                                     <input type="submit" name="delete_button"
                                     value='Delete'>
                             </div>
