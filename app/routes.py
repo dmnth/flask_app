@@ -132,7 +132,7 @@ def index():
             Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
 
     # Priorities:
-    choices = ['can wait', 'not important', 'maybe tommorow']
+    choices = ['not today', 'not important', 'maybe tommorow']
 
     # Do stuff here
     if header is None:
@@ -170,8 +170,13 @@ def index():
             all_selected=False
 
         if request.form.get('prior'):
-            print(request.form.keys())
-            print(request.form.values())
+            id = request.form.get('id')
+            act = Activitie.query.get(id)
+            prioritie = request.form.get('prior')
+            print(prioritie)
+            choices = [choice for choice in choices if choice != prioritie]
+            act.prioritie = prioritie
+            db.session.commit()
 
     return render_template('index.html', form=form, activities=activities,
             delete_form=delete_form, all_selected=all_selected, choices=choices)

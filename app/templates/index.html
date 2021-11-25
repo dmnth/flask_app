@@ -38,13 +38,14 @@
                                         <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
                                         <td>
                                             <form method='POST' action>
-                                                <select name='prior' method='POST' action>
-                                                    <option value="{{choices[0]}}" selected>{{choices[0]}}</option>
-                                                    {% for choice in choices[1:] %}
+                                                <select name='prior' method='POST' action style='width: 11.5rem'>
+                                                    <option value={{act.prioritie}} selected>{{act.prioritie}}</option>
+                                                    {% for choice in choices %}
                                                         <option value="{{choice}}">{{choice}}</option>
                                                     {% endfor %}
                                                 </select>
-                                                <button type='submit' name='{{act.id}}'>Set</button>
+                                                <button type='submit'>Set</button>
+                                                <input type='hidden' name='id' value='{{act.id}}'>
                                             </form>
                                         </td>
                                         {% if all_selected == True %}
