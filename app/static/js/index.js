@@ -1,41 +1,28 @@
 #! /usr/bin/env nodejs
 
-var numberOfIters = document.querySelectorAll('.sort').length;
+// Callback function allows to wait until something happens and respond to it
 
-for (var i = 0; i<2; i++) {
+document.addEventListener('keypress', function(event) { console.log(event) } )
 
-    document.querySelectorAll('.sort')[i].addEventListener('click', function () {
-        this.style.color='red';
-        this.style.background='green';
-    });
+var tableToggleButton = document.getElementById('table-toggle')
+var inputFields = document.getElementById('input-table')
+
+var addMoreButton = document.getElementById('add-more')
+var tableNotDones = document.getElementById('notdones')
+
+function hideNotDones () {
+    tableNotDones.classList.toggle('show')
 }
 
-var gateKeeper = {
-    age: 'unknown',
-    name: 'Banglasheumns',
-    circle: 'gluttony',
-    souls: 1299938,
-    hobby: 'kittens',
+function showInputTable () {
+    if (inputFields.style.display === 'none') {
+        inputFields.style.display = 'flex'
+    } else {
+        inputFields.style.display = 'none'
+    }
 }
 
-/* Constructor function - names has to be capitalized */
-
-function delegateSouls () {
-    alert('12 souls have been delegeted to inner circle')
-}
-
-function GateKeeper(age, name, circle, souls, hobby) {
-    this.age = age;
-    this.name = name;
-    this.circle = circle;
-    this.souls = souls;
-    this.hobby = hobby;
-    this.punish = function () {alert('punishments in progress')}
-    this.delegateSouls = delegateSouls
-}
-
-/* Object initialization */
-
-var gateKeeper2 = new GateKeeper('over9000', 'Fraudenius', 'blashphemy', 99322130, 'jogging');
+addMoreButton.addEventListener('click', showInputTable) 
+tableToggleButton.addEventListener('click', hideNotDones)
 
 

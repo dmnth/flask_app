@@ -90,9 +90,9 @@
         <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" id='somebutton'>Unfold all</button>
     {% for act in activities %}
     <div>
-        <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" id='{{act.id}}' name='button'>{{act.header[0].title() + act.header[1:].lower() }}</button>
+        <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" name='button'>{{act.header[0].title() + act.header[1:].lower() }}</button>
     </div>
-    <div class='element left col-md-6' id={{act.id}} hidden>
+    <div class='element left col-md-6' id={{act.id}}>
             <div class='image-frame' style='border: 1px solid black'>
                 <img class='activitie' src="" alt="inser image here">
                 <div>

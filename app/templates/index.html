@@ -9,10 +9,11 @@
 
                         <!--Delimeter-->
                         <div class='delimeter-text'>
+                            <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" id='table-toggle'>Hide table</button>
                             {% if activities %}
-                            <h2 class='crud-header'>Observe own misery: </h2>
+                            <h2 class='crud-header'>Observe the not done: </h2>
                             {% else %}
-                            <h2 class='crud-header'> Are you lost? Or maybe in doubt? </h2>
+                            <h2 class='crud-header'> Are you lost? </h2>
                             {% endif %}
                         </div>
                         <div class='delimeter-line'>
@@ -20,7 +21,7 @@
                         <!--Delimeter end-->
                         {% if activities %}
                         <form action method="POST">
-                            <div class='table container-fluid'>
+                            <div class='table container-fluid' id='notdones'>
                                 <table style='width: 100%'>
                                     <tr>
                                         <td> header </td>
@@ -56,6 +57,7 @@
                                 </table>
                             </div>
                             <div class='options'>
+                                    <input type='button' name='add_button' id='add-more' value='Add more'>
                                     {% if all_selected %}
                                     <input type="submit" name="deSelect" value="deSelect all">
                                     {% else %}
@@ -68,18 +70,9 @@
                         {% endif %}
 
                         <!---Delimeter-->
-                        <div class='delimeter-text'>
-                            {% if not activities %}
-                            <h2 class='crud-header'> Get in touch with the One Above All: </h2>
-                            {% else %}
-                            <h2 class='crud-header'> Add more? </h2>
-                        </div>
-                            {% endif %}
-                        <div class='delimeter-line'>
-                        </div>
                         <!---Delimeter end-->
 
-                        <div class='table input container-fluid'>
+                        <div class='table input container-fluid' style='margin-top: 1.5rem; display: none;' id='input-table'>
 
                             <!-- Message represntation -->
                             {% with messages = get_flashed_messages() %}
@@ -151,4 +144,5 @@
 <div class='footer-info'>
     content
 </div>
+<script src="{{url_for('static', filename='../static/js/index.js')}}"></script>
 {% endblock %}
