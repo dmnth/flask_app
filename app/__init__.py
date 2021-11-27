@@ -10,5 +10,8 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-from app import forms, routes, models
+#from app.main import main as main_blueprint
+#app.register_blueprint(main_blueprint)
+
+from app.main import forms, routes, models
 
