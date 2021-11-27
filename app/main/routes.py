@@ -127,13 +127,13 @@ def index():
     delete_form = DeleteForm()
 
     # Db entities
-    activities = Activitie.query.all()
+    activities = Activitie.query.filter(Activitie.status != 'deleted')
     activitie = Activitie()
     header = \
             Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
 
     # Priorities:
-    choices = ['not today', 'not important', 'maybe tommorow']
+    choices = ['not_today', 'not_important', 'maybe_tommorow']
 
     # Do stuff here
     if header is None:
@@ -173,14 +173,18 @@ def index():
         if request.form.get('prior'):
             id = request.form.get('id')
             act = Activitie.query.get(id)
-            prioritie = request.form.get('prior')
-            print(prioritie)
-            choices = [choice for choice in choices if choice != prioritie]
-            act.prioritie = prioritie
+            new_prioritie = request.form.get('prior')
+            idx = choices.index(new_prioritie)
+            temp = choices[0]
+            choices[0] = choices[idx]
+            choices[idx] = temp
+            print(choices)
+            act.prioritie = new_prioritie 
             db.session.commit()
 
     return render_template('index.html', form=form, activities=activities,
-            delete_form=delete_form, all_selected=all_selected, choices=choices)
+            delete_form=delete_form, all_selected=all_selected,
+            choices=choices)
 
 @app.route('/jq', methods=['GET', 'POST'])
 def jq():

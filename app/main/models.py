@@ -13,7 +13,7 @@ class Activitie(db.Model):
     header = db.Column(db.String(24), index=True, nullable=False)
     date_added = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     deadline = db.Column(db.DateTime, index=True)
-    prioritie = db.Column(db.String(128), index=True, default='can wait')
+    prioritie = db.Column(db.String(128), index=True, default='maybe tommorow')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
 
