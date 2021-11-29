@@ -22,8 +22,12 @@
     <script src="{{ url_for('static', filename='../static/jquery/jquery-3.6.0.min.js') }}"></script>
     <!-- endjQuery -->
     <title>{% block title %}Not Done's{% endblock %}</title>
+    {% block script %}
+    {% endblock %}
+</head>
+<body>
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" hr ef="#">
+        <a class="navbar-brand" href="#">
         </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -34,10 +38,10 @@
               <h1 class='neonText'> Not d<span class='header_text'>o</span>ne </h1>
           </li>
           <li class="nav-item active">
-              <a href={{ url_for('main') }}><h3 class='header' style='margin-left: 1rem; margin-top: 1.5rem;'>MAIN</h3></a>
+              <a href="{{ url_for('main') }}"><h3 class='header' style='margin-left: 1rem; margin-top: 1.5rem;'>MAIN</h3></a>
           </li>
           <li class="nav-item">
-              <a href={{ url_for('index') }}><h3 class='crud' style='margin-left: 1rem; margin-top: 1.5rem;'>CRUD</h3></a>
+              <a href="{{ url_for('index') }}"><h3 class='crud' style='margin-left: 1rem; margin-top: 1.5rem;'>CRUD</h3></a>
           </li>
           <li class="nav-item">
           </li>
@@ -46,8 +50,6 @@
         </ul>
       </div>
     </nav>
-</head>
-<body>
     <div class='container-fluid'>
         <div class='row'>
             <div class='col-md-2'>

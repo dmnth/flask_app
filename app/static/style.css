@@ -8,6 +8,26 @@
 
 /* Tags */
 
+.text-stuff {
+    color: palegreen;
+    background: red;
+}
+
+.important-quote {
+    color: purple;
+}
+
+.quote {
+    color: red;
+}
+
+.dicks {
+    color: brown;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 
 body {
     overflow-X: hidden;

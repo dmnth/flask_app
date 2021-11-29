@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href='{{url_for("static", filename="style.css")}}' >
+    <script src="{{ url_for('static', filename='../static/jquery/jquery-3.6.0.min.js') }}"></script>
+    <script>
+        function changeColor() {
+        $('span.text-stuff').each(function() {
+                    var quote = $(this).clone();
+                    quote.removeClass('text-stuff')
+                    quote.addClass('dicks');
+                    $(this).removeClass('text-stuff');
+                    $(this).addClass('quote');
+                    quote.before('text-stuff')
+                }); //end each
+                }
+
+        $(document).ready(function() {
+                    $('#presser').click(changeColor)
+                }); // end ready
+    </script>
+    <title></title>
+</head>
+<body>
+    <button type='button' id='presser'>Press me</button>
+    <div class='wrapper'>
+        <table>
+            <tr>
+        <div class='text-stuff'>
+        </div>
+        <p class='quote'>
+        KINDLUSTUSLEPINGU JÕUSTUMINE
+        Kindlustusleping on sõlmitud kindlustusmakse laekumisele järgnevast
+        päevast, kindlustusleping jõustub kindlustusperioodi
+        alguskuupäeval. <span class='text-stuff'>Kindlustuskaitse kehtib poliisil nimetatud
+        kindlustusperioodi jooksul.</span> Kindlustuskaitse kehtib poliisil nimetatud
+        kindlustusperioodi jooksul. Kui kindlustusteenuse osutamine
+        kindlustusvõtjale või kindlustatud isikule või soodustatud isikule on
+        vastuolus või muutub vastuolus olevaks Ameerika Ühendriikide poolt
+        kehtestatud piirangute, keeldude või sanktsioonidega, ei
+        kehti kindlustuskaitse alates päevast, mil eelnimetatud piiranguid, keelde
+        või sanktsioone kohaldatakse eelpool nimetatud isikute
+        suhtes.
+        </p>
+        <p>
+        <span class='dicks'>
+        </span>
+        </p>
+        <br>
+            </tr>
+            <tr>
+        <div>
+        </div>
+        <p class='quote'>
+        KINDLUSTUSLEPINGU KEHTIVUSAEG
+        Kindlustusleping on tähtajaline. Kindlustusleping kehtib poliisil nimetatud
+        kindlustusperioodi jooksul. <span class='text-stuff'>Kindlustusandja ja
+        kindlustusvõtja vahel ei ole sõlmitud automaatselt pikenevat
+        kindlustuslepingut.</span>
+        Kindlustusleping uueneb igaks järgmiseks perioodiks juhul, kui
+        kindlustusandja väljastab uue pakkumuse ning kindlustusvõtja
+        tasub kindlustusmakse.
+        </p>
+        <br>
+            </tr>
+            <tr>
+        <div>
+        </div>
+        <p class='quote'>
+        KINDLUSTUSLEPINGUST TAGANEMINE
+        Kui kindlustusleping on sõlmitud sidevahendi (arvuti, telefon) abil ja
+        pikemaks perioodiks kui 1 kuu, on tarbijal õigus taganeda
+        kindlustuslepingust 14 päeva jooksul peale kindlustuslepingu sõlmimist.
+        <span class='text-stuff'>Taganemise kohta tuleb esitada kirjalikku taasesitamist
+        võimaldavas vormis avaldus, millel on näidatud tasutud kindlustusmakse
+        tagasisaaja nimi ja arvelduskonto number.</span> Kui
+        kindlustuskaitse algas taganemistähtaja jooksul, tagastab kindlustusandja
+        tasutud kindlustusmakse osas, mis vastab ajale, kui
+        kindlustusleping ei kehtinud.
+        </p>
+        <br>
+            </tr>
+        </table>
+</body>
+</html>

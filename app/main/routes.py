@@ -194,6 +194,10 @@ def jq():
 def buttons():
     return render_template('button.html')
 
+@app.route('/text', methods=['GET', 'POST'])
+def text():
+    return render_template('text.html')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
