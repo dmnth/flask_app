@@ -28,7 +28,7 @@ class DeleteForm(FlaskForm):
     submit = SubmitField()
 
 class LoginForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired()])
+    username = StringField('username')
     email = StringField('email', validators=[DataRequired()], widget=EmailInput())
     password = StringField('password', validators=[InputRequired()], widget=PasswordInput(hide_value=True))
     remember_me = BooleanField(default=False, widget=CheckboxInput())

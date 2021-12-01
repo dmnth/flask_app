@@ -4,13 +4,19 @@ from app.main import main
 from .. import db
 from flask import render_template, url_for, redirect, session, flash, request, \
         abort
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user, login_required
 from app.main.forms import ActivitieForm, DeleteForm, LoginForm
 from app.main.models import Activitie, User
 from app.main.queries import Node, circularList 
+from werkzeug.urls import url_parse
 from datetime import datetime
 import random
 
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -18,12 +24,19 @@ def login():
         return redirect(url_for('index'))
     form=LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(name=form.username.data).first()
-        if user is None or not user.check_password_hash(form.password.data):
+        print("#########################################################")
+        user = User.query.filter_by(email=form.email.data).first()
+        print(user)
+        if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember = form.remember_me.data)
-        return redirect(url_for('index'))
+        next_page = request.args.get('next')
+        print(next_page)
+#       network location <scheme>://<netloc>/<path>;<params>?<query>#<fragment>
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
     return render_template('login.html', form=form)
 
 @app.route('/main', methods=['GET', 'POST'])
@@ -134,6 +147,7 @@ def activities():
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
+@login_required
 def index():
 
     all_selected = False
