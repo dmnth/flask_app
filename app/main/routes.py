@@ -4,12 +4,27 @@ from app.main import main
 from .. import db
 from flask import render_template, url_for, redirect, session, flash, request, \
         abort
-from app.main.forms import ActivitieForm, DeleteForm
-from app.main.models import Activitie
+from flask_login import current_user, login_user
+from app.main.forms import ActivitieForm, DeleteForm, LoginForm
+from app.main.models import Activitie, User
 from app.main.queries import Node, circularList 
 from datetime import datetime
 import random
 
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form=LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(name=form.username.data).first()
+        if user is None or not user.check_password_hash(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember = form.remember_me.data)
+        return redirect(url_for('index'))
+    return render_template('login.html', form=form)
 
 @app.route('/main', methods=['GET', 'POST'])
 def main():

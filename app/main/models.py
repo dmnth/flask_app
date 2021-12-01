@@ -2,6 +2,15 @@
 
 from app import db
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import UserMixin
+from app import login
+
+# Fetches id for flask-login
+
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 class Activitie(db.Model):
 
@@ -17,15 +26,17 @@ class Activitie(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
 
-class User(db.Model):
+class User(UserMixin, db.Model):
 
     __tablename__ = 'users'
 
+    # Nullable in some column is set to True for testing puprposes
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), index=True, nullable=False)
-    info = db.Column(db.String(255), index=True, nullable=False)
-    email = db.Column(db.String(120), index=True, nullable=False)
-    hashed_password = db.Column(db.String(255), index=True, nullable=False)
+    info = db.Column(db.String(255), index=True, nullable=True)
+    email = db.Column(db.String(120), index=True, nullable=True)
+    hashed_password = db.Column(db.String(255), index=True, nullable=True)
     # foreign_keys argument is needed for multiple FK --> single PK
     users = db.relationship('Follower', backref='user', lazy='dynamic', \
             foreign_keys='Follower.user_id')
@@ -36,6 +47,12 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<Person {self.name}>"
+
+    def set_password(self, password):
+        self.hashed_password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.hashed_password, password)
 
 class Follower(db.Model):
 
