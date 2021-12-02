@@ -33,10 +33,10 @@ class User(UserMixin, db.Model):
     # Nullable in some column is set to True for testing puprposes
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), index=True, nullable=False)
-    info = db.Column(db.String(255), index=True, nullable=True)
-    email = db.Column(db.String(120), index=True, nullable=True)
-    hashed_password = db.Column(db.String(255), index=True, nullable=True)
+    name = db.Column(db.String(120), index=True)
+    info = db.Column(db.String(255), index=True )
+    email = db.Column(db.String(120), index=True )
+    hashed_password = db.Column(db.String(255), index=True)
     # foreign_keys argument is needed for multiple FK --> single PK
     users = db.relationship('Follower', backref='user', lazy='dynamic', \
             foreign_keys='Follower.user_id')
