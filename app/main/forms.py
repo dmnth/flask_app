@@ -7,6 +7,7 @@ from wtforms.validators import DataRequired, InputRequired, EqualTo
 from datetime import datetime
 from wtforms.widgets import PasswordInput, CheckboxInput
 from wtforms.widgets.html5 import EmailInput
+from app.main.models import User
 
 class ActivitieForm(FlaskForm):
     description = TextAreaField('description', validators=[DataRequired()])
@@ -35,11 +36,18 @@ class LoginForm(FlaskForm):
     submit = SubmitField()
 
 class RegisterForm(FlaskForm):
-    username = StringField('username', validators=[DataRequired()])
+    first_name = StringField('first_name', validators=[DataRequired()])
+    last_name = StringField('last_name', validators=[DataRequired()])
     email = StringField('email', validators=[DataRequired()], widget=EmailInput())
-    password = StringField('password', validators=[InputRequired(), EqualTo('confirm', message='Passwords must match')], widget=PasswordInput(hide_value=True))
-    confirm = StringField('Re-enter pasword')
+    password = StringField('password', validators=[InputRequired()], widget=PasswordInput(hide_value=True))
+    confirm = StringField('Re-enter pasword', validators=[EqualTo('password', message='Passwords must match')], widget=PasswordInput(hide_value=True))
     submit = SubmitField()
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address')
+
 
 
 

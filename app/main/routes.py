@@ -5,8 +5,8 @@ from .. import db
 from flask import render_template, url_for, redirect, session, flash, request, \
         abort
 from flask_login import current_user, login_user, logout_user, login_required
-from app.main.forms import ActivitieForm, DeleteForm, LoginForm
-from app.main.models import Activitie, User
+from app.main.forms import ActivitieForm, DeleteForm, LoginForm, RegisterForm
+from app.main.models import Activitie, User 
 from app.main.queries import Node, circularList 
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -24,20 +24,33 @@ def login():
         return redirect(url_for('index'))
     form=LoginForm()
     if form.validate_on_submit():
-        print("#########################################################")
         user = User.query.filter_by(email=form.email.data).first()
-        print(user)
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user, remember = form.remember_me.data)
         next_page = request.args.get('next')
-        print(next_page)
 #       network location <scheme>://<netloc>/<path>;<params>?<query>#<fragment>
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
     return render_template('login.html', form=form)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data,
+                email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congrats you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
+
 
 @app.route('/main', methods=['GET', 'POST'])
 def main():
@@ -175,6 +188,7 @@ def index():
                 activitie.deadline = form.deadline.data
                 activitie.description = form.description.data
                 activitie.status = form.status.data
+                activitie.user_id = current_user.id
                 db.session.add(activitie)
                 db.session.commit()
                 form.description.data = ''
