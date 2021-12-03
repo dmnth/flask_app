@@ -64,6 +64,10 @@ tr.user-table.header {
     font-size: 1.2em;
     text-align: center;
 }
+tr.user-table:nth-child(even){
+    background-color: #ece602;
+    border: 1px solid #f2eac5;
+}
 
 td {
     font-size: 1.5em;
@@ -443,8 +447,9 @@ input#delete {
 .btn {
     background-color: #cc6b49;
     border: none;
-    color: white;
+    color: #ece6c2;
     padding: 10px 32px;
+    font-family: 'Gloria Hallelujah', cursive;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -455,8 +460,8 @@ input#delete {
 }
 
 .btn:hover {
-    background-color: #e03c30;
-    color: white;
+    background-color: #6f5643;
+    color: #981d26;
 }
 
 @keyframes star {
