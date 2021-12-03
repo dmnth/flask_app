@@ -14,7 +14,7 @@
                         <div class='delimeter-text'>
                             <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" id='table-toggle'>Hide table</button>
                             {% if activities %}
-                            <h2 class='crud-header'>Observe the not done: </h2>
+                            <h2 class='crud-header'>{{ current_user.first_name}}, observe all the things you havent done: </h2>
                             {% else %}
                             <h2 class='crud-header'> Are you lost? </h2>
                             <input type='button' name='add_button' id='add-more' value='Add more'>

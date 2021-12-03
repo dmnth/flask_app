@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %} {{ current_user.first_name }}'s page {% endblock %} 
+{% block cl1 %}
+<h4> Other users: </h4>
+{% for user in users %}
+{% if user.first_name != username %}
+<div style='width: 100%'>
+    <table style='font-size: 0.5rem; width: 100%;'>
+        <tr>
+            <td style='margin-bottom: 0px;'>
+                <h5> <a href="{{ url_for('user_page', username=user.first_name )}}">{{ user.first_name}}</a> </h5> 
+            </td>
+            <td style='padding-bottom: 0px;'>
+                <h5> Online </h5> 
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p style='font-size: 0.7em;'>last seen: 12.12.1975</p> 
+            </td>
+        </tr>
+    </table>
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock %}
+{% block cl2 %}
+<div style='padding-left: 5rem;'>
+    <div style='width: 100%; height: auto; border-radius: 10px; background-color: #e5a632; box-shadow: 5px 10px #f2eac5; border: 1px solid #f2eac5; '>
+    <table>
+        <tr>
+            <td style='font-size: 1rem'>
+                <img style='width: 130px; height: 130px; border: 1px solid black; border-radius: 50%; margin-left: 10px;'>
+                </img>
+            </td>
+            <td style='font-size: 1rem; width: 70%; vertical-align: top;'>
+                <div style='padding-left: 1.5rem'>
+                    <p> text </p>
+                </div>
+            </td>
+            <td style='font-size: 1rem; width: 30%; vertical-align: middle; padding-left: 15px; padding-right: 15px; display: inline-block'>
+                    <button class='btn' style='margin-top: 3.6px;'> Button </button>
+                    <button class='btn'> Button </button>
+                    <button class='btn' style='margin-bottom: 1.6px;'> Button </button>
+            </td>
+        </tr>
+    </table>
+    </div>
+</div>
+{% endblock %}
+{% block cl3 %}
+{% endblock %}

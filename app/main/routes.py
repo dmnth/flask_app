@@ -56,6 +56,15 @@ def register():
 def main():
     return render_template('main.html')
 
+@app.route('/users/<string:username>')
+@login_required
+def user_page(username):
+    users = User.query.all()
+    user = User.query.filter_by(first_name=username).first_or_404()
+    if user is not None:
+        username = user.first_name
+        return render_template('user_page.html', username=username, users=users)
+
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):
     

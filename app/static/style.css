@@ -31,6 +31,8 @@
 
 body {
     overflow-X: hidden;
+    background-color: #d2a24c;
+    color: #6f5643;
 }
 
 a {
@@ -427,7 +429,27 @@ input#delete {
     opacity: 0;
     transition: all 0.1s linear;
     border-radius: 100%;
+
 } 
+.btn {
+    background-color: #cc6b49;
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom: 0.1em;
+    margin-top: 0.5em;
+    transition-duration: 0.4s;
+}
+
+.btn:hover {
+    background-color: #e03c30;
+    color: white;
+}
+
 @keyframes star {
   0% {
     margin-left: -8px;
