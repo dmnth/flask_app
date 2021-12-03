@@ -9,6 +9,8 @@ from flask_login import LoginManager
 app = Flask(__name__)
 app.config.from_object(Config)
 login = LoginManager(app)
+# endpoint of function that handles login's
+login.login_view='login'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 

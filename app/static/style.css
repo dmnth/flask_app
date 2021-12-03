@@ -31,7 +31,7 @@
 
 body {
     overflow-X: hidden;
-    background-color: #d2a24c;
+    background-color: #73bda8;
     color: #6f5643;
 }
 
@@ -55,9 +55,18 @@ input[type=submit], input[type=button] {
     width: 10rem;
 
 }
+tr.user-table {
+    font-size: 0.6em;
+    text-align: left;
+}
+
+tr.user-table.header {
+    font-size: 1.2em;
+    text-align: center;
+}
 
 td {
-    font-size: 3.2em;
+    font-size: 1.5em;
     font-family: 'Indie Flower', cursive;
 }
 
