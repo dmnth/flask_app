@@ -3,7 +3,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField, DateTimeField, \
 TextAreaField
-from wtforms.validators import DataRequired, InputRequired, EqualTo
+from wtforms.validators import ValidationError, DataRequired, InputRequired, EqualTo
 from datetime import datetime
 from wtforms.widgets import PasswordInput, CheckboxInput
 from wtforms.widgets.html5 import EmailInput
