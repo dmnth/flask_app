@@ -61,10 +61,10 @@ def main():
 def user_page(username):
     users = User.query.all()
     user = User.query.filter_by(first_name=username).first_or_404()
-    activities = Activitie.query.filter_by(user_id = current_user.id).all()
+    activities = Activitie.query.filter_by(user_id = user.id).all()
     if user is not None:
         username = user.first_name
-        return render_template('user_page.html', username=username, users=users, activities=activities)
+        return render_template('user_page.html', user=user, username=username, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):
