@@ -4,15 +4,15 @@
 .box{
         float:left;
         overflow: hidden;
-        background: #f0e68c;
+        background: #d2a24c;
         display: none;
+        width: 75%
     }
     /* Add padding and border to inner content
     for better animation effect */
     .box-inner{
-        width: 400px;
+        width: 100%;
         padding: 10px;
-        border: 1px solid #a29415;
         height: 100px;
     }
 

@@ -1,45 +1,21 @@
 #! /usr/bin/env nodejs
 
+/* Makes selected item toggle slide down animation
+ * hides visible elements if present
+ */
+
 $(document).ready(function() {
     $('.slide-toggle').click(function(event) {
-        var clicked = $(this)
-        var id = clicked.attr('id')
-        $(`#${id}.box`).animate({ height: "toggle" })
-    });
-});
-
-
-
-
-
-/*
-$(document).ready(function(){
-    var clicked = $(this)
-    console.log(clicked)
-    $('.slide-toggle').each(function() {
-        $(this).click( function(){
-            if ($(this) == clicked)
-            $('.box').each(function() {
-                $(this).animate({ height: "toggle"})
-            });
+        var button = $(this)
+        var id = button.attr('id')
+        var input = $(`#${id}.box`)
+        $('.box').each(function() {
+            if ($(this).attr('id') != id && $(this).css('display') != 'none') {
+                var this_id = $(this).attr('id')
+                $(`#${this_id}.box`).animate({height: "toggle"})
+            }
         });
+        input.animate({ height: "toggle" }, 1000)
     });
-});
-*/
-/*
-$(document).ready(function(){
-  $(".slide-toggle-1").click(function(){
-    $("#1").animate({
-      height: "toggle"
-    });
-  });
 });
 
-$(document).ready(function(){
-  $(".slide-toggle-2").click(function(){
-    $("#2").animate({
-      height: "toggle"
-    });
-  });
-});
-*/

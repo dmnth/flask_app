@@ -64,7 +64,7 @@ def register():
 def main():
     return render_template('main.html')
 
-@app.route('/users/<string:username>',methods=['POST'])
+@app.route('/users/<string:username>',methods=['GET', 'POST'])
 @login_required
 def user_page(username):
     users = User.query.all()
