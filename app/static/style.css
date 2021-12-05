@@ -5,6 +5,7 @@
         float:left;
         overflow: hidden;
         background: #f0e68c;
+        display: none;
     }
     /* Add padding and border to inner content
     for better animation effect */
@@ -83,7 +84,6 @@ tr.user-table:nth-child(even){
 }
 
 
-
 td:first-child, th:first-child {
     border-radius: 10px 0 0 10px;
 }
@@ -128,10 +128,14 @@ img.activitie {
     border-radius: 10px;
     background-color: #d2a24c;
     box-shadow: 5px 10px #f2eac5;
-    border: 1px solid #f2eac5;
     overflow-X: auto;
     padding-left: 0.1em;
     padding-right: 0.1em;
+    margin-top: 1em;
+}
+
+.assigments-table.user {
+    box-shadow: 0 0;
 }
 
 .assigments-table table{
@@ -523,9 +527,6 @@ input#delete {
     color: #981d26;
 }
 
-.btn.user-btn {
-    margin-left: 10px;
-}
 
 
 

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} {{ current_user.first_name }}'s page {% endblock %} 
+{% block title %} {{ user.first_name }}'s page {% endblock %} 
 {% block cl1 %}
 <h4> Other users: </h4>
 {% for user in users %}
@@ -16,7 +16,7 @@
         </tr>
         <tr>
             <td>
-                <p style='font-size: 0.7em;'>last seen: 12.12.1975</p> 
+                <p style='font-size: 1.2em;'>{{ user.last_seen}} </p> 
             </td>
         </tr>
     </table>
@@ -26,41 +26,82 @@
 
 {% endblock %}
 {% block cl2 %}
-<div style='padding-left: 5rem;'>
-    <div style='width: 100%; height: auto; border-radius: 10px; background-color: #d2a24c; box-shadow: 5px 10px #f2eac5; border: 1px solid #f2eac5; margin-bottom: 3rem;'>
+<div>
+    <div style='width: 100%; height: auto; border-radius: 10px; background-color: #d2a24c; box-shadow: 5px 10px #f2eac5; border: 1px solid #f2eac5; margin-bottom: 3rem; padding-right: 10px; padding-left: 10px; padding-bottom: 10px; padding-top: 10px;'>
     <table>
         <tr>
             <td style='font-size: 1rem; vertical-align: top;'>
-                <img src="{{ user.avatar(130) }}" style='margin-top: 10px; width: 130px; height: 130px; border: 1px solid black; border-radius: 50%; margin-left: 10px;'>
+                <img src="{{ user.avatar(130) }}" style='width: 130px; height: 130px; border: 1px solid black; border-radius: 50%; '>
                 </img>
-                <button class='btn user-btn slide-toggle'> CHANGE PROFILE</button>
-            </td>
             <td style='font-size: 1rem; width: 70%; vertical-align: top;'>
                 <div style='padding-left: 1.5rem'>
                     <p> Hi, im {{ username }}</p>
                     {% if current_user.first_name == username %}
-                    <div class='user-info' style='width: 100%; height: 4rem'>
                         <p> I am currently logged in </p>
-                    </div>
-                    {% if current_user.first_name == username %}
-                        {% include 'sliders.html' %}
                     {% endif %}
-                    {% endif %}
+                    <p> Role: {{ user.role }} </p>
+                    <p> About: {{ user.info }} </p>
+                    <p> Last seen: {{user.last_seen }} </p>
                 </div>
             </td>
             <td style='font-size: 1rem; width: 30%; vertical-align: middle; padding-left: 15px; padding-right: 15px; display: inline-block'>
-                    <button class='btn' style='margin-top: 3.6px;'> HATE </button>
-                    <button class='btn'> UNFOLLOW</button>
-                    <button class='btn' style='margin-bottom: 1.6px'>THREATEN</button>
+                <div class='buttons' style='position: relative'>
+                    <form action method="POST">
+                    <table>
+                        <tr>
+                            <td>
+                        <button class='btn' style='margin-top: 3.6px;'> HATE </button>
+                        <button class='btn'> UNFOLLOW</button>
+                        <button class='btn' style='margin-bottom: 1.6px'>THREATEN</button>
+                            </td>
+                        </tr>
+                    </table>
+                    <form>
+                </div>
+            </td>
             </td>
         </tr>
     </table>
+                {% if current_user.first_name == username %}
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                    <button type='button' id=0 class='btn user-btn slide-toggle'> ADD INFO</button>
+                            </td>
+                            <td>
+                    <button type='button' id=1 class='btn user-btn slide-toggle'> CHANGE ROLE</button>
+                            </td>
+                            <td>
+                    <button type='button' id=2 class='btn user-btn slide-toggle'> CHANGE USERNAME </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class='box' id='0'>
+                    <div class='box-inner'>
+                        <input type='text' style='width: 100%; height: 5em; background-color: #f2eac5; border-radius: 10px;'>
+                    </div>
+                </div>
+                <div class='box' id='1'>
+                    <div class='box-inner'>
+                        <input type='text' style='width: 100%; height: 5em; background-color: #f2eac5; border-radius: 10px;'>
+                    </div>
+                </div>
+                <div class='box' id='2'>
+                    <div class='box-inner'>
+                        <input type='text' style='width: 100%; height: 5em; background-color: #f2eac5; border-radius: 10px;'>
+                    </div>
+                </div>
+                {% endif %}
+    {% include '_assigments-user.html' %}
+    <button class='btn user-btn slide-toggle'> ADD INFO</button>
+    <button type='button'> text </button>
     <div>
     </div>
     </div>
 </div>
 <script src="{{url_for('static', filename='js/jsquery_functions.js' )}}"></script>
-{% include '_assigments-user.html' %}
 {% endblock %}
 {% block cl3 %}
 {% endblock %}
