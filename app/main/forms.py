@@ -1,11 +1,10 @@
 #! /usr/bin/env python3
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField, DateTimeField, \
-TextAreaField
+from wtforms import StringField, SubmitField, BooleanField, DateTimeField, TextAreaField
 from wtforms.validators import ValidationError, DataRequired, InputRequired, EqualTo
 from datetime import datetime
-from wtforms.widgets import PasswordInput, CheckboxInput
+from wtforms.widgets import PasswordInput, CheckboxInput, TextArea
 from wtforms.widgets.html5 import EmailInput
 from app.main.models import User
 
@@ -48,8 +47,11 @@ class RegisterForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address')
 
-
-
+class EditProfileForm(FlaskForm):
+    info = StringField('about')
+    role = StringField('role')
+    username = StringField('username')
+    submit = SubmitField()
 
 
 

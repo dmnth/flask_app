@@ -5,7 +5,7 @@ from .. import db
 from flask import render_template, url_for, redirect, session, flash, request, \
         abort
 from flask_login import current_user, login_user, logout_user, login_required
-from app.main.forms import ActivitieForm, DeleteForm, LoginForm, RegisterForm
+from app.main.forms import ActivitieForm, DeleteForm, LoginForm, RegisterForm, EditProfileForm 
 from app.main.models import Activitie, User 
 from app.main.queries import Node, circularList 
 from werkzeug.urls import url_parse
@@ -13,12 +13,20 @@ from datetime import datetime
 import random
 
 
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        time_now = datetime.utcnow()
+        last_seen = time_now.strftime('%m/%d/%Y, %H:%M')
+        current_user.last_seen = last_seen 
+        db.session.commit()
+
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -56,15 +64,16 @@ def register():
 def main():
     return render_template('main.html')
 
-@app.route('/users/<string:username>')
+@app.route('/users/<string:username>',methods=['POST'])
 @login_required
 def user_page(username):
     users = User.query.all()
     user = User.query.filter_by(first_name=username).first_or_404()
     activities = Activitie.query.filter_by(user_id = user.id).all()
+    form = EditProfileForm()
     if user is not None:
         username = user.first_name
-        return render_template('user_page.html', user=user, username=username, users=users, activities=activities)
+        return render_template('user_page.html', form=form, user=user, username=username, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):
