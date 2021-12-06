@@ -3,18 +3,51 @@
 /* sliding box */
 .box{
         float:left;
-        overflow: hidden;
+        overflow-Y: scroll;
+        overflow-X: hidden;
         background: #d2a24c;
         display: none;
-        width: 75%
+        width: 100%
     }
     /* Add padding and border to inner content
     for better animation effect */
     .box-inner{
         width: 100%;
         padding: 10px;
-        height: 100px;
+        height: auto;
     }
+
+.box-input-form.username {
+    height: auto;
+    background-color: #f2eac5;
+    border-radius: 10px;
+    padding: 3px;
+    width: 30%;
+    font-family: 'Bangers', cursive;
+    font-size: 1.1em;
+}
+
+.box-input-form.about {
+    height: auto;
+    background-color: #f2eac5;
+    border-radius: 10px;
+    padding: 3px;
+    width: 80%;
+    font-family: 'Bangers', cursive;
+    font-size: 1.1em;
+}
+
+
+.box-input-form.role {
+    height: auto;
+    background-color: #f2eac5;
+    border-radius: 10px;
+    padding: 3px;
+    width: 30%;
+    font-family: 'Bangers', cursive;
+    font-size: 1.1em;
+    overflow: hidden;
+}
 
 /* Media queries */
 
@@ -96,6 +129,7 @@ td {
     font-size: 1.5em;
     font-family: 'Indie Flower', cursive;
 }
+
 
 h2.main-header {
     text-align: center;
@@ -527,6 +561,10 @@ input#delete {
     color: #981d26;
 }
 
+.btn.role {
+    margin-top: 0px;
+    padding: 5px;
+}
 
 
 

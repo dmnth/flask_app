@@ -6,7 +6,7 @@ from flask import render_template, url_for, redirect, session, flash, request, \
         abort
 from flask_login import current_user, login_user, logout_user, login_required
 from app.main.forms import ActivitieForm, DeleteForm, LoginForm, RegisterForm, EditProfileForm 
-from app.main.models import Activitie, User 
+from app.main.models import Activitie, User, Role 
 from app.main.queries import Node, circularList 
 from werkzeug.urls import url_parse
 from datetime import datetime
@@ -26,7 +26,7 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('index'))
@@ -71,6 +71,24 @@ def user_page(username):
     user = User.query.filter_by(first_name=username).first_or_404()
     activities = Activitie.query.filter_by(user_id = user.id).all()
     form = EditProfileForm()
+    print('print statements: ')
+    if request.method == "POST":
+        if form.info.data and form.info.data != user.info:
+            # Remove default value from form
+            user.info = form.info.data
+            db.session.commit()
+
+        if form.role.data and form.role.data != user.role:
+            role_id = form.role.data
+            user.role_id = role_id 
+            db.session.commit()
+
+
+        if form.username.data and form.username.data != username:
+            user.first_name = form.username.data
+            db.session.commit()
+            return redirect(url_for('user_page', username=user.first_name))
+
     if user is not None:
         username = user.first_name
         return render_template('user_page.html', form=form, user=user, username=username, users=users, activities=activities)

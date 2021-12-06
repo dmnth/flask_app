@@ -75,7 +75,11 @@ class Role(db.Model):
     __tablename__ = 'roles'
 
     id = db.Column(db.Integer, primary_key=True)
-    role_name = db.relationship('User', backref='role', lazy='dynamic')
+    name = db.Column(db.String(120))
+    user_name = db.relationship('User', backref='role', lazy='dynamic')
+
+    def __repr__(self):
+        return f"<{self.name}>"
 
 class Item(db.Model):
 
