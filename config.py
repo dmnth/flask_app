@@ -10,3 +10,22 @@ class Config(object):
             'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+class DevelopmentConfig(Config):
+    DEBUG = True
+    MAIL_SERVER = 'smtp.googlemail.com'
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+            'sqlite:///' + os.path.join(basedir, 'data-dev.db')
+
+class TestingConfig(Config):
+    TESTING = True
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DEV_DATABASE_URL') or \
+            'sqlite:///' + os.path.join(basedir, 'data-test.db')
+
+config = {
+        'development' : DevelopmentConfig,
+        'testing' : TestingConfig,
+        'default' : DevelopmentConfig,
+        }
+
+
+
