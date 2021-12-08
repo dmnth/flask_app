@@ -49,7 +49,7 @@ class RegisterForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     choices = [(1, 'front-end'), (2, 'back-end'), (3, 'normal')]
-    info = TextAreaField('about', default='Write about yourself')
+    info = TextAreaField('about')
     role = SelectField('about',choices=choices)
     username = StringField('username')
     submit = SubmitField()
