@@ -34,6 +34,7 @@ class User(UserMixin, db.Model):
     # Nullable in some column is set to True for testing puprposes
 
     id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(124), index=True)
     first_name = db.Column(db.String(124), index=True)
     last_name = db.Column(db.String(124), index=True)
     info = db.Column(db.String(255), index=True )

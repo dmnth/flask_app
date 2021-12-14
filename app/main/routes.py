@@ -64,34 +64,37 @@ def register():
 def main():
     return render_template('main.html')
 
-@app.route('/users/<string:username>',methods=['GET', 'POST'])
+@app.route('/users/<string:user_id>',methods=['GET', 'POST'])
 @login_required
-def user_page(username):
+def user_page(user_id):
     users = User.query.all()
-    user = User.query.filter_by(first_name=username).first_or_404()
+    user = User.query.filter_by(id=int(user_id)).first_or_404()
     activities = Activitie.query.filter_by(user_id = user.id).all()
     form = EditProfileForm()
+    print(user)
     print('print statements: ')
     if request.method == "POST":
-        if form.info.data and form.info.data != user.info:
+        if form.info.data != user.info:
             # Remove default value from form
             user.info = form.info.data
             db.session.commit()
 
-        if form.role.data and form.role.data != user.role:
+        if form.role.data != user.role:
             role_id = form.role.data
             user.role_id = role_id 
             db.session.commit()
 
 
-        if form.username.data and form.username.data != username:
-            user.first_name = form.username.data
+        if form.username.data != user.username:
+            user.username = form.username.data
             db.session.commit()
-            return redirect(url_for('user_page', username=user.first_name))
+            return redirect(url_for('user_page', user_id=user.id))
+
 
     if user is not None:
         username = user.first_name
-        return render_template('user_page.html', form=form, user=user, username=username, users=users, activities=activities)
+        email = user.email
+        return render_template('user_page.html', user_id=user.id, form=form, user=user, email=email, username=username, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):

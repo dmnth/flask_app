@@ -3,12 +3,12 @@
 {% block cl1 %}
 <h4> Other users: </h4>
 {% for user in users %}
-{% if user.first_name != current_user.first_name %}
+{% if user.id != current_user.id %}
 <div style='width: 100%'>
     <table style='font-size: 0.5rem; width: 100%;'>
         <tr>
             <td style='margin-bottom: 0px;'>
-                <h5> <a href="{{ url_for('user_page', username=user.first_name )}}">{{ user.first_name}}</a> </h5> 
+                <h5> <a href="{{ url_for('user_page', user_id=user.id )}}">{{ user.first_name}}</a> </h5> 
             </td>
             <td style='padding-bottom: 0px;'>
                 <h5> Online </h5> 
@@ -36,11 +36,12 @@
             <td style='font-size: 1rem; width: 70%; vertical-align: top;'>
                 <div style='padding-left: 1.5rem'>
                     <p> Hi, im {{ username }}</p>
-                    {% if current_user.first_name == username %}
+                    {% if current_user.id == user.id %}
                         <p> I am currently logged in </p>
                     {% endif %}
                     <p> Role: {{ user.role }} </p>
                     <p> About: {{ user.info }} </p>
+                    <p> Email: {{ user.email }} </p>
                     <p> Last seen: {{user.last_seen }} </p>
                 </div>
             </td>
@@ -62,7 +63,7 @@
             </td>
         </tr>
     </table>
-                {% if current_user.first_name == username %}
+                {% if current_user.id == user_id %}
                 <div>
                     <table>
                         <tr>
