@@ -39,9 +39,9 @@
                     {% if current_user.id == user.id %}
                         <p> I am currently logged in </p>
                     {% endif %}
-                    <p> Role: {{ user.role }} </p>
-                    <p> About: {{ user.info }} </p>
-                    <p> Email: {{ user.email }} </p>
+                    <p> Role: {{ role }} </p>
+                    <p> About: {{ info }} </p>
+                    <p> Email: {{ email }} </p>
                     <p> Last seen: {{user.last_seen }} </p>
                 </div>
             </td>
@@ -76,6 +76,9 @@
                             <td>
                     <button type='button' id=2 class='btn user-btn slide-toggle'> CHANGE USERNAME </button>
                             </td>
+                            <td>
+                    <button type='button' id=3 class='btn user-btn slide-toggle'> CHANGE EMAIL </button>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -103,6 +106,12 @@
                     <div class='box-inner'>
                         {{ form.username(class='box-input-form username', value=username) }}
                         {{ form.submit(class='btn role', id='username') }}
+                    </div>
+                </div>
+                <div class='box' id=3>
+                    <div class='box-inner'>
+                        {{ form.email(class='box-input-form username', value=user.email) }}
+                        {{ form.submit(class='btn role', id='email') }}
                     </div>
                 </div>
                 </form>

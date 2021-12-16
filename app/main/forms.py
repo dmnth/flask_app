@@ -52,6 +52,7 @@ class EditProfileForm(FlaskForm):
     info = TextAreaField('about')
     role = SelectField('about',choices=choices)
     username = StringField('username')
+    email = StringField('email', widget=EmailInput())
     submit = SubmitField()
 
 

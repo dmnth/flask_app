@@ -74,27 +74,28 @@ def user_page(user_id):
     print(user)
     print('print statements: ')
     if request.method == "POST":
+
         if form.info.data != user.info:
-            # Remove default value from form
             user.info = form.info.data
-            db.session.commit()
 
         if form.role.data != user.role:
             role_id = form.role.data
             user.role_id = role_id 
-            db.session.commit()
-
 
         if form.username.data != user.username:
             user.username = form.username.data
-            db.session.commit()
-            return redirect(url_for('user_page', user_id=user.id))
 
+        if form.email.data != user.email:
+            user.email = form.email.data
+
+        db.session.commit()
 
     if user is not None:
-        username = user.first_name
+        username = user.username
         email = user.email
-        return render_template('user_page.html', user_id=user.id, form=form, user=user, email=email, username=username, users=users, activities=activities)
+        role_id = user.role_id
+        info = user.info
+        return render_template('user_page.html', user_id=user.id, form=form, user=user, email=email, username=username, info=info, role_id=role_id, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):

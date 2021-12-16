@@ -12,7 +12,7 @@
         {% for act in activities %}
         <tr class='user-table'>
             <td class='header'> {{ act.header }} </td>
-            <td><a href='{{url_for("user_page", username=act.user)}}'><strong>{{act.user}}<strong></a></td>
+            <td><a href='{{url_for("user_page", user_id=act.id)}}'><strong>{{act.user}}<strong></a></td>
             <td> {{ act.date_added.year}}/{{act.date_added.month }}/{{act.date_added.day}} </td>
             <td> {{ act.deadline.year }}/{{act.deadline.month}}/{{act.deadline.day}} </td>
             <td> {{ act.prioritie }} </td>
