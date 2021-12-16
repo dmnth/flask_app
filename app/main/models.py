@@ -8,6 +8,7 @@ from app import login
 from hashlib import md5
 
 # Fetches id for flask-login
+# added this comment
 
 @login.user_loader
 def load_user(id):
