@@ -93,9 +93,9 @@ def user_page(user_id):
     if user is not None:
         username = user.username
         email = user.email
-        role_id = user.role_id
+        role = user.role
         info = user.info
-        return render_template('user_page.html', user_id=user.id, form=form, user=user, email=email, username=username, info=info, role_id=role_id, users=users, activities=activities)
+        return render_template('user_page.html', user_id=user.id, form=form, user=user, email=email, username=username, info=info, role=role, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):
