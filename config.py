@@ -32,7 +32,7 @@ class TestingConfig(Config):
 config = {
         'development' : DevelopmentConfig,
         'testing' : TestingConfig,
-        'default' : DevelopmentConfig,
+        'default' : Config,
         }
 
 
