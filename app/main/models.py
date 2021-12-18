@@ -48,7 +48,7 @@ class User(UserMixin, db.Model):
     followers = db.relationship('Follower', backref='follower', lazy='dynamic', foreign_keys='Follower.follower_id')
     activities = db.relationship('Activitie', backref='user', lazy='dynamic')
     items = db.relationship('Item', backref='user', lazy='dynamic')
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default='<normal person>')
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
 
     def __repr__(self):
         return f"{self.first_name}"

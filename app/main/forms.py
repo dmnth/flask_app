@@ -55,15 +55,18 @@ class EditProfileForm(FlaskForm):
     email = StringField('email', widget=EmailInput())
     submit = SubmitField()
 
+    # Initialization
+    def __init__(self, current_email, *args, **kwargs):
+        super(EditProfileForm, self).__init__(*args, **kwargs)
+        self.current_email = current_email
 
+    # Validation of current email
 
-
-
-
-
-
-
-
-
-
+    def email_validation(self, email):
+        if email.data != self.current_email:
+            this_email = User.query.filter_by(email=self.email.data).first()
+            print(this_email)
+            if this_email is not None:
+                print('################################# DICKS ################################')
+                raise ValidationError('This email is already registered')
 

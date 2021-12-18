@@ -68,34 +68,32 @@ def main():
 @login_required
 def user_page(user_id):
     users = User.query.all()
-    user = User.query.filter_by(id=int(user_id)).first_or_404()
-    activities = Activitie.query.filter_by(user_id = user.id).all()
-    form = EditProfileForm()
-    print(user)
-    print('print statements: ')
-    if request.method == "POST":
+    activities = Activitie.query.filter_by(user_id = current_user.id).all()
+    form = EditProfileForm(current_user.email)
+    print('PRINT STATEMENTS DEBUGGING HERE HALP')
+    print(form.current_email)
+    if form.validate() and request.method == "POST":
 
-        if form.info.data != user.info:
-            user.info = form.info.data
+        if form.info.data != current_user.info:
+            current_user.info = form.info.data
 
-        if form.role.data != user.role:
+        if form.role.data != current_user.role:
             role_id = form.role.data
-            user.role_id = role_id 
+            current_user.role_id = role_id 
 
-        if form.username.data != user.username:
-            user.username = form.username.data
+        if form.username.data != current_user.username:
+            current_user.username = form.username.data
 
-        if form.email.data != user.email:
-            user.email = form.email.data
+        form.email_validation(form.email)
+        current_user.email = form.email.data
 
         db.session.commit()
 
-    if user is not None:
-        username = user.username
-        email = user.email
-        role = user.role
-        info = user.info
-        return render_template('user_page.html', user_id=user.id, form=form, user=user, email=email, username=username, info=info, role=role, users=users, activities=activities)
+    username = current_user.username
+    email = current_user.email
+    role = current_user.role
+    info = current_user.info
+    return render_template('user_page.html', user_id=current_user.id, form=form, user=current_user, email=email, username=username, info=info, role=role, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):
