@@ -113,6 +113,9 @@
                         {{ form.email(class='box-input-form username', value=user.email) }}
                         {{ form.submit(class='btn role', id='email') }}
                     </div>
+                    {% for error in form.username.errors %}
+                    <div class='alert'> This is error </div>
+                    {% endfor %}
                 </div>
                 </form>
                 {% endif %}

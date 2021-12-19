@@ -69,7 +69,8 @@ def main():
 def user_page(user_id):
     users = User.query.all()
     activities = Activitie.query.filter_by(user_id = current_user.id).all()
-    form = EditProfileForm(current_user.email)
+    form = EditProfileForm(current_user.email, current_user.username)
+    viewed_user = User.query.filter_by(id=user_id).first_or_404()
     print('PRINT STATEMENTS DEBUGGING HERE HALP')
     print(form.current_email)
     if form.validate() and request.method == "POST":
@@ -81,19 +82,31 @@ def user_page(user_id):
             role_id = form.role.data
             current_user.role_id = role_id 
 
-        if form.username.data != current_user.username:
-            current_user.username = form.username.data
+#       So this and next if-statments form validations are concurrent
+#
+#        if form.username.data != current_user.username:
+#            form.username_validation(form.username)
+#            if form.username.errors:
+#                for error in form.username.errors:
+#                    print(error)
+#            current_user.username = form.username.data
 
-        form.email_validation(form.email)
-        current_user.email = form.email.data
-
+        if form.email.data != current_user.email:
+            form.email_validation(form.email)
+            if form.email.errors:
+                for error in form.email.errors:
+                    print(error)
+            current_user.email = form.email.data
+    
         db.session.commit()
 
-    username = current_user.username
-    email = current_user.email
-    role = current_user.role
-    info = current_user.info
-    return render_template('user_page.html', user_id=current_user.id, form=form, user=current_user, email=email, username=username, info=info, role=role, users=users, activities=activities)
+    print(current_user.username)
+    if viewed_user is not None:
+        username = viewed_user.username
+        email = viewed_user.email
+        role = viewed_user.role
+        info = viewed_user.info
+        return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):

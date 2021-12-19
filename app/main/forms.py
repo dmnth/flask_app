@@ -56,17 +56,25 @@ class EditProfileForm(FlaskForm):
     submit = SubmitField()
 
     # Initialization
-    def __init__(self, current_email, *args, **kwargs):
+    def __init__(self, current_email, current_username, *args, **kwargs):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.current_email = current_email
+        self.current_username = current_username
 
     # Validation of current email
 
     def email_validation(self, email):
         if email.data != self.current_email:
             this_email = User.query.filter_by(email=self.email.data).first()
-            print(this_email)
             if this_email is not None:
-                print('################################# DICKS ################################')
+                self.email.errors.append('This email is already registered')
                 raise ValidationError('This email is already registered')
+            
+    def username_validation(self, username):
+        if username.data != self.current_username:
+            this_user = User.query.filter_by(username=self.username.data).first()
+            if this_user is not None:
+                self.username.errors.append('This username is already taken')
+                raise ValidationError('This username is already taken')
+
 
