@@ -27,6 +27,10 @@ class Activitie(db.Model):
     prioritie = db.Column(db.String(128), index=True, default='maybe tommorow')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
+followers = db.Table('followers',
+        db.Column('follower_id', db.Integer, db.ForeignKey('users.id')),
+        db.Column('followed_id', db.Integer, db.ForeignKey('users.id'))
+        )
 
 class User(UserMixin, db.Model):
 
@@ -42,13 +46,14 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True )
     last_seen = db.Column(db.String(120), index=True )
     hashed_password = db.Column(db.String(255), index=True)
-    # foreign_keys argument is needed for multiple FK --> single PK
-    users = db.relationship('Follower', backref='user', lazy='dynamic', \
-            foreign_keys='Follower.user_id')
-    followers = db.relationship('Follower', backref='follower', lazy='dynamic', foreign_keys='Follower.follower_id')
     activities = db.relationship('Activitie', backref='user', lazy='dynamic')
     items = db.relationship('Item', backref='user', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
+    #many-to-many
+    followed = db.relationship('User', secondary=followers,
+            primaryjoin=(followers.c.follower_id == id),
+            secondaryjoin=(followers.c.followed_id == id),
+            backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
     def __repr__(self):
         return f"{self.first_name}"
@@ -61,15 +66,19 @@ class User(UserMixin, db.Model):
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(digest, size)
+        return 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(digest, sizoe)
 
-class Follower(db.Model):
+    def follow(self, user):
+        if not self.is_following(user):
+            self.followed.append(user)
 
-    __tablename__ = 'followers'
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.followed.remove(user)
 
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    def is_following(self, user):
+        return self.followed.filter(followers.c.followed_id == user_id).count() > 0
+
 
 
 class Role(db.Model):
