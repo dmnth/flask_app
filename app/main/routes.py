@@ -83,24 +83,28 @@ def user_page(user_id):
             current_user.role_id = role_id 
 
 #       So this and next if-statments form validations are concurrent
-#
-#        if form.username.data != current_user.username:
-#            form.username_validation(form.username)
-#            if form.username.errors:
-#                for error in form.username.errors:
-#                    print(error)
-#            current_user.username = form.username.data
+
+        if form.username.data != current_user.username:
+            form.username_validation(form.username)
+            if form.username.errors:
+                for error in form.username.errors:
+                    print(error)
+            else:
+                current_user.username = form.username.data
 
         if form.email.data != current_user.email:
             form.email_validation(form.email)
             if form.email.errors:
                 for error in form.email.errors:
                     print(error)
-            current_user.email = form.email.data
+            else:
+                current_user.email = form.email.data
     
         db.session.commit()
 
     print(current_user.username)
+    print(current_user.role)
+    print(current_user.role_id)
     if viewed_user is not None:
         username = viewed_user.username
         email = viewed_user.email

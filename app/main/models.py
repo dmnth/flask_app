@@ -14,6 +14,11 @@ from hashlib import md5
 def load_user(id):
     return User.query.get(int(id))
 
+tasks = db.Table('tasks', 
+        db.Column('task_id', db.Integer, db.ForeignKey('activities.id')),
+        db.Column('user_id', db.Integer, db.ForeignKey('users.id'))
+        )
+
 class Activitie(db.Model):
 
     __tablename__ = 'activities'
@@ -27,6 +32,7 @@ class Activitie(db.Model):
     prioritie = db.Column(db.String(128), index=True, default='maybe tommorow')
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     
+# Self-referent many-to-many entitie
 followers = db.Table('followers',
         db.Column('follower_id', db.Integer, db.ForeignKey('users.id')),
         db.Column('followed_id', db.Integer, db.ForeignKey('users.id'))
@@ -35,8 +41,6 @@ followers = db.Table('followers',
 class User(UserMixin, db.Model):
 
     __tablename__ = 'users'
-
-    # Nullable in some column is set to True for testing puprposes
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(124), index=True, unique=True)
@@ -55,6 +59,11 @@ class User(UserMixin, db.Model):
             secondaryjoin=(followers.c.followed_id == id),
             backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
+    active_tasks = db.relationship('Activitie', secondary=tasks,
+            primaryjoin=(tasks.c.task_id == id),
+            secondaryjoin=(tasks.c.user_id == id),
+            backref = db.backref('users', lazy='dynamic'), lazy='dynamic')
+
     def __repr__(self):
         return f"{self.first_name}"
 
@@ -66,7 +75,7 @@ class User(UserMixin, db.Model):
 
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(digest, sizoe)
+        return 'https://www.gravatar.com/avatar/{}?d=retro&s={}'.format(digest, size)
 
     def follow(self, user):
         if not self.is_following(user):
