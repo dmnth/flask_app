@@ -8,6 +8,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from app.main.forms import ActivitieForm, DeleteForm, LoginForm, RegisterForm, EditProfileForm 
 from app.main.models import Activitie, User, Role 
 from app.main.queries import Node, circularList 
+from app.main.create_roles import create_roles
 from werkzeug.urls import url_parse
 from datetime import datetime
 import random
@@ -71,35 +72,51 @@ def user_page(user_id):
     activities = Activitie.query.filter_by(user_id = current_user.id).all()
     form = EditProfileForm(current_user.email, current_user.username)
     viewed_user = User.query.filter_by(id=user_id).first_or_404()
+    role = Role.query.first()
+    if not role:
+        create_roles()
+
     print('PRINT STATEMENTS DEBUGGING HERE HALP')
     print(form.current_email)
-    if form.validate() and request.method == "POST":
 
-        if form.info.data != current_user.info:
-            current_user.info = form.info.data
 
-        if form.role.data != current_user.role:
-            role_id = form.role.data
-            current_user.role_id = role_id 
+    if request.method == "POST":
+        user = User.query.filter_by(id = user_id).first()
+
+        if 'follow' in request.form:
+            print('dicks')
+            current_user.follow(user)
+
+        if 'unfollow' in request.form:
+            current_user.unfollow(user)
+
+        if form.validate():
+
+            if form.info.data != current_user.info:
+                current_user.info = form.info.data
+
+            if form.role.data != current_user.role:
+                role_id = form.role.data
+                current_user.role_id = role_id 
 
 #       So this and next if-statments form validations are concurrent
 
-        if form.username.data != current_user.username:
-            form.username_validation(form.username)
-            if form.username.errors:
-                for error in form.username.errors:
-                    print(error)
-            else:
-                current_user.username = form.username.data
+            if form.username.data != current_user.username:
+                form.username_validation(form.username)
+                if form.username.errors:
+                    for error in form.username.errors:
+                        print(error)
+                else:
+                    current_user.username = form.username.data
 
-        if form.email.data != current_user.email:
-            form.email_validation(form.email)
-            if form.email.errors:
-                for error in form.email.errors:
-                    print(error)
-            else:
-                current_user.email = form.email.data
-    
+            if form.email.data != current_user.email:
+                form.email_validation(form.email)
+                if form.email.errors:
+                    for error in form.email.errors:
+                        print(error)
+                else:
+                    current_user.email = form.email.data
+
         db.session.commit()
 
     print(current_user.username)
@@ -285,18 +302,3 @@ def index():
             delete_form=delete_form, all_selected=all_selected,
             choices=choices)
 
-@app.route('/jq', methods=['GET', 'POST'])
-def jq():
-    return render_template('jq.html')
-
-@app.route('/button_test', methods=['GET', 'POST'])
-def buttons():
-    return render_template('button.html')
-
-@app.route('/text', methods=['GET', 'POST'])
-def text():
-    return render_template('text.html')
-
-@app.errorhandler(404)
-def page_not_found(e):
-    return render_template('404.html'), 404

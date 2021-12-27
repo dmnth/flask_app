@@ -31,7 +31,7 @@
     <table>
         <tr>
             <td style='font-size: 1rem; vertical-align: top;'>
-                <img src="{{ user.avatar(130) }}" style='width: 130px; height: 130px; border: 1px solid black; border-radius: 50%; '>
+                <img class='user-avatar' src="{{ user.avatar(130) }}" >
                 </img>
             <td style='font-size: 1rem; width: 70%; vertical-align: top;'>
                 <div style='padding-left: 1.5rem'>
@@ -47,17 +47,22 @@
             </td>
             <td style='font-size: 1rem; width: 30%; vertical-align: middle; padding-left: 15px; padding-right: 15px; display: inline-block'>
                 <div class='buttons' style='position: relative'>
-                    <form action method="POST">
+                    <form action='' method="POST">
                     <table>
                         <tr>
                             <td>
-                        <button class='btn' style='margin-top: 3.6px;'> HATE </button>
-                        <button class='btn'> UNFOLLOW</button>
-                        <button class='btn' style='margin-bottom: 1.6px'>THREATEN</button>
+                                {% if current_user.id != user_id %}
+                                    {% if current_user.is_following(user) == True %}
+                                        <button class='btn' name='unfollow' style='margin-top: 3.6px;'> UNFOLLOW </button>
+                                    {% else %} 
+                                        <button class='btn' name='follow' > FOLLOW</button>
+                                    {% endif %}
+                                <button class='btn' style='margin-bottom: 1.6px'>THREATEN</button>
+                                {% endif %}
                             </td>
                         </tr>
                     </table>
-                    <form>
+                    </form>
                 </div>
             </td>
             </td>
@@ -82,7 +87,7 @@
                         </tr>
                     </table>
                 </div>
-                <form action method="">
+                <form action='' method="POST">
                 <div class='box' id=0>
                     {{ form.hidden_tag() }}
                     {{ form.csrf_token() }}
@@ -127,4 +132,25 @@
 <script src="{{url_for('static', filename='js/jsquery_functions.js' )}}"></script>
 {% endblock %}
 {% block cl3 %}
+<h3> Followers: </h3>
+<div class='follower-list'>
+    <ol>
+        {% for follower in user.followers.all() %}
+        <li><img class='user-avatar' src="{{ follower.avatar(30) }}"</img><a href="{{ url_for('user_page', user_id=follower.id) }}"> {{ follower.username}} </a></li>
+        {% endfor %}
+    </ol>
+</div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

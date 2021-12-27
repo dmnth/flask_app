@@ -49,6 +49,21 @@
     overflow: hidden;
 }
 
+.follower-list {
+    display: flex;
+    justify-content: left;
+}
+
+.follower-list ol {
+    list-style-type: none;
+    font-family: 'Indie Flower', cursive;
+    font-size: 1.5rem;
+}
+
+img.user-avatar {
+    border-radius: 50%;
+}
+
 /* Media queries */
 
 @media only screen and (max-width: 1200px) {

@@ -69,6 +69,7 @@ class EditProfileForm(FlaskForm):
             if this_email is not None:
                 self.email.errors.append('This email is already registered')
                 raise ValidationError('This email is already registered')
+
             
     def username_validation(self, username):
         if username.data != self.current_username:
