@@ -69,25 +69,22 @@ def main():
 @login_required
 def user_page(user_id):
     users = User.query.all()
-    activities = Activitie.query.filter_by(user_id = current_user.id).all()
     form = EditProfileForm(current_user.email, current_user.username)
     viewed_user = User.query.filter_by(id=user_id).first_or_404()
+    activities = Activitie.query.filter_by(user_id = viewed_user.id).all()
     role = Role.query.first()
     if not role:
         create_roles()
 
-    print('PRINT STATEMENTS DEBUGGING HERE HALP')
-    print(form.current_email)
-
-
     if request.method == "POST":
         user = User.query.filter_by(id = user_id).first()
-
-        if 'follow' in request.form:
-            print('dicks')
+        print('POST')
+        print(request.form.get('follow'))
+        # .get method works with input type only?
+        if 'follow' in request.form: 
             current_user.follow(user)
 
-        if 'unfollow' in request.form:
+        if 'unfollow' in request.form: 
             current_user.unfollow(user)
 
         if form.validate():
@@ -119,15 +116,12 @@ def user_page(user_id):
 
         db.session.commit()
 
-    print(current_user.username)
-    print(current_user.role)
-    print(current_user.role_id)
-    if viewed_user is not None:
-        username = viewed_user.username
-        email = viewed_user.email
-        role = viewed_user.role
-        info = viewed_user.info
-        return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities)
+    username = viewed_user.username
+    email = viewed_user.email
+    role = viewed_user.role
+    info = viewed_user.info
+
+    return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities)
 
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
 def details(id):

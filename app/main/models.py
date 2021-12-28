@@ -53,12 +53,15 @@ class User(UserMixin, db.Model):
     activities = db.relationship('Activitie', backref='user', lazy='dynamic')
     items = db.relationship('Item', backref='user', lazy='dynamic')
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), default=3)
+    team_id = db.Column(db.Integer, db.ForeignKey('teams.id'), default=None)
     #many-to-many
+    # User can have many followers, and can be a follower for many users
     followed = db.relationship('User', secondary=followers,
             primaryjoin=(followers.c.follower_id == id),
             secondaryjoin=(followers.c.followed_id == id),
             backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
 
+    # Assign multiple users on one task, user can have multiple unfinished tasks at once 
     active_tasks = db.relationship('Activitie', secondary=tasks,
             primaryjoin=(tasks.c.task_id == id),
             secondaryjoin=(tasks.c.user_id == id),
@@ -87,6 +90,15 @@ class User(UserMixin, db.Model):
 
     def is_following(self, user):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
+
+# One team can have one person from many departments - front-end, back-end, management
+class Team(db.Model):
+    
+    __tablename__ = 'teams'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(125), index=True)
+    members = db.relationship('User', backref='team', lazy='dynamic')
 
 
 

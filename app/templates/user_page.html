@@ -135,7 +135,7 @@
 <h3> Followers: </h3>
 <div class='follower-list'>
     <ol>
-        {% for follower in user.followers.all() %}
+        {% for follower in user.followed.all() %}
         <li><img class='user-avatar' src="{{ follower.avatar(30) }}"</img><a href="{{ url_for('user_page', user_id=follower.id) }}"> {{ follower.username}} </a></li>
         {% endfor %}
     </ol>
