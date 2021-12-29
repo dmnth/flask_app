@@ -91,6 +91,19 @@ class User(UserMixin, db.Model):
     def is_following(self, user):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
+    def get_followed_activities(self):
+        followed_activities = Activitie.query.join(followers, (followers.c.followed_id == Activitie.user_id))\
+                .filter_by(Activitie.user_id == self.id).order_by(Activitie.date_added.desc())
+        return followed_activities
+
+    def get_own_activities(self):
+        own_activities = Activitie.query.filter_by(Activitie.user_id == self.id)
+        return own_activities
+
+    def get_followed_own_activities(self):
+        return self.get_followed_own_activities().union(self.get_own_activities).order_by(Activitie.date_added.desc()) 
+
+
 # One team can have one person from many departments - front-end, back-end, management
 class Team(db.Model):
     
