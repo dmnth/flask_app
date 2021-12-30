@@ -24,9 +24,9 @@ class Activitie(db.Model):
     __tablename__ = 'activities'
 
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.Text(255), index=True, nullable=False)
-    status = db.Column(db.String(24), index=True, nullable=False)
-    header = db.Column(db.String(24), index=True, nullable=False)
+    description = db.Column(db.Text(255), index=True, nullable=True)
+    status = db.Column(db.String(24), index=True, nullable=True)
+    header = db.Column(db.String(24), index=True, nullable=True)
     date_added = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     deadline = db.Column(db.DateTime, index=True)
     prioritie = db.Column(db.String(128), index=True, default='maybe tommorow')
@@ -93,15 +93,18 @@ class User(UserMixin, db.Model):
 
     def get_followed_activities(self):
         followed_activities = Activitie.query.join(followers, (followers.c.followed_id == Activitie.user_id))\
-                .filter_by(Activitie.user_id == self.id).order_by(Activitie.date_added.desc())
+                .filter(followers.c.follower_id == self.id).order_by(Activitie.date_added.desc())
         return followed_activities
 
     def get_own_activities(self):
-        own_activities = Activitie.query.filter_by(Activitie.user_id == self.id)
+        own_activities = Activitie.query.filter(Activitie.user_id == self.id) 
         return own_activities
 
     def get_followed_own_activities(self):
-        return self.get_followed_own_activities().union(self.get_own_activities).order_by(Activitie.date_added.desc()) 
+        followed_activities = Activitie.query.join(followers, (followers.c.followed_id == Activitie.user_id))\
+                .filter(followers.c.follower_id == self.id)
+        own_activities = Activitie.query.filter(Activitie.user_id == self.id) 
+        return followed_activities.union(own_activities)
 
 
 # One team can have one person from many departments - front-end, back-end, management
