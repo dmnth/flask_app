@@ -71,10 +71,15 @@ def user_page(user_id):
     users = User.query.all()
     form = EditProfileForm(current_user.email, current_user.username)
     viewed_user = User.query.filter_by(id=user_id).first_or_404()
+    # This is wrong:
+    followed_activities = None
     activities = Activitie.query.filter_by(user_id = viewed_user.id).all()
     role = Role.query.first()
     if not role:
         create_roles()
+
+    if viewed_user.is_followed():
+        followed_activities = viewed_user.get_followed_activities()
 
     if request.method == "POST":
         user = User.query.filter_by(id = user_id).first()
@@ -87,6 +92,7 @@ def user_page(user_id):
         if 'unfollow' in request.form: 
             current_user.unfollow(user)
 
+        # Make view function for user data editing as well 
         if form.validate():
 
             if form.info.data != current_user.info:
@@ -121,7 +127,7 @@ def user_page(user_id):
     role = viewed_user.role
     info = viewed_user.info
 
-    return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities)
+    return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities, followed_activities=followed_activities)
 
 @app.route('/follow/<int:user_id>')
 @login_required

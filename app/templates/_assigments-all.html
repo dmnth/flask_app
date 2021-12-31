@@ -1,6 +1,6 @@
 <div class='assigments-table' >
     <table>
-        {% if activities %}
+        {% if followed_activities %}
         <tr class='user-table header'>
             <th> header </th>
             <th> user </th>
@@ -9,7 +9,7 @@
             <th> prioritie </th>
             <th> status </th>
         </tr>
-        {% for act in activities %}
+        {% for act in followed_activities%}
         <tr class='user-table'>
             <td class='header'> {{ act.header }} </td>
             <td><a href='{{url_for("user_page", user_id=act.id)}}'><strong>{{act.user}}<strong></a></td>
@@ -21,8 +21,10 @@
         {% endfor %}
         {% else %}
         <tr>
-            this user doesnt have any ass-igments
+            <p> This user doesnt follow anyone who could be considered an active member of society and should be considered
+            a boring person and try to be unpopular on Instagramm instead </p>
         </tr>
         {% endif %}
     </table>
+
 </div>

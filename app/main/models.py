@@ -88,6 +88,12 @@ class User(UserMixin, db.Model):
         if self.is_following(user):
             self.followed.remove(user)
 
+    def has_followers(self):
+        return self.followers.count() > 0
+
+    def is_followed(self):
+        return self.followed.count() > 0
+
     def is_following(self, user):
         return self.followed.filter(followers.c.followed_id == user.id).count() > 0
 
