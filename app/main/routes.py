@@ -123,7 +123,40 @@ def user_page(user_id):
 
     return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities)
 
+@app.route('/follow/<int:user_id>')
+@login_required
+def follow(user_id):
+    viewed_user = User.query.filter(User.id == user_id).first()
+    print(viewed_user.username)
+    if viewed_user is None:
+        flash(f'{viewed_user.username} not found')
+        return redirect(url_for('index'))
+    if current_user.id == viewed_user.id:
+        flash('One should not follow himself')
+        return redirect(url_for('user_page', user_id=viewed_user.id))
+    current_user.follow(viewed_user)
+    db.session.commit()
+    flash(f'you are now stalking on {viewed_user.username}')
+    return redirect(url_for('user_page', user_id=viewed_user.id))
+
+@app.route('/unfollow/<int:user_id>')
+@login_required
+def unfollow(user_id):
+    viewed_user = User.query.filter(User.id == user_id).first()
+    print(viewed_user.username)
+    if viewed_user is None:
+        flash(f'{viewed_user.username} not found in db')
+        return redirect(url_for('index'))
+    if current_user.id == viewed_user.id:
+        flash('One should not unfollow himself')
+        return redirect(url_for('user_page', user_id=viewed_user.id))
+    current_user.unfollow(viewed_user)
+    db.session.commit()
+    flash(f'you are not stalking on {viewed_user.username}')
+    return redirect(url_for('user_page', user_id=viewed_user.id))
+
 @app.route('/activitie/<int:id>/', methods=['GET', 'POST'])
+@login_required
 def details(id):
     
     # ll filters deleted items so you wont have to

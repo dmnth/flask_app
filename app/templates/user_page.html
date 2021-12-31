@@ -50,13 +50,16 @@
                     <form action='' method="POST">
                     <table>
                         <tr>
+                            {% if current_user.id != user_id %}
                             <td>
-                                {% if current_user.id != user_id %}
-                                    {% if current_user.is_following(user) == True %}
-                                        <button class='btn' name='unfollow' style='margin-top: 3.6px;'> UNFOLLOW </button>
-                                    {% else %} 
-                                        <button class='btn' name='follow' > FOLLOW</button>
-                                    {% endif %}
+                                <a href="{{ url_for('follow', user_id = user_id) }}">follow</a>
+                                <a href="{{ url_for('unfollow', user_id = user_id) }}">unfollow</a>
+                            <td>
+                                {% if current_user.is_following(user) == True %}
+                                    <button class='btn' name='unfollow' style='margin-top: 3.6px;'> UNFOLLOW </button>
+                                {% else %} 
+                                    <button class='btn' name='follow' > FOLLOW</button>
+                                {% endif %}
                                 <button class='btn' style='margin-bottom: 1.6px'>THREATEN</button>
                                 {% endif %}
                             </td>
@@ -135,7 +138,7 @@
 <h3> Followers: </h3>
 <div class='follower-list'>
     <ol>
-        {% for follower in user.followed.all() %}
+        {% for follower in user.followers.all() %}
         <li><img class='user-avatar' src="{{ follower.avatar(30) }}"</img><a href="{{ url_for('user_page', user_id=follower.id) }}"> {{ follower.username}} </a></li>
         {% endfor %}
     </ol>
