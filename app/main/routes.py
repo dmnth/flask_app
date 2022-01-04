@@ -22,6 +22,130 @@ def before_request():
         current_user.last_seen = last_seen 
         db.session.commit()
 
+@app.route('/activities')
+@login_required
+def activities():
+    form = ActivitieForm()
+    activities = Activitie.query.filter(Activitie.status!="deleted")
+    activitie = Activitie()
+
+    header = \
+            Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
+
+    # Do stuff here
+    if header is None:
+        if form.validate_on_submit():
+            if not form.dateNotInPast():
+                form.deadline.errors.append('Time travel not allowed')
+            else:
+                activitie.date_added = form.date_added.data
+                activitie.header = form.header.data
+                activitie.deadline = form.deadline.data
+                activitie.description = form.description.data
+                activitie.status = form.status.data
+                db.session.add(activitie)
+                db.session.commit()
+                form.description.data = ''
+                return redirect(url_for('activities'))
+
+    else:
+        flash(f'<\"{form.header.data}\" is already on list somewhere> ')
+        form.header.data = ''
+
+
+    if request.method == "POST":
+
+        if request.form.get('single'):
+            activitie = Activitie.query.filter_by(status="not done").first()
+            return redirect(url_for('details', id=activitie.id, activitie=activitie)) 
+
+        if request.form.get('delete'):
+            id = request.form.get('id')
+            act = Activitie.query.get(id)
+            if act:
+                act.status = 'deleted'
+                db.session.commit()
+
+        if request.form.get('done'):
+            id = request.form.get('id')
+            act = Activitie.query.get(id)
+            if act:
+                act.status = 'done'
+                db.session.commit()
+
+    return render_template('activities_long.html', activities=activities, form=form)
+
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
+@login_required
+def index():
+
+    all_selected = False
+    # Forms
+    form = ActivitieForm()
+    delete_form = DeleteForm()
+
+    # Db entities
+    activities = Activitie.query.filter(Activitie.status != 'deleted')
+    activitie = Activitie()
+    header = \
+            Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
+
+    # Priorities:
+    choices = ['not_today', 'not_important', 'maybe_tommorow']
+
+    # Do stuff here
+    if header is None:
+        if form.validate_on_submit():
+            if not form.dateNotInPast():
+                form.deadline.errors.append('Time travel not allowed')
+            else:
+                activitie.date_added = form.date_added.data
+                activitie.header = form.header.data
+                activitie.deadline = form.deadline.data
+                activitie.description = form.description.data
+                activitie.status = form.status.data
+                activitie.user_id = current_user.id
+                db.session.add(activitie)
+                db.session.commit()
+                form.description.data = ''
+                return redirect(url_for('index'))
+
+    else:
+        flash(f'<\"{form.header.data}\" is already on list somewhere> ')
+        form.header.data = ''
+
+    if request.method == 'POST': 
+
+        if request.form.get('delete_button'):
+            for key in request.form.keys():
+                if key.isdigit():
+                    Activitie.query.filter(Activitie.id==int(key)).delete()
+                    db.session.commit()
+            return redirect(url_for('index'))
+        
+        if request.form.get('Select'):
+            all_selected=True
+
+        if request.form.get('deSelect'):
+            all_selected=False
+
+        if request.form.get('prior'):
+            id = request.form.get('id')
+            act = Activitie.query.get(id)
+            new_prioritie = request.form.get('prior')
+            idx = choices.index(new_prioritie)
+            temp = choices[0]
+            choices[0] = choices[idx]
+            choices[idx] = temp
+            print(choices)
+            act.prioritie = new_prioritie 
+            db.session.commit()
+
+    return render_template('index.html', form=form, activities=activities,
+            delete_form=delete_form, all_selected=all_selected,
+            choices=choices)
+
 @app.route('/logout')
 def logout():
     logout_user()
@@ -212,126 +336,4 @@ def details(id):
     else:
         return render_template('activitie.html')
 
-@app.route('/activities', methods=['GET', 'POST'])
-def activities():
-    form = ActivitieForm()
-    activities = Activitie.query.filter(Activitie.status!="deleted")
-    activitie = Activitie()
-
-    header = \
-            Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
-
-    # Do stuff here
-    if header is None:
-        if form.validate_on_submit():
-            if not form.dateNotInPast():
-                form.deadline.errors.append('Time travel not allowed')
-            else:
-                activitie.date_added = form.date_added.data
-                activitie.header = form.header.data
-                activitie.deadline = form.deadline.data
-                activitie.description = form.description.data
-                activitie.status = form.status.data
-                db.session.add(activitie)
-                db.session.commit()
-                form.description.data = ''
-                return redirect(url_for('activities'))
-
-    else:
-        flash(f'<\"{form.header.data}\" is already on list somewhere> ')
-        form.header.data = ''
-
-
-    if request.method == "POST":
-
-        if request.form.get('single'):
-            activitie = Activitie.query.filter_by(status="not done").first()
-            return redirect(url_for('details', id=activitie.id, activitie=activitie)) 
-
-        if request.form.get('delete'):
-            id = request.form.get('id')
-            act = Activitie.query.get(id)
-            if act:
-                act.status = 'deleted'
-                db.session.commit()
-
-        if request.form.get('done'):
-            id = request.form.get('id')
-            act = Activitie.query.get(id)
-            if act:
-                act.status = 'done'
-                db.session.commit()
-
-    return render_template('activities_long.html', activities=activities, form=form)
-
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
-@login_required
-def index():
-
-    all_selected = False
-    # Forms
-    form = ActivitieForm()
-    delete_form = DeleteForm()
-
-    # Db entities
-    activities = Activitie.query.filter(Activitie.status != 'deleted')
-    activitie = Activitie()
-    header = \
-            Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
-
-    # Priorities:
-    choices = ['not_today', 'not_important', 'maybe_tommorow']
-
-    # Do stuff here
-    if header is None:
-        if form.validate_on_submit():
-            if not form.dateNotInPast():
-                form.deadline.errors.append('Time travel not allowed')
-            else:
-                activitie.date_added = form.date_added.data
-                activitie.header = form.header.data
-                activitie.deadline = form.deadline.data
-                activitie.description = form.description.data
-                activitie.status = form.status.data
-                activitie.user_id = current_user.id
-                db.session.add(activitie)
-                db.session.commit()
-                form.description.data = ''
-                return redirect(url_for('index'))
-
-    else:
-        flash(f'<\"{form.header.data}\" is already on list somewhere> ')
-        form.header.data = ''
-
-    if request.method == 'POST': 
-
-        if request.form.get('delete_button'):
-            for key in request.form.keys():
-                if key.isdigit():
-                    Activitie.query.filter(Activitie.id==int(key)).delete()
-                    db.session.commit()
-            return redirect(url_for('index'))
-        
-        if request.form.get('Select'):
-            all_selected=True
-
-        if request.form.get('deSelect'):
-            all_selected=False
-
-        if request.form.get('prior'):
-            id = request.form.get('id')
-            act = Activitie.query.get(id)
-            new_prioritie = request.form.get('prior')
-            idx = choices.index(new_prioritie)
-            temp = choices[0]
-            choices[0] = choices[idx]
-            choices[idx] = temp
-            print(choices)
-            act.prioritie = new_prioritie 
-            db.session.commit()
-
-    return render_template('index.html', form=form, activities=activities,
-            delete_form=delete_form, all_selected=all_selected,
-            choices=choices)
 

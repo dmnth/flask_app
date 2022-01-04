@@ -91,16 +91,7 @@
     <div>
         <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" name='button'>{{act.header[0].title() + act.header[1:].lower() }}</button>
     </div>
-    <div class='element left col-md-6' id={{act.id}}>
-            <div class='image-frame' style='border: 1px solid black'>
-                <img class='activitie' src="" alt="inser image here">
-                <div>
-                    <form action method="POST">
-                        <input type="submit" name='picture_upload'
-                               value="add picture">
-                    </form>
-                </div>
-            </div>
+    <div class='element left col-md-6' id={{act.id}} hidden>
                 <div class='text-stuff'>
                     <div>
                     {% if act.status == "done" %}
@@ -129,6 +120,9 @@
                         {{ act.description[0].title() +
                         act.description[1:] }}
                         </p>
+                    </div>
+                    <div style='display: flex; justify-content: end; padding-right: 5em;'>
+                            <p> Author: {{ act.user.username }} </p>
                     </div>
                     {% else %}
                     <div class='content-container-buttons'>

@@ -12,26 +12,26 @@
 
                         <!--Delimeter-->
                         <div class='delimeter-text'>
-                            <button type="button" class="btn btn-primary btn-lg btn-block btn-secondary" id='table-toggle'>Hide table</button>
                             {% if activities %}
-                            <h2 class='crud-header'>{{ current_user.first_name}}, observe all the things you havent done: </h2>
+                            <h2 class='crud-header'>{{ current_user.first_name}}, observe all the things other users havent done: </h2>
                             {% else %}
                             <h2 class='crud-header'> Are you lost? </h2>
                             <input type='button' name='add_button' id='add-more' value='Add more'>
                             {% endif %}
                         </div>
+                        <a href='{{ url_for("activities") }}'> All activities </a>
                         <div class='delimeter-line'>
                         </div>
                         <!--Delimeter end-->
                         {% if activities %}
-                        <form action method="POST">
+                        <form action='' method="POST">
                             <div class='table container-fluid' id='notdones'>
                                 <table style='width: 100%'>
                                     <tr>
                                         <td> header </td>
                                         <td> added </td>
                                         <td> deadline </td>
-                                        <td> priroritie </td>
+                                        <td> Owner </td>
                                     </tr>
                                     {% for act in activities %}
                                     {% if act.status != "deleted" %}
@@ -39,25 +39,7 @@
                                         <td><a href={{url_for('details',id=act['id']) }}>{{act['header'] }}</a></td>
                                         <td>{{ act['date_added'].year}}-{{act['date_added'].month}}-{{act['date_added'].day}}</td>
                                         <td>{{ act['deadline'].year}}-{{act['deadline'].month}}-{{act['deadline'].day}}</td>
-                                        <td>
-                                            <form method='POST' action>
-                                                <select name='prior' method='POST' action style='width: 11.5rem'>
-                                                    <option
-                                                    >{{act.prioritie}}</option>
-                                                    {% for choice in
-                                                    choices[1:] %}
-                                                        <option>{{choice}}</option>
-                                                    {% endfor %}
-                                                </select>
-                                                <button type='submit'>Set</button>
-                                                <input type='hidden' name='id' value='{{act.id}}'>
-                                            </form>
-                                        </td>
-                                        {% if all_selected == True %}
-                                        <td><input type="checkbox" name={{act['id']}} checked></td>
-                                        {% else %}
-                                        <td><input type="checkbox" name={{act['id']}} ></td>
-                                        {% endif %}
+                                        <td><a href='{{ url_for("user_page", user_id=act.user.id) }}'> {{ act.user.username }} </a></td>
                                     </tr>
                                     {% endif %}
                                     {% endfor %}
@@ -94,11 +76,16 @@
                             <!-- Message representation end -->
 
                             <div class='row'>
-                            <form action method='POST' novalidate>
+                            <form action='' method='POST' novalidate>
                                 {{ form.hidden_tag() }}
                                 {{ form.csrf_token }}
                                 {% if form.csrf_token.errors %}
-                                    <div class="warning">You have submitted an invalid CSRF token</div>
+                                    <div class="warning">
+                                        <p>You have submitted an invalid CSRF token </p>
+                                        {% for error in form.csrf_token.errors %}
+                                        <p style='color: red'> [{{ error }}] </p>
+                                        {% endfor %}
+                                    </div>
                                 {% endif %}
                                 <div class='row'>
                                     <div class='col-md-6'>
@@ -129,13 +116,12 @@
                                             {{form.description(rows='4',
                                             cols='30')}}
                                             {% for error in form.description.errors %}
-                                            <span style='color: red;'>[{{error}}]</span>
+                                                <span style='color: red;'>[{{error}}]</span>
                                             {% endfor %}
                                             </div>
                                         <div class='row'>
                                             <div class='submit col-md-12'>
-                                            {{ form.submit(size=5, maxlength=5)
-                                            }}
+                                                {{ form.submit(size=5, maxlength=5) }}
                                             </div>
                                         </div>
                                         </div>
@@ -144,7 +130,6 @@
                             </form>
                         </div>
                     </div>
-                    {% include '_assigments-all.html' %}
                 {% endblock %}
                 {% block cl3 %}
                 {% endblock %}

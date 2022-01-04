@@ -31,11 +31,16 @@ class userModelTest(unittest.TestCase):
 
         user_1.follow(user_2)
         db.session.commit()
-        self.assertTrue(user_1.is_following(user_2))
         self.assertEqual(user_1.followed.count(), 1)
         self.assertEqual(user_1.followed.first().username, 'jottaro')
         self.assertEqual(user_2.followers.count(), 1)
         self.assertEqual(user_2.followers.first().username, 'Dick')
+        self.assertTrue(user_1.is_following(user_2))
+        self.assertTrue(user_2.has_followers())
+        self.assertTrue(user_1.is_followed())
+        user_1.unfollow(user_2)
+        self.assertFalse(user_2.is_followed())
+        self.assertFalse(user_1.has_followers())
 
         user_1.unfollow(user_2)
         db.session.commit()
