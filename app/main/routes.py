@@ -22,12 +22,11 @@ def before_request():
         current_user.last_seen = last_seen 
         db.session.commit()
 
-@app.route('/activities')
+@app.route('/activities', methods=['GET', 'POST'])
 @login_required
 def activities():
     form = ActivitieForm()
     activities = Activitie.query.filter(Activitie.status!="deleted")
-    activitie = Activitie()
 
     header = \
             Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
@@ -36,13 +35,16 @@ def activities():
     if header is None:
         if form.validate_on_submit():
             if not form.dateNotInPast():
-                form.deadline.errors.append('Time travel not allowed')
+                form.deadline.errors.append('Date should not be in past')
             else:
-                activitie.date_added = form.date_added.data
-                activitie.header = form.header.data
-                activitie.deadline = form.deadline.data
-                activitie.description = form.description.data
-                activitie.status = form.status.data
+                activitie = Activitie(
+                        header=form.header.data,
+                        description=form.description.data,
+                        status=form.status.data,
+                        deadline=form.deadline.data,
+                        date_added=form.date_added.data,
+                        user_id=current_user.id
+                        )
                 db.session.add(activitie)
                 db.session.commit()
                 form.description.data = ''
@@ -100,12 +102,14 @@ def index():
             if not form.dateNotInPast():
                 form.deadline.errors.append('Time travel not allowed')
             else:
-                activitie.date_added = form.date_added.data
-                activitie.header = form.header.data
-                activitie.deadline = form.deadline.data
-                activitie.description = form.description.data
-                activitie.status = form.status.data
-                activitie.user_id = current_user.id
+                activitie = Activitie(
+                        header=form.header.data,
+                        description=form.description.data,
+                        status=form.status.data,
+                        deadline=form.deadline.data,
+                        date_added=form.date_added.data,
+                        user_id=current_user.id
+                        )
                 db.session.add(activitie)
                 db.session.commit()
                 form.description.data = ''
