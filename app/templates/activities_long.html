@@ -122,13 +122,14 @@
                         </p>
                     </div>
                     <div style='display: flex; justify-content: end; padding-right: 5em;'>
-                            <p> Author: {{ act.user.username }} </p>
+                        <p> Author: <a href='{{ url_for("user_page", user_id=act.user.id) }}'> {{ act.user.username }}</a> </p>
                     </div>
                     {% else %}
                     <div class='content-container-buttons'>
                         <p> Nothing left </p> 
                     </div>
                     {% endif %}
+                    {% if act.user.id == current_user.id %}
                     <form action method="POST">
                     <div class='row'>
                         <div class='col-md-12 btns'>
@@ -141,6 +142,7 @@
                         </div>
                     </div>
                 </form>
+                {% endif %}
             </div>
         </div>
         </div>
@@ -216,23 +218,5 @@
 {% endblock %}
 <!-- right menu -->
 {% block cl3 %}
-    <div class='right-menu'>
-        <form action method="POST">
-            <h3> Display as: </h3>
-            <ul>
-                <li><input type='submit' name='list'
-                           value='Long list'></li>
-                <li><input type='submit' name='single'
-                           value='One at a time'></li>
-            </ul>
-            <h3> Sort: </h3>
-            <ul>
-                <li><input type='submit' name='sort'
-                           value='Show not done only'></li>
-                <li><input type='submit' name='sort'
-                           value='Show done only'></li>
-            </ul>
-        </form>
-        <script src="{{url_for('static', filename='../static/js/activities_long.js')}}"></script>
-    </div>
+    <script src="{{url_for('static', filename='../static/js/activities_long.js')}}"></script>
 {% endblock %}
