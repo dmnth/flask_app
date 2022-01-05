@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block cl1 %}
+<!-- left menu -->
+        <div class='list-of-notdones'>
+            <h4> NotDone's: </h4>
+                <ul>
+                    {% for act in activities %}
+                        {% if act.status == "not done" %}
+                        <li><a style="text-decoration: none; color: red;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% elif act.status == "done"  %}
+                        <li><a style="text-decoration: line-through; color: blue;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% elif act.status == "done" %}
+                        <li><a style="text-decoration: line-through; color: red;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% elif act.status == "not done" %}
+                        <li><a style="text-decoration: none; color: blue;" href='#{{act.id}}'> {{ act.header }} </a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+        </div>
+{% endblock %}
+{% block cl2 %}
+{% if activities %}
+    {% for act in activities %}
+    <div class='element left col-md-6' id={{act.id}} >
+                <div class='text-stuff'>
+                    <div>
+                    {% if act.status == "done" %}
+                    <div class='content-header-done' id={{act.id}} >
+                        <p> {{ act.header | upper }} [ {{act.status}} ]</p>
+                    </div>
+                    <div class='content-text'>
+                        <p class='content-text'>
+                        {{ act.description[0].title() +
+                        act.description[1:] }}
+                        </p>
+                    </div>
+                    {% elif act.status == "not done" %}
+                    <div class='content-header' id={{act.id}} >
+                        <div class='row'>
+                            <div class='col-md-10'>
+                                <p class='conten-header-nd'> {{ act.header | upper }} <span style='margin-left: 0.5rem;'>[ {{act.status}} ]</span></p>
+                            </div>
+                            <div class='col-md-2' style='display: flex; justify-content: end; padding-top: 0.5rem;'>
+                                <i class="far fa-trash-alt" ><input type='checkbox' name={{act.id}} style="margin-left: 0.5rem;"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class='content-text'>
+                        <p class='content-text'>
+                        {{ act.description[0].title() +
+                        act.description[1:] }}
+                        </p>
+                    </div>
+                    <div style='display: flex; justify-content: end; padding-right: 5em;'>
+                        <p> Author: <a href='{{ url_for("user_page", user_id=act.user.id) }}'> {{ act.user.username }}</a> </p>
+                    </div>
+                    {% else %}
+                    <div class='content-container-buttons'>
+                        <p> Nothing left </p> 
+                    </div>
+                    {% endif %}
+                    {% if act.user.id == current_user.id %}
+                    <form action method="POST">
+                    <div class='row'>
+                        <div class='col-md-12 btns'>
+                            <input type='submit' name='delete' value='delete'>
+                            <input type='submit' name='edit' value='edit'>
+                            {% if act.status == "not done" %}
+                            <input type='submit' name='done' value='mark as done'>
+                            {% endif %}
+                            <input type='hidden' name='id' value='{{act.id}}'>
+                        </div>
+                    </div>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+    <div style='display: flex; flex-direction: row; justify-content: center; margin-top: 3em;'>
+        <a href= {{prev_url}}'> Previous</a>
+        &nbsp
+        &nbsp
+        &nbsp
+        &nbsp
+        <a href='{{next_url}}'> Next </a>
+    </div>
+
+            <!-- Message represntation -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul class='flashes'>
+                {% for message in messages %}
+                <li> {{ message }} </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            {% endwith %}
+
+    {% else %}
+    <h1> All out of stuff </h1>
+{% endif %}
+{% endblock %}
+{% block cl3 %}
+    <script src="{{url_for('static', filename='../static/js/activities_long.js')}}"></script>
+{% endblock %}
+

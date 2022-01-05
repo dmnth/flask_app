@@ -26,7 +26,7 @@ def before_request():
 @login_required
 def activities():
     form = ActivitieForm()
-    activities = Activitie.query.filter(Activitie.status!="deleted")
+    activities = Activitie.query.filter(Activitie.user_id==current_user.id).filter(Activitie.status!="deleted")
 
     header = \
             Activitie.query.filter(Activitie.header==form.header.data, Activitie.status!='deleted').first()
@@ -77,11 +77,21 @@ def activities():
 
     return render_template('activities_long.html', activities=activities, form=form)
 
+@app.route('/explore', methods=['GET'])
+@login_required
+def explore():
+    page = request.args.get('page', 1, type=int)
+    activities = Activitie.query.filter(Activitie.status!="deleted").paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('explore', page=activities.next_num) if activities.has_next else None
+    prev_url = url_for('explore', page=activities.prev_num) if activities.has_prev else None
+    return render_template('activities_pagination.html', activities=activities.items, next_url=next_url, prev_url=prev_url)
+
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
 
+    print(request.args)
     all_selected = False
     # Forms
     form = ActivitieForm()
