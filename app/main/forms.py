@@ -76,4 +76,10 @@ class EditProfileForm(FlaskForm):
                 self.username.errors.append('This username is already taken')
                 raise ValidationError('This username is already taken')
 
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('email', validators=[DataRequired()], widget=EmailInput())
+    submit = SubmitField('Request Password Reset')
+
+
+
 
