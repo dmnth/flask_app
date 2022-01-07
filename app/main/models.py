@@ -116,7 +116,7 @@ class User(UserMixin, db.Model):
         return followed_activities.union(own_activities)
 
     def get_reset_password_token(self, exp_in=600):
-        return jwt.encode({'reset_password': self.id, 'exp': exp_in}, app.config['SECRET_KEY'],
+        return jwt.encode({'reset_password': self.id, 'exp':time() + exp_in}, app.config['SECRET_KEY'],
                 algorithm='HS256')
     
     @staticmethod

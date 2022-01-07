@@ -6,7 +6,7 @@ from flask import render_template, url_for, redirect, session, flash, request, \
         abort
 from flask_login import current_user, login_user, logout_user, login_required
 from app.main.forms import ActivitieForm, DeleteForm, LoginForm, RegisterForm, EditProfileForm, \
-        ResetPasswordRequestForm
+        ResetPasswordRequestForm, ResetPasswordForm
 from app.main.models import Activitie, User, Role 
 from app.main.queries import Node, circularList 
 from app.main.create_roles import create_roles
@@ -37,6 +37,25 @@ def password_reset_request():
         return redirect(url_for('login'))
     
     return render_template('forgot-password.html', form=form)
+
+@app.route('/reset-password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        print('huge bag of dicks here')
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Password has been changed, mortal')
+        return redirect(url_for('login'))
+
+    return render_template('restore_password.html', form=form)
+
 
 @app.route('/activities', methods=['GET', 'POST'])
 @login_required
