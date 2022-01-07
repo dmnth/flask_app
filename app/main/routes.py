@@ -10,6 +10,7 @@ from app.main.forms import ActivitieForm, DeleteForm, LoginForm, RegisterForm, E
 from app.main.models import Activitie, User, Role 
 from app.main.queries import Node, circularList 
 from app.main.create_roles import create_roles
+from app.main.email import send_password_reset_email
 from werkzeug.urls import url_parse
 from datetime import datetime
 import random
@@ -25,15 +26,16 @@ def before_request():
 
 @app.route('/forgot-password', methods=['GET', 'POST'])
 def password_reset_request():
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = ResetPasswordRequestForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
-            # Here will be password-resetting function
-            pass
+            send_password_reset_email(user)
         flash('Check email for further instructions')
+        return redirect(url_for('login'))
+    
     return render_template('forgot-password.html', form=form)
 
 @app.route('/activities', methods=['GET', 'POST'])
