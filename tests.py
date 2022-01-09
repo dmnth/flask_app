@@ -3,6 +3,8 @@
 import unittest
 from app import app, db
 from app.main.models import User, Activitie
+from app.main.forms import EditProfileForm
+import jwt
 from datetime import datetime
 
 class userModelTest(unittest.TestCase):
@@ -108,6 +110,13 @@ class userModelTest(unittest.TestCase):
         # get followed + own activities 
 
         self.assertEqual(user_1.get_followed_own_activities().all(), [act_1, act_2, act_3, act_4])
+
+    def test_reset_password(self):
+        user_1 = User(username='Jango', email='bobbabubba@female.com')
+        db.session.add(user_1)
+        db.session.commit()
+        token = user_1.get_reset_password_token()
+        self.assertEqual(user_1, User.verify_reset_password_token(token)) 
 
 
     def tearDown(self):
