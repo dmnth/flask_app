@@ -28,7 +28,7 @@ class Activitie(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.Text(255), index=True, nullable=True)
-    status = db.Column(db.String(24), index=True, nullable=True)
+    status = db.Column(db.String(24), index=True, nullable=True, default='not done')
     header = db.Column(db.String(24), index=True, nullable=True)
     date_added = db.Column(db.DateTime, index=True, default=datetime.utcnow())
     deadline = db.Column(db.DateTime, index=True)
@@ -118,6 +118,16 @@ class User(UserMixin, db.Model):
     def get_reset_password_token(self, exp_in=600):
         return jwt.encode({'reset_password': self.id, 'exp':time() + exp_in}, app.config['SECRET_KEY'],
                 algorithm='HS256')
+
+    def create_assigment(self, form):
+        header = form.header.data
+        date_added = form.date_added.data
+        deadline = form.deadline.data
+        description = form.description.data
+        user_id = self.id
+        new_assigment = Activitie(header=header, date_added=date_added, deadline=deadline, description=description, user_id=user_id)
+        db.session.add(new_assigment)
+        db.session.commit()
     
     @staticmethod
     def verify_reset_password_token(token):

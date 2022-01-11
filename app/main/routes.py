@@ -243,6 +243,7 @@ def main():
 def user_page(user_id):
     users = User.query.all()
     form = EditProfileForm(current_user.email, current_user.username)
+    add_form = ActivitieForm() 
     viewed_user = User.query.filter_by(id=user_id).first_or_404()
     # This is wrong:
     followed_activities = None
@@ -254,10 +255,18 @@ def user_page(user_id):
     if viewed_user.is_followed():
         followed_activities = viewed_user.get_followed_activities()
 
+    if add_form.validate_on_submit():
+
+        if add_form.dateNotInPast():
+            current_user.create_assigment(add_form)
+        else:
+            flash('Date should not be in past')
+            add_form.deadline.errors.append('deadline should not be in past')
+            print(add_form.errors)
+            print(add_form.deadline.errors)
+
     if request.method == "POST":
         user = User.query.filter_by(id = user_id).first()
-        print('POST')
-        print(request.form.get('follow'))
         # .get method works with input type only?
         if 'follow' in request.form: 
             current_user.follow(user)
@@ -267,6 +276,7 @@ def user_page(user_id):
 
         # Make view function for user data editing as well 
         if form.validate():
+            
 
             if form.info.data != current_user.info:
                 current_user.info = form.info.data
@@ -300,7 +310,8 @@ def user_page(user_id):
     role = viewed_user.role
     info = viewed_user.info
 
-    return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities, followed_activities=followed_activities)
+    return render_template('user_page.html', user_id=viewed_user.id, form=form, user=viewed_user, email=email, username=username, info=info, role=role, users=users, activities=activities, followed_activities=followed_activities, 
+            add_form=add_form)
 
 @app.route('/follow/<int:user_id>')
 @login_required

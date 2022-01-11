@@ -19,8 +19,9 @@ class ActivitieForm(FlaskForm):
     submit = SubmitField(id='submit-btn')
 
     def dateNotInPast(self):
-        difference = self.deadline.data - self.date_added.data
-        return difference.days >= 0
+        if (self.deadline.data - self.date_added.data).days >= 0: 
+            return True
+            
 
 class DeleteForm(FlaskForm):
     submit = SubmitField()
