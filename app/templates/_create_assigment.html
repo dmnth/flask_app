@@ -1,0 +1,54 @@
+<div class='row'>
+    <form action='' method='POST' novalidate>
+        {{ add_form.hidden_tag() }}
+        {{ add_form.csrf_token }}
+        {% if add_form.csrf_token.errors %}
+            <div class="warning">
+                <p>You have submitted an invalid CSRF token </p>
+                {% for error in add_form.csrf_token.errors %}
+                <p style='color: red'> [{{ error }}] </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class='row'>
+                    {{add_form.header.label()}}
+                    <br>
+                    {{add_form.header()}}
+                </div>
+                <div class='row'>
+                    {{ add_form.date_added.label()}}
+                    <br>
+                    {{ add_form.date_added()}}
+                </div>
+                <div class='row'>
+                    {{ add_form.deadline.label()}}
+                    <br>
+                    {{ add_form.deadline(value='yy/mm/dd')}}
+                    {% for error in add_form.deadline.errors %}
+                    <span style='color: red;'>[{{error}}]</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class='col-md-6'>
+                <div class='row'>
+                    <div class='description col-md-12'>
+                    {{add_form.description.label()}}
+                    <br>
+                    {{add_form.description(rows='4',
+                    cols='30')}}
+                    {% for error in add_form.description.errors %}
+                        <span style='color: red;'>[{{error}}]</span>
+                    {% endfor %}
+                    </div>
+                <div class='row'>
+                    <div class='submit col-md-12'>
+                        {{ add_form.submit(size=5, maxlength=5) }}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    <form>
+</div>
