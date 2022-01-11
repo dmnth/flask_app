@@ -87,6 +87,9 @@
                             <td>
                     <button type='button' id=3 class='btn user-btn slide-toggle'> CHANGE EMAIL </button>
                             </td>
+                            <td>
+                    <button type='button' id=4 class='btn user-btn slide-toggle'> CREATE ASSIGMENT </button>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -124,6 +127,9 @@
                     {% for error in form.username.errors %}
                     <div class='alert'> This is error </div>
                     {% endfor %}
+                </div>
+                <div class='box' id=4>
+                    {% include '_create_assigment.html' %}
                 </div>
                 </form>
                 {% endif %}
