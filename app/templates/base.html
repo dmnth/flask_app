@@ -71,6 +71,9 @@
         </div>
     </div>
 </body>
+{% block scripts %}
+{{ moment.include_moment() }} 
+{% endblock %}
 <footer>
     {% block footer %}
     {% endblock %}

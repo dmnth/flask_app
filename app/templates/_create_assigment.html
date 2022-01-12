@@ -16,6 +16,9 @@
                     {{add_form.header.label()}}
                     <br>
                     {{add_form.header()}}
+                    {% for error in add_form.header.errors %}
+                    <span style='color: red;'>[{{error}}]</span>
+                    {% endfor %}
                 </div>
                 <div class='row'>
                     {{ add_form.date_added.label()}}

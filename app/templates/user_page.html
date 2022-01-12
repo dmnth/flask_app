@@ -42,7 +42,9 @@
                     <p> Role: {{ role }} </p>
                     <p> About: {{ info }} </p>
                     <p> Email: {{ email }} </p>
-                    <p> Last seen: {{user.last_seen }} </p>
+                    {% if user.last_seen %}
+                    <p> Last seen: {{moment(user.last_seen).format('LLL') }} </p>
+                    {% endif %}
                 </div>
             </td>
             <td style='font-size: 1rem; width: 30%; vertical-align: middle; padding-left: 15px; padding-right: 15px; display: inline-block'>

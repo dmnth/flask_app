@@ -51,7 +51,7 @@ class User(UserMixin, db.Model):
     last_name = db.Column(db.String(124), index=True)
     info = db.Column(db.String(255), index=True )
     email = db.Column(db.String(120), index=True, unique=True )
-    last_seen = db.Column(db.String(120), index=True )
+    last_seen = db.Column(db.DateTime, index=True )
     hashed_password = db.Column(db.String(255), index=True)
     activities = db.relationship('Activitie', backref='user', lazy='dynamic')
     items = db.relationship('Item', backref='user', lazy='dynamic')

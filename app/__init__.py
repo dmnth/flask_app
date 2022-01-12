@@ -5,11 +5,13 @@ import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
 from flask import Flask
 from config import config 
+from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager 
 from flask_mail import Mail
-
+from flask_moment import Moment
+from flask_babel import Babel
 
 app = Flask(__name__)
 app.config.from_object(config['default'])
@@ -19,11 +21,18 @@ login.login_view='login'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 mail = Mail(app)
+moment = Moment(app)
+babel = Babel(app)
 
 from app.main import main as main_blueprint
 app.register_blueprint(main_blueprint)
 
 from app.main import forms, routes, models, errors
+
+@babel.localeselector
+def get_locale():
+    # HTTP: Accept-Language: ru, en-gb; q=0.8, en; q=0.7 
+    return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 # port < 8085
 if not app.debug and not app.testing:

@@ -20,7 +20,7 @@ import random
 def before_request():
     if current_user.is_authenticated:
         time_now = datetime.utcnow()
-        last_seen = time_now.strftime('%m/%d/%Y, %H:%M')
+        last_seen = time_now
         current_user.last_seen = last_seen 
         db.session.commit()
 
@@ -256,14 +256,16 @@ def user_page(user_id):
         followed_activities = viewed_user.get_followed_activities()
 
     if add_form.validate_on_submit():
+        sample = Activitie.query.filter(Activitie.header == add_form.header.data).first()
+        if sample is None:
+            if add_form.dateNotInPast():
+                current_user.create_assigment(add_form)
+                return redirect(url_for('user_page', user_id = current_user.id))
 
-        if add_form.dateNotInPast():
-            current_user.create_assigment(add_form)
-        else:
-            flash('Date should not be in past')
             add_form.deadline.errors.append('deadline should not be in past')
-            print(add_form.errors)
-            print(add_form.deadline.errors)
+        else:
+            add_form.header.errors.append('This header exists')
+            add_form.header.data = ''
 
     if request.method == "POST":
         user = User.query.filter_by(id = user_id).first()

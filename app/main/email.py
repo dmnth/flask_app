@@ -7,7 +7,7 @@ from app import app
 from threading import Thread
 
 def send_async_mail(app, msg):
-    with app_context():
+    with app.app_context():
         mail.send(msg)
 
 def send_mail(subject, recipients, html_body):
