@@ -20,7 +20,7 @@ class userModelTest(unittest.TestCase):
         self.assertTrue(user.check_password('bobbasbubbas'))
 
     def test_avatar(self):
-        user=User(username='Jango', email='fettfat@gmail.com')
+        user=User(username='Jango', email='fett@gmail.com')
         self.assertEqual(user.avatar(128), ('https://www.gravatar.com/avatar/192abd819777ab90f75ce868fe16f6cf?d=retro&s=128'))
 
     def test_follow(self):
@@ -54,7 +54,7 @@ class userModelTest(unittest.TestCase):
         # create some users:
         user_1 = User(username='boris', email='hangman@gmail.com')
         user_2 = User(username='jukko', email='santa_helper12@gmail.com')
-        user_3 = User(username='Indulcer', email='nohomo@mail.ru')
+        user_3 = User(username='Indulcer', email='nomomo@mail.ru')
         user_4 = User(username='Arcadi', email='theman@mail.ru')
         db.session.add_all([user_1, user_2, user_3, user_4])
         db.session.commit()
@@ -112,7 +112,7 @@ class userModelTest(unittest.TestCase):
         self.assertEqual(user_1.get_followed_own_activities().all(), [act_1, act_2, act_3, act_4])
 
     def test_reset_password(self):
-        user_1 = User(username='Jango', email='bobbabubba@female.com')
+        user_1 = User(username='Jango', email='bobbabubba@gmale.com')
         db.session.add(user_1)
         db.session.commit()
         token = user_1.get_reset_password_token()
