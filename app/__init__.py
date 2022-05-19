@@ -29,10 +29,12 @@ app.register_blueprint(main_blueprint)
 
 from app.main import forms, routes, models, errors
 
+"""
 @babel.localeselector
 def get_locale():
     # HTTP: Accept-Language: ru, en-gb; q=0.8, en; q=0.7 
     return request.accept_languages.best_match(app.config['LANGUAGES'])
+"""
 
 # port < 8085
 if not app.debug and not app.testing:

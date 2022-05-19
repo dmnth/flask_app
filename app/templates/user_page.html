@@ -73,7 +73,8 @@
             </td>
         </tr>
     </table>
-                {% if current_user.id == user_id %}
+    <div>
+            {% if current_user.id == user_id %}
                 <div>
                     <table>
                         <tr>
@@ -95,46 +96,45 @@
                         </tr>
                     </table>
                 </div>
-                <form action='' method="POST">
-                <div class='box' id=0>
-                    {{ form.hidden_tag() }}
-                    {{ form.csrf_token() }}
-                    <div class='box-inner'>
-                        {{ form.info(class='box-input-form about', value='none', id='about') }}
-                        {{ form.submit(class='btn') }} 
+                <form method='post'>
+                    <div class='box' id=0>
+                        {{ form.hidden_tag() }}
+                        {{ form.csrf_token() }}
+                        <div class='box-inner'>
+                            {{ form.info(class='box-input-form about', value='none', id='about') }}
+                            {{ form.submit(class='btn') }} 
+                        </div>
                     </div>
-                </div>
-                <div class='box' id=1>
-                    <div class='box-inner'>
-                        <select class='box-input-form role'>
-                            <option value='Commoner'>Commoner</option>
-                            <option value='Commoner'>Developer</option>
-                            <option value='Commoner'>Manager</option>
-                        </select>
-                        {{ form.role(class='box-input-form role', value=user.role) }}
-                        {{ form.submit(class='btn role', id='role') }} 
+                    <div class='box' id=1>
+                        <div class='box-inner'>
+                            <select class='box-input-form role'>
+                                <option value='Commoner'>Commoner</option>
+                                <option value='Commoner'>Developer</option>
+                                <option value='Commoner'>Manager</option>
+                            </select>
+                            {{ form.role(class='box-input-form role', value=user.role) }}
+                            {{ form.submit(class='btn role', id='role') }} 
+                        </div>
                     </div>
-                </div>
-                <div class='box' id=2>
-                    <div class='box-inner'>
-                        {{ form.username(class='box-input-form username', value=username) }}
-                        {{ form.submit(class='btn role', id='username') }}
+                    <div class='box' id=2>
+                        <div class='box-inner'>
+                            {{ form.username(class='box-input-form username', value=username) }}
+                            {{ form.submit(class='btn role', id='username') }}
+                        </div>
                     </div>
-                </div>
-                <div class='box' id=3>
-                    <div class='box-inner'>
-                        {{ form.email(class='box-input-form username', value=user.email) }}
-                        {{ form.submit(class='btn role', id='email') }}
+                    <div class='box' id=3>
+                        <div class='box-inner'>
+                            {{ form.email(class='box-input-form username', value=user.email) }}
+                            {{ form.submit(class='btn role', id='email') }}
+                        </div>
                     </div>
-                    {% for error in form.username.errors %}
-                    <div class='alert'> This is error </div>
-                    {% endfor %}
-                </div>
-                <div class='box' id=4>
-                    {% include '_create_assigment.html' %}
-                </div>
+                    <div class='box' id=4>
+                        {% include '_create_assigment.html' %}
+                    </div>
                 </form>
-                {% endif %}
+                <form method='post'>
+                </form>
+            {% endif %}
     {% include '_assigments-user.html' %}
     {% include '_assigments-all.html' %}
     <div>
